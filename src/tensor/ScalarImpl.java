@@ -1,4 +1,4 @@
 package tensor;
 
-public class ScalarImpl {
+public class ScalarImpl implements Scalar {
 }

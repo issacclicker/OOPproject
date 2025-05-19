@@ -1,4 +1,4 @@
 package tensor;
 
-public interface Matrix {
+public interface Matrix extends Vector {
 }

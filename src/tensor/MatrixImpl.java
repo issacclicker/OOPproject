@@ -1,4 +1,4 @@
 package tensor;
 
-public class MatrixImpl {
+public class MatrixImpl implements Matrix {
 }

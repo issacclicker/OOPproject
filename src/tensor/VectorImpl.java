@@ -1,4 +1,4 @@
 package tensor;
 
-public class VectorImpl {
+public class VectorImpl implements Vector {
 }

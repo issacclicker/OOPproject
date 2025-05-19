@@ -1,4 +1,4 @@
 package tensor;
 
-public interface Vector {
+public interface Vector extends Scalar {
 }
