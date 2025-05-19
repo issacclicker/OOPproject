@@ -2,7 +2,7 @@ package tensor;
 
 import java.math.BigDecimal;
 
-public class ScalarImpl implements Scalar {
+public class ScalarImpl implements Scalar,Cloneable {
     //스칼라의 자료구조
     BigDecimal scalarValue = null;
 
@@ -18,5 +18,28 @@ public class ScalarImpl implements Scalar {
         //스칼라 생성
     }
 
+    //17s 객체 복제(Impl에서 override)
+    public Scalar cloneSelf()
+    {
+        return clone();
+    }
+    @Override
+    protected Scalar clone()
+    {
+        return null;
+    }
 
+    //24 전달 받은 두 스칼라의 덧셈
+    static Scalar addScalarEach(Scalar A,Scalar B)
+    {
+        //구현 필요
+        return null;
+    }
+
+    //25 전달 받은 두 스칼라의 곱셈
+    static Scalar multiplyScalarEach(Scalar A,Scalar B)
+    {
+        //구현 필요
+        return null;
+    }
 }
