@@ -7,6 +7,9 @@ public interface Vector extends Scalar {
     //11v. 특정 위치의 요소를 조회
     Scalar getVectorAt(int index);
 
+    //13v. 크기 정보 조회
+    int size();
+
     //14v. 객체 콘솔에 출력
     @Override
     String toString();
