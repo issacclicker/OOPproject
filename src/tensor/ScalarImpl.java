@@ -2,7 +2,7 @@ package tensor;
 
 import java.math.BigDecimal;
 
-class ScalarImpl implements Scalar,Cloneable {
+class ScalarImpl implements Scalar,Cloneable,Comparable<Scalar> {
     //스칼라의 자료구조
     BigDecimal scalarValue = null;
 
@@ -49,10 +49,10 @@ class ScalarImpl implements Scalar,Cloneable {
     }
 
     //16 스칼라의 값 대 소 비교
-    public boolean valueCompare(Scalar A,Scalar B)
+    @Override
+    public int compareTo(Scalar A)
     {
-        boolean result = false;
-        return false;
+        return 0;
     }
 
     //17s 객체 복제(Impl에서 override)

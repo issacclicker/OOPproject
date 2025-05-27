@@ -1,11 +1,11 @@
 package tensor;
 
-public interface Vector extends Scalar {
+public interface Vector {
     //11v. 특정 위치의 요소를 지정
-    void setVectorAt(Scalar val,int index);
+    void setAt(Scalar val,int index);
 
     //11v. 특정 위치의 요소를 조회
-    Scalar getVectorAt(int index);
+    Scalar getAt(int index);
 
     //13v. 크기 정보 조회
     int size();
@@ -25,7 +25,6 @@ public interface Vector extends Scalar {
     void addVector(Vector val);
 
     //21 다른 스칼라와 곱셈
-    @Override
     void multiplyScalar(Scalar val);
 
     //30 n-차원 벡터 객체를 자신으로 부터 n*1 행렬을 생성하여 반환

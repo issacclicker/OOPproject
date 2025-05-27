@@ -1,6 +1,6 @@
 package tensor;
 
-public interface Matrix extends Vector {
+public interface Matrix {
     //11m 특정 위치의 요소 지정
     void setMatrixAt(int i, int j, Scalar val);
 

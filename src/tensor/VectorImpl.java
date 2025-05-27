@@ -1,6 +1,6 @@
 package tensor;
 
-public class VectorImpl implements Vector,Cloneable {
+class VectorImpl implements Vector,Cloneable {
     //벡터의 자료구조
     java.util.Vector<Scalar> vectorValues;
 
@@ -23,12 +23,12 @@ public class VectorImpl implements Vector,Cloneable {
     }
 
     //11v. 특정 위치의 요소를 지정
-    public void setVectorAt(Scalar val,int index) {
+    public void setAt(Scalar val,int index) {
 
     };
 
     //11v. 특정 위치의 요소를 조회
-    public Scalar getVectorAt(int index){
+    public Scalar getAt(int index){
         Scalar result = null;
         return result;
     };
