@@ -6,6 +6,12 @@ class ScalarImpl implements Scalar,Cloneable,Comparable<Scalar> {
     //스칼라의 자료구조
     BigDecimal scalarValue = null;
 
+    //temp
+    ScalarImpl()
+    {
+
+    }
+
     //1. String 값 지정하는 생성자
     ScalarImpl(String value)
     {
@@ -49,6 +55,11 @@ class ScalarImpl implements Scalar,Cloneable,Comparable<Scalar> {
     }
 
     //16 스칼라의 값 대 소 비교
+    public int compareWith(Scalar A)
+    {
+        return compareTo(A);
+    }
+
     @Override
     public int compareTo(Scalar A)
     {
@@ -63,7 +74,7 @@ class ScalarImpl implements Scalar,Cloneable,Comparable<Scalar> {
     @Override
     protected Scalar clone()
     {
-        Scalar result = null;
+        Scalar result = new ScalarImpl();
         System.out.println("객체 복제됨");
         return result;
     }

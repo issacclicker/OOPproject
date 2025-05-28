@@ -2,10 +2,7 @@ package tensor;
 
 public class Tensors {
     //스칼라 연산
-    public static Scalar addScalarEach(Scalar A, Scalar B)
-    {
-        return ScalarImpl.addScalarEach(A, B);
-    }
+    public static Scalar addScalarEach(Scalar A, Scalar B) { return ScalarImpl.addScalarEach(A, B); }
 
     public static Scalar multiplyScalarEach(Scalar A, Scalar B)
     {

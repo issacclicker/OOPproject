@@ -3,6 +3,13 @@ package tensor;
 class VectorImpl implements Vector,Cloneable {
     //벡터의 자료구조
     java.util.Vector<Scalar> vectorValues;
+    private int dimension = 0;
+
+    //temp
+    VectorImpl()
+    {
+
+    }
 
     //3. 지정한 하나의 값을 모든 요소의 값으로 하는 n차원 벡터 생성
     VectorImpl(Scalar val, int n)
@@ -29,7 +36,7 @@ class VectorImpl implements Vector,Cloneable {
 
     //11v. 특정 위치의 요소를 조회
     public Scalar getAt(int index){
-        Scalar result = null;
+        Scalar result = new ScalarImpl();
         return result;
     };
 
@@ -62,7 +69,7 @@ class VectorImpl implements Vector,Cloneable {
     @Override
     protected Vector clone()
     {
-        return null;
+        return new VectorImpl();
     }
 
     //20 다른 벡터와 덧셈

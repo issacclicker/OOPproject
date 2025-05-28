@@ -15,6 +15,9 @@ public interface Scalar {
     @Override
     boolean equals(Object o);
 
+    //16 대 소 비교
+    int compareWith(Scalar A);
+
     //17s 객체 복제(Impl에서 override)
     Scalar cloneSelf();
 

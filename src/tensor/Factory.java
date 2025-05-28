@@ -8,6 +8,7 @@ public class Factory {
         return new ScalarImpl(value);
     }
 
+    public static Scalar getScalar(int i, int j) { return new ScalarImpl(i,j); }
     //벡터 생성
     public static Vector getVector(Scalar val, int n)
     {

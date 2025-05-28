@@ -8,6 +8,12 @@ class MatrixImpl implements Matrix {
     private int rows;
     private int cols;
 
+    // temp
+    MatrixImpl()
+    {
+
+    }
+
     // Matrix 인터페이스 메서드들
     public void setMatrixAt(int i, int j, Scalar val) {
         System.out.println("setMatrixAt 호출 성공");
