@@ -10,14 +10,14 @@ public class Test {
 
             // 01. 스칼라1 지정 생성(지정값 : 3)
             Scalar scalar1 = Factory.getScalar("3");
-            System.out.println("스칼라1(값 : 3) 생성 (01)");
+            System.out.println("스칼라1 생성 (01)");
 
             // 01. 스칼라2 지정 생성(지정값 : 4)
             Scalar scalar2 = Factory.getScalar("4");
-            System.out.println("스칼라2(값 : 4) 생성 (01)");
+            System.out.println("스칼라2 생성 (01)");
 
             // 02. 스칼라3 랜덤 생성(1~9중 랜덤값)
-            int scalarRandomValue1 = 1, scalarRandomValue2 = 9;
+            int scalarRandomValue1 = (int)(Math.random() * 9) + 1, scalarRandomValue2 = (int)(Math.random() * 9) + 1;
             Scalar scalar3 = Factory.getScalar(scalarRandomValue1, scalarRandomValue2);
             System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 (02)");
 
@@ -67,7 +67,7 @@ public class Test {
             // 05. 벡터1 1차원 배열로 3차원 벡터 생성(값: 1, 2, 3)
             int[] arr1 = {1, 2, 3};
             Vector vector1 = Factory.getVector(arr1, 3);
-            System.out.println("벡터1 1차원 배열로 3차원 벡터 생성(값: 1, 2, 3) (05)");
+            System.out.println("벡터1 1차원 배열로 3차원 벡터 생성 (05)");
 
             // 03. 벡터2 0을 요소로 하는 2차원 벡터 생성
             Scalar zero = Factory.getScalar("0");
@@ -82,29 +82,30 @@ public class Test {
 
             // 11. 벡터1 0번째 인덱스 요소 조회
             Scalar element0 = vector1.getAt(0);
-            System.out.println("벡터1 0번째 인덱스 요소 조회: " + element0.getScalar() + " (예상값: 1) (11)");
-
+            System.out.println("벡터1 0번째 인덱스 요소 조회: " + element0.getScalar() + " (11)");
 
             // 13. 벡터1 크기 정보(차원) 조회
             int vector1Size = vector1.size();
-            System.out.println("벡터1 크기 정보 조회: " + vector1Size + " (예상값: 3) (13)");
+            System.out.println("벡터1 크기 정보 조회: " + vector1Size + " (13)");
 
-            // 26, 27번
+            // 26. 벡터1 벡터2 덧셈
+            Vector tempVector = Tensors.addVectorEach(vector1, vector2);
+            System.out.println("벡터1에 벡터2 더한 결과: " + tempVector + " (26)");
 
+            //27. 벡터1 벡터2 곱셈
+            // Vector tempVector2 = Tensors.multiplyVectorScalar(vector1, vector2);
 
             // 20. 벡터1에 벡터3 더해서 저장 (크기가 같은 벡터끼리만 가능)
-            Vector tempVector1 = vector1.cloneSelf();
             try {
-                tempVector1.addVector(vector3);
-                System.out.println("벡터1에 벡터3 더해서 저장 완료 (20)");
+                vector1.addVector(vector3);
+                System.out.println("벡터1에 벡터3 더해서 저장 완료 -> " + vector3 + " (20)");
             } catch (Exception e) {
                 System.out.println("벡터1에 벡터3 더하기 실패 (크기 불일치): " + e.getMessage());
             }
 
             // 21. 벡터2에 스칼라2 곱해서 저장
-            Vector tempVector2 = vector2.cloneSelf();
-            tempVector2.multiplyScalar(scalar2);
-            System.out.println("벡터2에 스칼라2 곱해서 저장 완료 (21)");
+            vector2.multiplyScalar(scalar2);
+            System.out.println("벡터2에 스칼라2 곱해서 저장 완료 -> " + vector2 + " (21)");
 
             System.out.println();
 
