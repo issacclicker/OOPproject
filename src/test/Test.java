@@ -10,16 +10,18 @@ public class Test {
             System.out.println("[1] 스칼라 생성 및 연산");
 
             // 01. 스칼라1 지정 생성(지정값 : 3)
-            Scalar scalar1 = Factory.getScalar("3");
+            String scalar1_value = "3"; // 사용자 지정 값
+            Scalar scalar1 = Factory.getScalar(scalar1_value);
             System.out.println("스칼라1 생성 (01)");
 
             // 01. 스칼라2 지정 생성(지정값 : 4)
-            Scalar scalar2 = Factory.getScalar("4");
+            String scalar2_value = "4"; // 사용자 지정 값
+            Scalar scalar2 = Factory.getScalar(scalar2_value);
             System.out.println("스칼라2 생성 (01)");
 
             // 02. 스칼라3 랜덤 생성(1~9중 랜덤값)
-            int scalarRandomValue1 = (int)(Math.random() * 9) + 1, scalarRandomValue2 = (int)(Math.random() * 9) + 1;
-            Scalar scalar3 = Factory.getScalar(scalarRandomValue1, scalarRandomValue2);
+            int randMin = 1, randMax = 10; // 사용자 지정 값
+            Scalar scalar3 = Factory.getScalar(randMin, randMax);
             System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 (02)");
 
             // 17. 스칼라1 복제
@@ -27,9 +29,8 @@ public class Test {
             System.out.println("스칼라1-1에 스칼라1 복제(17) -> " + scalar1_1);
 
             // 16. 스칼라1 스칼라2 비교
-            //int comparedvalue = scalar1.compareWith(scalar2);
-            //compareTo 호출이 불가하여 compareWith 대체해놓음.
-            //System.out.println("스칼라1과 스칼라2의 비교 결과: " + comparedvalue + " (16)");
+            int comparedvalue = scalar1.compareWith(scalar2);
+            System.out.println("스칼라1과 스칼라2의 비교 결과: " + comparedvalue + " (16)");
 
             // 15. 스칼라1 동등성 비교
             boolean isEqual = scalar1.equals(scalar2);
@@ -120,15 +121,15 @@ public class Test {
             // 31. 벡터1을 행렬로 전환 (1*3 행렬)
             Matrix matrixFromVector2 = vector1.getColumn(0);
             System.out.println("벡터1을 행렬로 전환 (1*3 행렬) (31)");
-
             System.out.println();
 
             // [4] 행렬 생성 및 연산
             System.out.println("[4] 행렬 생성 및 연산");
 
             // 09. 행렬1 2차원 배열로 생성(값 : {1 2} {3 4})
-            int[][] arr2d = {{1, 2}, {3, 4}};
-            Matrix matrix1 = Factory.getMatrix(arr2d, 2, 2);
+            int[][] matrix1_array = {{1, 2}, {3, 4}}; // 사용자 지정 값
+            int row = 2, col = 2 ; //사용자 지정 값
+            Matrix matrix1 = Factory.getMatrix(matrix1_array, row , col);
             System.out.println("행렬1 2차원 배열로 생성(값: {1 2} {3 4}) (09)");
 
             // 08. 행렬2 csv 파일로 생성 (파일이 있다고 가정)
@@ -138,14 +139,15 @@ public class Test {
 
             // 06. 행렬3 0으로만 구성된 2*2 행렬 생성
             int row = 2, col = 2; //사용자 설정 값
-            Scalar zeroScalar = Factory.getScalar("0");
+            String matrix3_value = "0"; //사용자 설정 값
+            Scalar zeroScalar = Factory.getScalar(matrix3_value);
             Matrix matrix3 = Factory.getMatrix(zeroScalar, row, col);
             System.out.printf("행렬3 0으로만 구성된 %d*%d 행렬 생성 (06)\n", row, col);
 
             // 07. 행렬4 랜덤(1~9) 2*2 생성
             int randMin = 1, randMax = 10, row = 2, col = 2;  //사용자 설정 값
             Matrix matrix4 = Factory.getMatrix(randMin, randMax, row, col);
-            System.out.printf("행렬4 랜덤(1~9) %d*%d 생성 (07)\n", row, col);
+            System.out.printf("행렬4 랜덤(%d~%d) %d*%d 생성 (07)\n", randMin, randMax-1, row, col);
 
             // 28. 행렬1과 행렬4 덧셈
             try {
@@ -172,7 +174,7 @@ public class Test {
             // 23. 행렬3에 행렬1 곱해서 저장
             String multiplyDirection = "right";//사용자 지정 값
             try {
-                matrix3.multiplyMatrix(matrix1, multiplyDirection); // m * 기존행렬
+                matrix3.multiplyMatrix(matrix1, multiplyDirection); //m * 기존행렬
                 System.out.println("행렬3에 행렬1 곱해서 저장 완료 (23)");
             } catch (Exception e) {
                 System.out.println("행렬3에 행렬1 곱하기 실패: " + e.getMessage());
@@ -194,7 +196,7 @@ public class Test {
             // 45. 행렬1 1행과 2행 교환
             int rows = matrix1.size("row");
             int cols = matrix1.size("column");
-            Matrix matrix1Copy = Factory.getMatrix(arr2d, rows, cols); // 새로 생성
+            Matrix matrix1Copy = Factory.getMatrix(matrix1_array, rows, cols); // 새로 생성
             matrix1Copy.swapRow(0, 1); // 0-based 인덱스 사용
             System.out.println("행렬1 1행과 2행 교환 완료 (45)");
 
@@ -231,10 +233,10 @@ public class Test {
 
             // 33. 행렬끼리 세로로 합치기
             try {
-                //matrixFromRow1.connectMatrix(matrixFromRow2, "vertical");
+                matrixFromRow1.connectMatrix(matrixFromRow2, "vertical");
                 System.out.println("행렬끼리 세로로 합치기 완료 (33)");
             } catch (Exception e) {
-                System.out.println("세로 합치기 실패: " + e.getMessage());
+                System.out.println("세로 합치기 실패: (33)" + e.getMessage());
             }
 
             // 35. 행렬1의 열 벡터 형태로 추출
@@ -252,7 +254,7 @@ public class Test {
                 matrixFromCol1.connectMatrix(matrixFromCol2, "horizontal");
                 System.out.println("행렬끼리 가로로 합치기 완료 (32)");
             } catch (Exception e) {
-                System.out.println("가로 합치기 실패: " + e.getMessage());
+                System.out.println("가로 합치기 실패: (32)" + e.getMessage());
             }
 
             System.out.println();
