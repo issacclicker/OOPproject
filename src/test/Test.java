@@ -175,23 +175,37 @@ public class Test {
             int[][] matrix1_array = {{1, 2}, {3, 4}}; // 사용자 지정 값
             int row = 2, col = 2 ; //사용자 지정 값
             Matrix matrix1 = Factory.getMatrix(matrix1_array, row , col);
-            System.out.println("행렬1 2차원 배열로 생성(값: {1 2} {3 4}) (09)");
+            if(("1 2\n3 4".equals(matrix1.toString()))){
+                System.out.println("행렬1 2차원 배열로 생성 성공 :" +  matrix1 + "(09)");
+            } else {
+                System.out.println("행렬1 2차원 배열로 생성 실패 (09)");
+            }
 
             // 08. 행렬2 csv 파일로 생성 (파일이 있다고 가정)
             File csvFile = new File("matrix_data.csv");
             Matrix matrix2 = Factory.getMatrix(csvFile, 3, 3);
-            System.out.println("행렬2 csv 파일로 생성 (08)");
+            if(("5 6 7\n8 9 10\n11 12 13".equals(matrix2.toString()))){
+                System.out.println("행렬2 csv파일로 생성 성공 :" +  matrix2 + "(08)");
+            } else {
+                System.out.println("행렬2 csv파일로 생성 실패 (08)");
+            }
+
 
             // 06. 행렬3 0으로만 구성된 2*2 행렬 생성
             int row = 2, col = 2; //사용자 설정 값
             String matrix3_value = "0"; //사용자 설정 값
             Scalar zeroScalar = Factory.getScalar(matrix3_value);
             Matrix matrix3 = Factory.getMatrix(zeroScalar, row, col);
-            System.out.printf("행렬3 0으로만 구성된 %d*%d 행렬 생성 (06)\n", row, col);
+        if(("0 0\n0 0".equals(matrix3.toString()))){
+            System.out.printf("행렬3 %s으로만 구성된 %d*%d 행렬 생성 성공 :" +  matrix3 + "(06)" ,matrix3_value, row, col);
+        } else {
+            System.out.printf("행렬3 %s으로만 구성된 %d*%d 행렬 생성 실패 (06)",matrix3_value, row, col);
+        }
 
             // 07. 행렬4 랜덤(1~9) 2*2 생성
             int randMin = 1, randMax = 10, row = 2, col = 2;  //사용자 설정 값
             Matrix matrix4 = Factory.getMatrix(randMin, randMax, row, col);
+            if()
             System.out.printf("행렬4 랜덤(%d~%d) %d*%d 생성 (07)\n", randMin, randMax-1, row, col);
 
             // 28. 행렬1과 행렬4 덧셈
@@ -204,33 +218,50 @@ public class Test {
             // 29. 행렬1과 행렬3 곱셈
             try {
                 Matrix result_1multi3 = Tensors.multiplyMatrixEach(matrix1, matrix3);
-                System.out.println("행렬1과 행렬3 곱셈 성공 (29)");
+                if(("0 0\n0 0".equals(result_1multi3.toString()))){
+                    System.out.println("행렬1과 행렬3 곱셈 성공 : "+  result_1multi3 +"(29)");
+                } else {
+                    System.out.println("행렬1과 행렬3 곱셈 실패 (29)");
+                }
             } catch (Exception e) {
                 System.out.println("행렬1과 행렬3 곱하기 실패: " + e.getMessage());
             }
+
             // 22. 행렬1에 행렬3 더해서 저장
             try {
                 matrix1.addMatrix(matrix3);
-                System.out.println("행렬1에 행렬3 더해서 저장 완료 (22)");
+                if(("1 2\n3 4".equals(matrix1.toString()))){
+                    System.out.println("행렬1에 행렬3 더해서 저장 성공 : "+  matrix1 +"(22)");
+                } else {
+                    System.out.println("행렬1과 행렬3 더해서 저장 실패 (22)");
+                }
             } catch (Exception e) {
-                System.out.println("행렬1에 행렬3 더하기 실패: " + e.getMessage());
+                System.out.println("행렬1에 행렬3 더해서 저장 실패: " + e.getMessage());
             }
 
             // 23. 행렬3에 행렬1 곱해서 저장
             String multiplyDirection = "right";//사용자 지정 값
             try {
                 matrix3.multiplyMatrix(matrix1, multiplyDirection); //m * 기존행렬
-                System.out.println("행렬3에 행렬1 곱해서 저장 완료 (23)");
+                if(("0 0\n0 0".equals(matrix3.toString()))){
+                    System.out.println("행렬3에 행렬1 곱해서 저장 성공 : "+  matrix3 +"(23)");
+                } else {
+                    System.out.println("행렬3에 행렬1 곱해서 저장 실패 (23)");
+                }
             } catch (Exception e) {
-                System.out.println("행렬3에 행렬1 곱하기 실패: " + e.getMessage());
+                System.out.println("행렬3에 행렬1 곱해서 저장 실패: " + e.getMessage());
             }
 
             // 39. 행렬3 대각 요소의 합 구하기
             try {
                 Scalar trace = matrix3.getTrace();
-                System.out.println("행렬3 대각 요소의 합: " + trace.getScalar() + " (39)");
+                if("0".equals(trace.toString())) {
+                    System.out.println("행렬3 대각 요소의 합 구하기 성공: " + trace.getScalar() + " (39)");
+                } else {
+                    System.out.println("행렬3 대각 요소의 합 구하기 실패 (39)");
+                }
             } catch (Exception e) {
-                System.out.println("행렬3 대각합 구하기 실패: " + e.getMessage());
+                System.out.println("행렬3 대각합 구하기 실패 (39): " + e.getMessage());
             }
 
             System.out.println();
@@ -239,23 +270,34 @@ public class Test {
             System.out.println("[5] 행렬 행/열 조작");
 
             // 45. 행렬1 1행과 2행 교환
-            int rows = matrix1.size("row");
-            int cols = matrix1.size("column");
-            Matrix matrix1Copy = Factory.getMatrix(matrix1_array, rows, cols); // 새로 생성
-            matrix1Copy.swapRow(0, 1); // 0-based 인덱스 사용
-            System.out.println("행렬1 1행과 2행 교환 완료 (45)");
+            matrix1.swapRow(0, 1); // 0-based 인덱스 사용
+            if("3 4\n1 2".equals(matrix1.toString())) {
+                System.out.println("행렬1 1행과 2행 교환 성공 (45)");
+            } else {
+                System.out.println("행렬1 1행과 2행 교환 실패(45)");
+            }
 
             // 46. 행렬1 1열과 2열 교환
-            matrix1Copy.swapColumn(0, 1);
-            System.out.println("행렬1 1열과 2열 교환 완료 (46)");
-
+            matrix1.swapColumn(0, 1);
+            if("4 3\n2 1".equals(matrix1.toString())) {
+                System.out.println("행렬1 1열과 2열 교환 성공 (46)");
+            } else {
+                System.out.println("행렬1 1열과 2열 교환 실패 (46)");
+            }
             // 38. 행렬1 전치행렬 생성
             Matrix transpose = matrix1.getTranspose();
-            System.out.println("행렬1 전치행렬 생성 완료 (38)");
-
+            if("1 3\n2 4".equals(transpose.toString())) {
+                System.out.println("행렬1 전치행렬 생성 완료"+transpose+"(38)");
+            }else {
+                System.out.println("행렬1 전치행렬 생성 실패 (38)");
+            }
             // 15m. 행렬1과 행렬1전치행렬 동등성 판단
             boolean isTransposeEqual = matrix1.equals(transpose);
-            System.out.println("행렬1과 전치행렬 동등성: " + isTransposeEqual + " (15m)");
+            if(false == isTransposeEqual) {
+                System.out.println("행렬1과 전치행렬 동등성 판단 성공: " + isTransposeEqual + " (15m)");
+            } else {
+                System.out.println("행렬1과 전치행렬 동등성 판단 실패 (15m)");
+            }
 
             System.out.println();
 
