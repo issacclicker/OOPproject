@@ -3,6 +3,8 @@ package test;
 import java.io.File;
 import tensor.*;
 
+import static java.lang.Integer.*;
+
 
 public class Test {
     public static void main(String[] args) {
@@ -12,29 +14,52 @@ public class Test {
             // 01. 스칼라1 지정 생성(지정값 : 3)
             String scalar1_value = "3"; // 사용자 지정 값
             Scalar scalar1 = Factory.getScalar(scalar1_value);
-            System.out.println("스칼라1 생성 (01)");
+            if("3".equals(scalar1.toString())) {
+                System.out.println("스칼라1 생성 성공 (01)");
+            } else { System.out.println("스칼라1 생성 실패(01)"); }
 
             // 01. 스칼라2 지정 생성(지정값 : 4)
             String scalar2_value = "4"; // 사용자 지정 값
             Scalar scalar2 = Factory.getScalar(scalar2_value);
-            System.out.println("스칼라2 생성 (01)");
+            if("4".equals(scalar2.toString())) {
+            System.out.println("스칼라2 생성 성공 (02)");
+            } else { System.out.println("스칼라2 생성 실패(02)"); }
 
             // 02. 스칼라3 랜덤 생성(1~9중 랜덤값)
             int randMin = 1, randMax = 10; // 사용자 지정 값
             Scalar scalar3 = Factory.getScalar(randMin, randMax);
             System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 (02)");
+            if(parseInt(String.valueOf(scalar3)) >= 1 && parseInt(String.valueOf(scalar3)) < 10){
+                System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 성공 (02)");
+            } else {
+                System.out.println("스칼라3 생성 실패 (02");
+            }
 
             // 17. 스칼라1 복제
             Scalar scalar1_1 = scalar1.cloneSelf();
-            System.out.println("스칼라1-1에 스칼라1 복제(17) -> " + scalar1_1);
+            if("3".equals(scalar1_1.toString())) {
+                System.out.println("스칼라1-1에 스칼라1 복제 성공(17) -> " + scalar1_1);
+            } else {
+                System.out.println("스칼라1-1에 스칼라1 복제 실패(17) ");
+            }
+
 
             // 16. 스칼라1 스칼라2 비교
             int comparedvalue = scalar1.compareWith(scalar2);
             System.out.println("스칼라1과 스칼라2의 비교 결과: " + comparedvalue + " (16)");
+            if(comparedvalue<0){
+                System.out.println("스칼라1과 스칼라2의 비교 결과 (성공): " + comparedvalue + " (16)");
+            } else {
+                System.out.println("스칼라1과 스칼라2 비교 실패 (16)");
+            }
 
-            // 15. 스칼라1 동등성 비교
+            // 15. 스칼라1 스칼라2 동등성 비교
             boolean isEqual = scalar1.equals(scalar2);
-            System.out.println("스칼라1과 스칼라2 동등성 비교 결과: " + isEqual + " (15)");
+            if(false == isEqual) {
+                System.out.println("스칼라1과 스칼라2 동등성 비교 성공 /결과: " + isEqual + " (15)");
+            } else {
+                System.out.println("스칼라1과 스칼라2 동등성 비교 실패 (15)");
+            }
 
             // 14. 스칼라1 출력
             System.out.println("스칼라1 출력: " + scalar1 + " (14)");
@@ -43,23 +68,43 @@ public class Test {
             System.out.println("스칼라1 값 조회: " + scalar1.getScalar() + " (12)");
             String scalarValue = "5";
             scalar1.setScalar(scalarValue);
-            System.out.println("스칼라1 값을 5로 변경 후 조회: " + scalar1.getScalar() + " (12)");
+            if ("5".equals(scalar1.getScalar().toString())){
+                System.out.println("스칼라1 값을 5로 변경 후 조회 성공: " + scalar1.getScalar() + " (12)");
+            } else {
+                System.out.println("스칼라1 값을 5로 변경 후 조회 실패 (12)");
+            }
 
             // 24. 스칼라1 스칼라2 덧셈
             Scalar tempscalar = Tensors.addScalarEach(scalar1, scalar2);
-            System.out.println(tempscalar + " (24)"); //scalar1에 scalar2의 값을 더한 것을 출력함.
+            if("9".equals(tempscalar.toString()){
+            System.out.println("스칼라1 + 스칼라2 성공 :"tempscalar + " (24)"); //scalar1에 scalar2의 값을 더한 것을 출력함.
+            } else {
+            System.out.println("스칼라1 + 스칼라2 실패 (24)");
+            }
 
             // 25. 스칼라1 스칼라2 곱셈
             Scalar tempscalar2 = Tensors.multiplyScalarEach(scalar1, scalar2);
-            System.out.println(tempscalar2 + " (25)"); //scalar1에 scalar2의 값을 곱한 것을 출력함.
+            if("20".equals(tempscalar2.toString())) {
+                System.out.println("스칼라1 * 스칼라2 성공" + tempscalar2 + " (25)"); //scalar1에 scalar2의 값을 곱한 것을 출력함.
+            } else {
+                System.out.println("스칼라1 * 스칼라2 실패 (25)");
+            }
 
             // 18. 스칼라1에 스칼라2 더해서 저장
             scalar1.addScalar(scalar2);
-            System.out.println("스칼라1에 스칼라2 더한 결과: " + scalar1 + " (18)");
+            if ("9".equals(scalar1.toString())) {
+                System.out.println("스칼라1에 스칼라2 더해서 저장 성공 : " + scalar1 + " (18)");
+            } else {
+                System.out.println("스칼라1에 스칼라2 더해서 저장 실패 (18)");
+            }
 
             // 19. 스칼라2에 스칼라3 곱해서 저장
             scalar2.multiplyScalar(scalar3);
-            System.out.println("스칼라2에 스칼라3 곱한 결과: " + scalar3 + " (19)");
+        if(parseInt(String.valueOf(scalar2)) >= 4 && parseInt(String.valueOf(scalar3)) < 40){
+            System.out.println("스칼라2에 스칼라3 곱해서 저장 성공: " + scalar3.getScalar() + " (19)");
+        } else {
+            System.out.println("스칼라2에 스칼라3 곱해서 저장 실패 (19)");
+        }
 
             System.out.println();
 
