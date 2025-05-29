@@ -3,6 +3,7 @@ package test;
 import java.io.File;
 import tensor.*;
 
+
 public class Test {
     public static void main(String[] args) {
             // [1] 스칼라 생성 및 연산
@@ -134,35 +135,44 @@ public class Test {
             File csvFile = new File("matrix_data.csv");
             Matrix matrix2 = Factory.getMatrix(csvFile, 3, 3);
             System.out.println("행렬2 csv 파일로 생성 (08)");
-            // CSV 파일 대신 직접 생성
-            int[][] csvData = {{5, 6, 7}, {8, 9, 10}, {11, 12, 13}};
-            Matrix matrix3 = Factory.getMatrix(csvData, 3, 3);
-            System.out.println("행렬2 배열로 생성(값: CSV 데이터 대신) (08)");
 
             // 06. 행렬3 0으로만 구성된 2*2 행렬 생성
+            int row = 2, col = 2; //사용자 설정 값
             Scalar zeroScalar = Factory.getScalar("0");
-            Matrix matrix4 = Factory.getMatrix(zeroScalar, 2, 2);
-            System.out.println("행렬3 0으로만 구성된 2*2 행렬 생성 (06)");
+            Matrix matrix3 = Factory.getMatrix(zeroScalar, row, col);
+            System.out.printf("행렬3 0으로만 구성된 %d*%d 행렬 생성 (06)\n", row, col);
 
             // 07. 행렬4 랜덤(1~9) 2*2 생성
-            int randMin = 1, randMax = 10;
-            Matrix matrix5 = Factory.getMatrix(randMin, randMax, 2, 2);
-            System.out.println("행렬4 랜덤(1~9) 2*2 생성 (07)");
+            int randMin = 1, randMax = 10, row = 2, col = 2;  //사용자 설정 값
+            Matrix matrix4 = Factory.getMatrix(randMin, randMax, row, col);
+            System.out.printf("행렬4 랜덤(1~9) %d*%d 생성 (07)\n", row, col);
 
-            // 28, 29번은 interface에 없어서 22, 23번으로 대체
-            // 22. 행렬1에 행렬3 더해서 저장
-            Matrix tempMatrix1 = matrix1; // cloneSelf가 없어서 원본 사용
+            // 28. 행렬1과 행렬4 덧셈
             try {
-                tempMatrix1.addMatrix(matrix3);
+                Matrix result_1plus4 = Tensors.addMatrixEach(matrix1, matrix4);
+                System.out.println("행렬1과 행렬4 덧셈 성공 (28)");
+            } catch (Exception e) {
+                System.out.println("행렬1과 행렬4 더하기 실패: " + e.getMessage());
+            }
+            // 29. 행렬1과 행렬3 곱셈
+            try {
+                Matrix result_1multi3 = Tensors.multiplyMatrixEach(matrix1, matrix3);
+                System.out.println("행렬1과 행렬3 곱셈 성공 (29)");
+            } catch (Exception e) {
+                System.out.println("행렬1과 행렬3 곱하기 실패: " + e.getMessage());
+            }
+            // 22. 행렬1에 행렬3 더해서 저장
+            try {
+                matrix1.addMatrix(matrix3);
                 System.out.println("행렬1에 행렬3 더해서 저장 완료 (22)");
             } catch (Exception e) {
                 System.out.println("행렬1에 행렬3 더하기 실패: " + e.getMessage());
             }
 
             // 23. 행렬3에 행렬1 곱해서 저장
-            Matrix tempMatrix3 = matrix3;
+            String multiplyDirection = "right";//사용자 지정 값
             try {
-                tempMatrix3.multiplyMatrix(matrix1, "right"); // m * 기존행렬
+                matrix3.multiplyMatrix(matrix1, multiplyDirection); // m * 기존행렬
                 System.out.println("행렬3에 행렬1 곱해서 저장 완료 (23)");
             } catch (Exception e) {
                 System.out.println("행렬3에 행렬1 곱하기 실패: " + e.getMessage());
@@ -182,7 +192,9 @@ public class Test {
             System.out.println("[5] 행렬 행/열 조작");
 
             // 45. 행렬1 1행과 2행 교환
-            Matrix matrix1Copy = Factory.getMatrix(arr2d, 2, 2); // 새로 생성
+            int rows = matrix1.size("row");
+            int cols = matrix1.size("column");
+            Matrix matrix1Copy = Factory.getMatrix(arr2d, rows, cols); // 새로 생성
             matrix1Copy.swapRow(0, 1); // 0-based 인덱스 사용
             System.out.println("행렬1 1행과 2행 교환 완료 (45)");
 
@@ -353,7 +365,7 @@ public class Test {
                         System.out.println("a11: " + a11.getScalar() + ", a12: " + a12.getScalar());
                         System.out.println("a21: " + a21.getScalar() + ", a22: " + a22.getScalar());
 
-                        // 19. 스칼라끼리 곱셈
+                        // 19. 스칼라끼리 곱셈ㅇ
                         Scalar term1 = a11.cloneSelf();
                         term1.multiplyScalar(a22);
 
