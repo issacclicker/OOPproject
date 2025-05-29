@@ -65,48 +65,223 @@ public class Test {
             // [2] 벡터 생성 및 연산
             System.out.println("[2] 벡터 생성 및 연산");
 
-            // 05. 벡터1 1차원 배열로 3차원 벡터 생성(값: 1, 2, 3)
+            // 05. 벡터1 1차원 배열(arr1)로 3차원 벡터 생성
             int[] arr1 = {1, 2, 3};
-            Vector vector1 = Factory.getVector(arr1, 3);
-            System.out.println("벡터1 1차원 배열로 3차원 벡터 생성 (05)");
+            Vector vector1 = Factory.getVector(arr1);
+            System.out.println("벡터1 1차원 배열로 3차원 벡터 생성 (05) 값 : ");
+            System.out.print(vector1.toString());
+            if("1 2 3".equals(vector1.toString()))
+            {
+                System.out.println("통과.");
+            }
+            else
+            {
+                System.out.println("실패.");
+            }
 
-            // 03. 벡터2 0을 요소로 하는 2차원 벡터 생성
-            Scalar zero = Factory.getScalar("0");
-            Vector vector2 = Factory.getVector(zero, 2);
-            System.out.println("벡터2 0을 요소로 하는 2차원 벡터 생성 (03)");
 
-            // 04. 벡터3 1~9까지 랜덤 요소로 3차원 벡터 생성
-            int rand1 = (int)(Math.random() * 9) + 1;
-            int rand2 = (int)(Math.random() * 9) + 1;
-            Vector vector3 = Factory.getVector(rand1, rand2, 3);
-            System.out.println("벡터3 1~9까지 랜덤 요소로 3차원 벡터 생성 (04)");
+            // 03. 스칼라 va1을 요소로 하는 n차원 벡터 생성
+            Scalar val1 = Factory.getScalar("0");
+            Vector vector2 = Factory.getVector(val1, 2);
+            System.out.println("벡터2 "+val1+"을 요소로 하는 2차원 벡터 생성 (03) 값 : ");
+            System.out.println(vector2.toString());
+            if("0 0".equals(vector2.toString()))
+            {
+                System.out.println("통과.");
+            }
+            else
+            {
+                System.out.println("실패.");
+            }
 
-            // 11. 벡터1 0번째 인덱스 요소 조회
-            Scalar element0 = vector1.getAt(0);
-            System.out.println("벡터1 0번째 인덱스 요소 조회: " + element0.getScalar() + " (11)");
+            // 04. 벡터3 rand1~rand2까지 랜덤 요소로 val2차원 벡터 생성
+            int rand1 = 1;
+            int rand2 = 9;
+            int val2 = 3;
+            Vector vector3 = Factory.getVector(rand1, rand2, val2);
+            System.out.println("벡터3 "+rand1+"~"+rand2+"까지 랜덤 요소로 "+val2+"차원 벡터 생성 (04) 값 : ");
+            System.out.println(vector3.toString());
+            if(vector3.size() == val2) //사이즈 비교
+            {
+                boolean flag=true;
+                for(int i=0;i<val2;i++) //값이 유효한 범위 안인지 비교
+                {
+                    Scalar nowVal = vector3.getAt(i);
+                    if(rand1>Integer.parseInt(nowVal.toString())||rand2<Integer.parseInt(nowVal.toString()))
+                    {
+                        flag=false;
+                        System.out.println("실패.");
+                        break;
+                    }
+                }
+
+                if(flag)
+                {
+                    System.out.println("성공.");
+                }
+            }
+            else
+            {
+                System.out.println("실패.");
+            }
+
+
+            // 11. 벡터1 n번째 인덱스 요소 조회 (예외 상황)
+            int val3 = -1;
+
+            try {
+                Scalar element0 = vector1.getAt(val3);
+                System.out.println("벡터1 0번째 인덱스 요소 조회: " + element0.toString() + " (11)");
+                if(element0.toString().equals("1"))
+                {
+                    System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
+            }
+            catch (IndexOutOfBoundsException e)
+            {
+                System.out.println("인덱스 범위 벗어남.");
+            }
+
+            //11. 벡터1 n번째 인덱스 요소 조회
+            val3 = 0;
+            try {
+                Scalar element0 = vector1.getAt(val3);
+                System.out.println("벡터1 0번째 인덱스 요소 조회: " + element0.toString() + " (11)");
+                if(element0.toString().equals("1"))
+                {
+                   System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
+            }
+            catch (IndexOutOfBoundsException e)
+            {
+                System.out.println("인덱스 범위 벗어남.");
+            }
+
 
             // 13. 벡터1 크기 정보(차원) 조회
             int vector1Size = vector1.size();
             System.out.println("벡터1 크기 정보 조회: " + vector1Size + " (13)");
+            if(vector1Size == arr1.length)
+            {
+                System.out.println("성공.");
+            }
+            else
+            {
+                System.out.println("실패.");
+            }
 
-            // 26. 벡터1 벡터2 덧셈
-            Vector tempVector = Tensors.addVectorEach(vector1, vector2);
-            System.out.println("벡터1에 벡터2 더한 결과: " + tempVector + " (26)");
+            // 26. 벡터1 벡터4 덧셈
+            try
+            {
+                Scalar temp = Factory.getScalar("1");
+                Vector vector4 = Factory.getVector(temp, 3);
+                Vector tempVector = Tensors.addVectorEach(vector1, vector4);
+                System.out.println("벡터1에 벡터4 더한 결과: " + tempVector.toString() + " (26)");
+                if ("2 3 4".equals(tempVector.toString())) {
+                    System.out.println("성공.");
+                } else {
+                    System.out.println("실패.");
+                }
+            }
+            catch (VectorSumSizeMismatch e)
+            {
+                System.out.println("벡터의 사이즈가 맞지 않습니다.");
+            }
 
-            //27. 벡터1 벡터2 곱셈
-            // Vector tempVector2 = Tensors.multiplyVectorScalar(vector1, vector2);
+            // 26. 벡터1 벡터2 덧셈(예외 발생)
+            try
+            {
+                Vector tempVector = Tensors.addVectorEach(vector1, vector2);
+                System.out.println("벡터1에 벡터2 더한 결과: " + tempVector.toString() + " (26)");
+                if ("1 2 3".equals(tempVector.toString())) {
+                    System.out.println("성공.");
+                } else {
+                    System.out.println("실패.");
+                }
+            }
+            catch (VectorSumSizeMismatch e)
+            {
+                System.out.println("벡터의 사이즈가 맞지 않습니다.");
+            }
 
-            // 20. 벡터1에 벡터3 더해서 저장 (크기가 같은 벡터끼리만 가능)
+            //27. 벡터1 스칼라 곱셈
+            try{
+                Scalar tempScalar = Factory.getScalar("1");
+                Vector tempVector2 = Tensors.multiplyVectorScalar(vector1, tempScalar);
+                if ("1 2 3".equals(tempVector2.toString())) {
+                    System.out.println("성공.");
+                } else {
+                    System.out.println("실패.");
+                }
+            }catch(VectorMultiplySizeMismatch e){
+                System.out.println("벡터의 사이즈가 맞지 않습니다.");
+            }
+
+
+            // 20. temp1에 temp2 더해서 저장 (크기가 같은 벡터끼리만 가능)
             try {
-                vector1.addVector(vector3);
-                System.out.println("벡터1에 벡터3 더해서 저장 완료 -> " + vector3 + " (20)");
-            } catch (Exception e) {
-                System.out.println("벡터1에 벡터3 더하기 실패 (크기 불일치): " + e.getMessage());
+                int[] tempValues = {1,2,3}, tempValues2 = {3,2,1};
+                Vector temp1 = Factory.getVector(tempValues);
+                Vector temp2 = Factory.getVector(tempValues2);
+                temp1.addVector(temp2);
+                System.out.println("temp1에 temp2 더해서 저장 완료 -> " + temp1 + " (20)");
+                if("4 4 4".equals(temp1.toString()))
+                {
+                    System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
+            } catch (VectorSumSizeMismatch e) {
+                System.out.println("temp1에 temp2 더하기 실패 (크기 불일치)");
+            }
+
+        // 20. temp1에 temp2 더해서 저장 (크기가 같은 벡터끼리만 가능) (예외 발생)
+            try
+            {
+                int[] tempValues = {1,2,3}, tempValues2 = {3,2};
+                Vector temp1 = Factory.getVector(tempValues);
+                Vector temp2 = Factory.getVector(tempValues2);
+                temp1.addVector(temp2);
+                System.out.println("temp1에 temp2 더해서 저장 완료 -> " + temp1 + " (20)");
+                if("4 4 4".equals(temp1.toString()))
+                {
+                    System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
+            }
+            catch (VectorSumSizeMismatch e) {
+                System.out.println("temp1에 temp2 더하기 실패 (크기 불일치)");
             }
 
             // 21. 벡터2에 스칼라2 곱해서 저장
-            vector2.multiplyScalar(scalar2);
-            System.out.println("벡터2에 스칼라2 곱해서 저장 완료 -> " + vector2 + " (21)");
+            {
+            int[] tempValues = {1,2,3};
+            Scalar temp2 = Factory.getScalar("2");
+            Vector temp1 = Factory.getVector(tempValues);
+            temp1.multiplyScalar(temp2);
+            System.out.println("temp1에 temp2 곱해서 저장 완료 -> " + temp1 + " (21)");
+            if("2 4 6".equals(temp1.toString()))
+            {
+                System.out.println("성공.");
+            }
+            else
+            {
+                System.out.println("실패.");
+            }
+            }
 
             System.out.println();
 

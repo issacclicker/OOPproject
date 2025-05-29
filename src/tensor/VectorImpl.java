@@ -24,7 +24,7 @@ class VectorImpl implements Vector,Cloneable {
     }
 
     //5. 1차원 배열로부터 n-차원 벡터 생성
-    VectorImpl(int[] arr, int n)
+    VectorImpl(int[] arr)
     {
 
     }
