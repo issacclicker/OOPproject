@@ -26,8 +26,8 @@ public class Test {
             } else { System.out.println("스칼라2 생성 실패(02)"); }
 
             // 02. 스칼라3 랜덤 생성(1~9중 랜덤값)
-            int randMin = 1, randMax = 10; // 사용자 지정 값
-            Scalar scalar3 = Factory.getScalar(randMin, randMax);
+            int randMin_s=1,randMax_s=10; // 사용자 지정 값
+            Scalar scalar3 = Factory.getScalar(randMin_s,randMax_s);
             System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 (02)");
             if(parseInt(String.valueOf(scalar3)) >= 1 && parseInt(String.valueOf(scalar3)) < 10){
                 System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 성공 (02)");
@@ -76,8 +76,8 @@ public class Test {
 
             // 24. 스칼라1 스칼라2 덧셈
             Scalar tempscalar = Tensors.addScalarEach(scalar1, scalar2);
-            if("9".equals(tempscalar.toString()){
-            System.out.println("스칼라1 + 스칼라2 성공 :"tempscalar + " (24)"); //scalar1에 scalar2의 값을 더한 것을 출력함.
+            if("9".equals(tempscalar.toString())){
+            System.out.println("스칼라1 + 스칼라2 성공 :" + tempscalar + " (24)"); //scalar1에 scalar2의 값을 더한 것을 출력함.
             } else {
             System.out.println("스칼라1 + 스칼라2 실패 (24)");
             }
@@ -192,10 +192,10 @@ public class Test {
 
 
             // 06. 행렬3 0으로만 구성된 2*2 행렬 생성
-            int row = 2, col = 2; //사용자 설정 값
+            int row3= 2, col3=2;//사용자 설정 값
             String matrix3_value = "0"; //사용자 설정 값
             Scalar zeroScalar = Factory.getScalar(matrix3_value);
-            Matrix matrix3 = Factory.getMatrix(zeroScalar, row, col);
+            Matrix matrix3 = Factory.getMatrix(zeroScalar, row3, col3);
         if(("0 0\n0 0".equals(matrix3.toString()))){
             System.out.printf("행렬3 %s으로만 구성된 %d*%d 행렬 생성 성공 :" +  matrix3 + "(06)" ,matrix3_value, row, col);
         } else {
@@ -203,10 +203,9 @@ public class Test {
         }
 
             // 07. 행렬4 랜덤(1~9) 2*2 생성
-            int randMin = 1, randMax = 10, row = 2, col = 2;  //사용자 설정 값
-            Matrix matrix4 = Factory.getMatrix(randMin, randMax, row, col);
-            if()
-            System.out.printf("행렬4 랜덤(%d~%d) %d*%d 생성 (07)\n", randMin, randMax-1, row, col);
+            int randMin_m=1, randMax_m=10, row4 = 2, col4 = 2;  //사용자 설정 값
+            Matrix matrix4 = Factory.getMatrix(randMin_m,randMax_m,row4, col4);
+            System.out.printf("행렬4 랜덤(%d~%d) %d*%d 생성 (07)\n", randMin_m,randMax_m-1,row4,col4);
 
             // 28. 행렬1과 행렬4 덧셈
             try {
