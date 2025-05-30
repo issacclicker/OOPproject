@@ -14,6 +14,7 @@ public interface Matrix {
     @Override
     boolean equals(Object o);
 
+    Matrix cloneSelf();
 
     //22 다른 행렬과의 덧셈
     void addMatrix(Matrix m);

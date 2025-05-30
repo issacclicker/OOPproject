@@ -28,9 +28,9 @@ public interface Vector {
     void multiplyScalar(Scalar val);
 
     //30 n-차원 벡터 객체를 자신으로 부터 n*1 행렬을 생성하여 반환
-    Matrix getRow();
+    Matrix getColumn();
 
     //30 n-차원 벡터 객체를 자신으로 부터 1*n 행렬을 생성하여 반환
-    Matrix getColumn();
+    Matrix getRow();
 
 }
