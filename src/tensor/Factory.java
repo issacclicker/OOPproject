@@ -23,9 +23,9 @@ public class Factory {
         return new VectorImpl(i,j,n);
     }
 
-    public static Vector getVector(int[] arr,int n)
+    public static Vector getVector(int[] arr)
     {
-        return new VectorImpl(arr,n);
+        return new VectorImpl(arr);
     }
 
     //행렬 생성
