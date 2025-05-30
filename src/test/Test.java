@@ -270,6 +270,22 @@ public class Test {
 
             System.out.println();
 
+            // 15v. 벡터1과 벡터2 동등성 비교
+            isEqual = scalar1.equals(scalar2);
+            if(false == isEqual) {
+                System.out.println("벡터1과 벡터2 동등성 비교 성공 /결과: " + isEqual + " (15)");
+            } else {
+                System.out.println("스칼라1과 스칼라2 동등성 비교 실패 (15)");
+            }
+
+            // 17v. 벡터1를 복사해 벡터6에 저장
+            Vector vector6 = vector1.cloneSelf();
+            if("1\n2\n3".equals(vector6.toString())) {
+                System.out.println("벡터6에 벡터1 복제 성공 (17v) -> " + vector6.toString());
+            } else {
+                System.out.println("벡터6에 벡터1 복제 실패 (17v) ");
+            }
+
             // [3] 벡터 -> 행렬 전환
             System.out.println("[3] 벡터 -> 행렬 전환");
 
@@ -330,6 +346,14 @@ public class Test {
                 System.out.println("행렬2 csv파일로 생성 실패 (08)");
             }
 
+            // 14m. 행렬1 출력
+            if(("1 3 \n2 4 ".equals(matrix1.toString()))){
+                System.out.println("행렬1 출력 성공");
+            } else {
+                System.out.println("행렬1 출력 실패");
+            }
+
+            // 17m. 행렬1을 복사해 행렬6에 저장
 
             // 06. 행렬3 0으로만 구성된 2*2 행렬 생성
             int row3= 2, col3=2;//사용자 설정 값
@@ -574,15 +598,14 @@ public class Test {
                 System.out.println("(51) 실패");
             }
 
-            // 14m. 행렬2 출력
-            System.out.println("행렬2 현재 상태 출력 (14m) 값: ");
-            System.out.println(matrix2.toString());
-
             // 13m. 행렬2 크기 정보 조회
             int rows = matrix2.size("row");
             int cols = matrix2.size("column");
-            System.out.println("행렬2 크기: " + rows + "x" + cols + " (13m)");
-
+            if(rows == 3 && cols == 3)
+            {
+                System.out.println("행렬2 크기: " + rows + "x" + cols + " (13m)");
+                System.out.println("통과 (13m)");
+            }
             // 10. 단위행렬 생성
             Matrix identityMatrix = Factory.getMatrix(rows); // (입력값: 바로위에서 알게된 3)
             if("1 0 0 \n0 1 0 \n0 0 1 ".equals(identityMatrix.toString()))
