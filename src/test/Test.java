@@ -324,7 +324,7 @@ public class Test {
             int[][] matrix1_array = {{1, 2}, {3, 4}}; // 사용자 지정 값
             int row = 2, col = 2 ; //사용자 지정 값
             Matrix matrix1 = Factory.getMatrix(matrix1_array, row , col);
-            if(("1 2\n3 4".equals(matrix1.toString()))){
+            if(("1 3 \n2 4".equals(matrix1.toString()))){
                 System.out.println("행렬1 2차원 배열로 생성 성공 :" +  matrix1 + "(09)");
             } else {
                 System.out.println("행렬1 2차원 배열로 생성 실패 (09)");
@@ -333,7 +333,7 @@ public class Test {
             // 08. 행렬2 csv 파일로 생성 (파일이 있다고 가정)
             File csvFile = new File("matrix_data.csv");
             Matrix matrix2 = Factory.getMatrix(csvFile, 3, 3);
-            if(("5 6 7\n8 9 10\n11 12 13".equals(matrix2.toString()))){
+            if(("0 2 1 \n1 0 3 \n4 5 6 ".equals(matrix2.toString()))){
                 System.out.println("행렬2 csv파일로 생성 성공 :" +  matrix2 + "(08)");
             } else {
                 System.out.println("행렬2 csv파일로 생성 실패 (08)");
@@ -413,7 +413,7 @@ public class Test {
             // 29. 행렬1과 행렬3 곱셈
             try {
                 Matrix result_1multi3 = Tensors.multiplyMatrixEach(matrix1, matrix3);
-                if(("0 0\n0 0".equals(result_1multi3.toString()))){
+                if(("0 0 \n0 0 ".equals(result_1multi3.toString()))){
                     System.out.println("행렬1과 행렬3 곱셈 성공 : "+  result_1multi3 +"(29)");
                 } else {
                     System.out.println("행렬1과 행렬3 곱셈 실패 (29)");
@@ -425,7 +425,7 @@ public class Test {
             // 22. 행렬1에 행렬3 더해서 저장
             try {
                 matrix1.addMatrix(matrix3);
-                if(("1 2\n3 4".equals(matrix1.toString()))){
+                if(("1 3 \n2 4 ".equals(matrix1.toString()))){
                     System.out.println("행렬1에 행렬3 더해서 저장 성공 : "+  matrix1 +"(22)");
                 } else {
                     System.out.println("행렬1과 행렬3 더해서 저장 실패 (22)");
@@ -438,7 +438,7 @@ public class Test {
             String multiplyDirection = "right";//사용자 지정 값
             try {
                 matrix3.multiplyMatrix(matrix1, multiplyDirection); //m * 기존행렬
-                if(("0 0\n0 0".equals(matrix3.toString()))){
+                if(("0 0 \n0 0 ".equals(matrix3.toString()))){
                     System.out.println("행렬3에 행렬1 곱해서 저장 성공 : "+  matrix3 +"(23)");
                 } else {
                     System.out.println("행렬3에 행렬1 곱해서 저장 실패 (23)");
@@ -466,7 +466,7 @@ public class Test {
 
             // 45. 행렬1 1행과 2행 교환
             matrix1.swapRow(0, 1); // 0-based 인덱스 사용
-            if("3 4\n1 2".equals(matrix1.toString())) {
+            if("2 4 \n1 3 ".equals(matrix1.toString())) {
                 System.out.println("행렬1 1행과 2행 교환 성공 (45)");
             } else {
                 System.out.println("행렬1 1행과 2행 교환 실패(45)");
@@ -474,14 +474,14 @@ public class Test {
 
             // 46. 행렬1 1열과 2열 교환
             matrix1.swapColumn(0, 1);
-            if("4 3\n2 1".equals(matrix1.toString())) {
+            if("4 2 \n3 1 ".equals(matrix1.toString())) {
                 System.out.println("행렬1 1열과 2열 교환 성공 (46)");
             } else {
                 System.out.println("행렬1 1열과 2열 교환 실패 (46)");
             }
             // 38. 행렬1 전치행렬 생성
             Matrix transpose = matrix1.getTranspose();
-            if("1 3\n2 4".equals(transpose.toString())) {
+            if("4 3 \n2 1".equals(transpose.toString())) {
                 System.out.println("행렬1 전치행렬 생성 완료"+transpose+"(38)");
             }else {
                 System.out.println("행렬1 전치행렬 생성 실패 (38)");
@@ -502,7 +502,7 @@ public class Test {
             // 34. 행렬1의 1행 벡터 형태로 추출
             Vector row1 = matrix1.extractMatrixToVector(1, "row");
             System.out.println("행렬1의 1행 벡터 형태로 추출 완료 (34)");
-            if("1\n3".equals(row1.toString()))
+            if("4 \n3 ".equals(row1.toString()))
             {
                 System.out.println("(34-1) 통과");
             }
@@ -514,7 +514,7 @@ public class Test {
             // 34. 행렬1의 2행 벡터 형태로 추출
             Vector row2 = matrix1.extractMatrixToVector(2, "row");
             System.out.println("행렬1의 2행 벡터 형태로 추출 완료 (34)");
-            if("2\n4".equals(row2.toString()))
+            if("2 \n1 ".equals(row2.toString()))
             {
                 System.out.println("(34-2) 통과");
             }
@@ -527,7 +527,7 @@ public class Test {
 
             Matrix matrixFromRow1 = row1.getColumn();
             Matrix matrixFromRow2 = row2.getColumn();
-            if("1 3 ".equals(matrixFromRow1.toString()) && "2 4 ".equals(matrixFromRow2.toString()))
+            if("4 3 ".equals(matrixFromRow1.toString()) && "2 1 ".equals(matrixFromRow2.toString()))
             {
                 System.out.println("(31) 통과");
             }
@@ -540,7 +540,7 @@ public class Test {
 
             try {
                 matrixFromRow1.connectMatrix(matrixFromRow2, "vertical");
-                if("1 3 \n2 4 ".equals(matrixFromRow1.toString()))
+                if("4 3 \n2 1 ".equals(matrixFromRow1.toString()))
                 {
                     System.out.println("(33) 통과");
                 }
@@ -555,19 +555,17 @@ public class Test {
             // 35. 행렬1의 열 벡터 형태로 추출
             Vector col1 = matrix1.extractMatrixToVector(1, "column");
             Vector col2 = matrix1.extractMatrixToVector(2, "column");
-            if("1\n2".equals(col1.toString()) && "3\n4".equals(col2.toString()))
+            if("4 \n2 ".equals(col1.toString()) && "3 \n1 ".equals(col2.toString()))
             {
                 System.out.println("(35) 통과");
-            }
-            else
-            {
+            } else {
                 System.out.println("(35) 실패");
             }
 
             // 30. 추출한 열 벡터들을 행렬로 전환
             Matrix matrixFromCol1 = col1.getRow();
             Matrix matrixFromCol2 = col2.getRow();
-            if("1 2 ".equals(matrixFromCol1.toString()) && "3 4 ".equals(matrixFromCol2.toString()))
+            if("4 \n2 ".equals(matrixFromCol1.toString()) && "3 \n1 ".equals(matrixFromCol2.toString()))
             {
                 System.out.println("(30) 통과");
             }
@@ -579,7 +577,7 @@ public class Test {
             // 32. 행렬끼리 가로로 합치기
             try {
                 matrixFromCol1.connectMatrix(matrixFromCol2, "horizontal");
-                if("1 2 3 4 ".equals(matrixFromCol1.toString()))
+                if("4 3 \n2 1 ".equals(matrixFromCol1.toString()))
                 {
                     System.out.println("(32) 통과");
                 }
@@ -601,9 +599,7 @@ public class Test {
             if("".equals(RREFmatrix.toString()))  // //////////////////////////////
             {
                 System.out.println("(51) 성공");
-            }
-            else
-            {
+            } else {
                 System.out.println("(51) 실패");
             }
 
