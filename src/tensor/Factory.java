@@ -4,11 +4,14 @@ import java.io.File;
 public class Factory {
     //스칼라 생성
     public static Scalar getScalar(String value)
-    {
+    { //스칼라 값 지정 후 생성
         return new ScalarImpl(value);
     }
 
-    public static Scalar getScalar(int i, int j) { return new ScalarImpl(i,j); }
+    public static Scalar getScalar(int i, int j)
+    { //스칼라 값 랜덤 생성
+        return new ScalarImpl(i,j);
+    }
     //벡터 생성
     public static Vector getVector(Scalar val, int n)
     {
@@ -20,9 +23,9 @@ public class Factory {
         return new VectorImpl(i,j,n);
     }
 
-    public static Vector getVector(int[] arr,int n)
+    public static Vector getVector(int[] arr)
     {
-        return new VectorImpl(arr,n);
+        return new VectorImpl(arr);
     }
 
     //행렬 생성

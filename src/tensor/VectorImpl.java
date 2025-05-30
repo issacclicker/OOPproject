@@ -24,7 +24,7 @@ class VectorImpl implements Vector,Cloneable {
     }
 
     //5. 1차원 배열로부터 n-차원 벡터 생성
-    VectorImpl(int[] arr, int n)
+    VectorImpl(int[] arr)
     {
 
     }
@@ -97,13 +97,13 @@ class VectorImpl implements Vector,Cloneable {
     }
 
     //30 n-차원 벡터 객체를 자신으로 부터 n*1 행렬을 생성하여 반환
-    public Matrix getRow(int index){
+    public Matrix getRow(){
         Matrix result = null;
         return result;
     }
 
     //30 n-차원 벡터 객체를 자신으로 부터 1*n 행렬을 생성하여 반환
-    public Matrix getColumn(int index){
+    public Matrix getColumn(){
         Matrix result = null;
         return result;
     }
