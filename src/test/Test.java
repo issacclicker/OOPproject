@@ -294,7 +294,7 @@ public class Test {
                 int[] arr = {0,1,2};
                 Vector target = Factory.getVector(arr); //입력값
                 Matrix matrixFromVector2 = target.getColumn();
-                System.out.println("벡터1을 행렬로 전환 ("+arr.length+"*3 행렬) (31) 값:");
+                System.out.println("벡터1을 행렬로 전환 (1*"+arr.length+" 행렬) (31) 값:");
                 System.out.println(matrixFromVector2.toString());
                 if("0 1 2 ".equals(matrixFromVector2.toString()))
                 {
@@ -315,7 +315,7 @@ public class Test {
             int[][] matrix1_array = {{1, 2}, {3, 4}}; // 사용자 지정 값
             int row = 2, col = 2 ; //사용자 지정 값
             Matrix matrix1 = Factory.getMatrix(matrix1_array, row , col);
-            if(("1 3 \n2 4".equals(matrix1.toString()))){
+            if(("1 3 \n2 4 ".equals(matrix1.toString()))){
                 System.out.println("행렬1 2차원 배열로 생성 성공 :" +  matrix1 + "(09)");
             } else {
                 System.out.println("행렬1 2차원 배열로 생성 실패 (09)");
@@ -461,7 +461,7 @@ public class Test {
             }
             // 38. 행렬1 전치행렬 생성
             Matrix transpose = matrix1.getTranspose();
-            if("4 3 \n2 1".equals(transpose.toString())) {
+            if("4 3 \n2 1 ".equals(transpose.toString())) {
                 System.out.println("행렬1 전치행렬 생성 완료"+transpose+"(38)");
             }else {
                 System.out.println("행렬1 전치행렬 생성 실패 (38)");
@@ -567,7 +567,7 @@ public class Test {
 
             // 51. 행렬2 RREF 구하기
             Matrix RREFmatrix = matrix2.getRREF();
-            if("".equals(RREFmatrix.toString()))  // //////////////////////////////
+            if("1 0 0 \n0 1 0 \n0 0 1 ".equals(RREFmatrix.toString()))
             {
                 System.out.println("(51) 성공");
             } else {
