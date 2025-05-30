@@ -624,22 +624,62 @@ public class Test {
                 // 40. 정사각 행렬인지
                 boolean isSquare = rrefResult.isSquareMatrix();
                 System.out.println("RREF가 정사각 행렬인지: " + isSquare + " (40)");
+                if(isSquare)
+                {
+                    System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
 
                 // 41. 상삼각 행렬인지
                 boolean isUpper = rrefResult.isUpperTriangularMatrix();
                 System.out.println("RREF가 상삼각 행렬인지: " + isUpper + " (41)");
+                if(isSquare)
+                {
+                    System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
 
                 // 42. 하삼각 행렬인지
                 boolean isLower = rrefResult.isLowerTriangularMatrix();
                 System.out.println("RREF가 하삼각 행렬인지: " + isLower + " (42)");
+                if(isLower)
+                {
+                    System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
 
                 // 43. 단위 행렬인지
                 boolean isIdentity = rrefResult.isIdentityMatrix();
                 System.out.println("RREF가 단위 행렬인지: " + isIdentity + " (43)");
+                if(isIdentity)
+                {
+                    System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
 
                 // 44. 영 행렬인지
                 boolean isZero = rrefResult.isZeroMatrix();
                 System.out.println("RREF가 영 행렬인지: " + isZero + " (44)");
+                if(isZero)
+                {
+                    System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
 
             } catch (Exception e) {
                 System.out.println("RREF 특징 판단 중 오류: " + e.getMessage());
