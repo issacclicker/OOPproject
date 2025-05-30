@@ -1,5 +1,6 @@
 package test;
 
+import java.io.DataInput;
 import java.io.File;
 import java.util.Objects;
 
@@ -58,7 +59,7 @@ public class Test {
 
             // 15. 스칼라1 스칼라2 동등성 비교
             boolean isEqual = scalar1.equals(scalar2);
-            if(false == isEqual) {
+            if(!isEqual) {
                 System.out.println("스칼라1과 스칼라2 동등성 비교 성공 /결과: " + isEqual + " (15)");
             } else {
                 System.out.println("스칼라1과 스칼라2 동등성 비교 실패 (15)");
@@ -272,7 +273,7 @@ public class Test {
 
             // 15v. 벡터1과 벡터2 동등성 비교
             isEqual = scalar1.equals(scalar2);
-            if(false == isEqual) {
+            if(!isEqual) {
                 System.out.println("벡터1과 벡터2 동등성 비교 성공 /결과: " + isEqual + " (15)");
             } else {
                 System.out.println("스칼라1과 스칼라2 동등성 비교 실패 (15)");
@@ -500,7 +501,7 @@ public class Test {
             }
             // 15m. 행렬1과 행렬1전치행렬 동등성 판단
             boolean isTransposeEqual = matrix1.equals(transpose);
-            if(false == isTransposeEqual) {
+            if(!isTransposeEqual) {
                 System.out.println("행렬1과 전치행렬 동등성 판단 성공: " + isTransposeEqual + " (15m)");
             } else {
                 System.out.println("행렬1과 전치행렬 동등성 판단 실패 (15m)");
@@ -787,38 +788,326 @@ public class Test {
             // 예외처리 테스트
             System.out.println("[예외처리 테스트]");
 
-            // 크기가 같지 않은 두 벡터 덧셈 시도
+            //20 크기가 같지 않은 두 벡터 덧셈 시도
             try {
                 vector1.addVector(vector2); // 3차원 + 2차원
                 System.out.println("벡터 덧셈 성공 (예상외)");
             } catch (VectorSumSizeMismatch e) {
-                System.out.println("벡터 덧셈 크기 불일치 예외 발생: " + e.getMessage());
-            }
-            catch (Exception e) {
-                System.out.println("벡터 덧셈 기타 예외: " + e.getMessage());
+                System.out.println("VectorSumSizeMismatch");
             }
 
-            // 크기가 맞지 않는 행렬 곱셈 시도
+            //26 크기가 같지 않은 두 벡터 덧셈 시도
+            try {
+               Tensors.addVectorEach(vector1,vector2); // 3차원 + 2차원
+                  System.out.println("벡터 덧셈 성공 (예상외)");
+            } catch (VectorSumSizeMismatch e) {
+                System.out.println("VectorSumSizeMismatch");
+            }
+
+            //22 크기가 같지 않은 두 행렬 덧셈 시도
+            try
+            {
+                matrix1.addMatrix(matrix2);
+                System.out.println("행렬 덧셈 성공 (예상외)");
+            }
+            catch(MatrixSumSizeMismatch e)
+            {
+                System.out.println("MatrixSumSizeMismatch");
+            }
+
+        //28 크기가 같지 않은 두 행렬 덧셈 시도
+        try
+        {
+            Tensors.addMatrixEach(matrix1,matrix2);
+            System.out.println("행렬 덧셈 성공 (예상외)");
+        }
+        catch(MatrixSumSizeMismatch e)
+        {
+            System.out.println("MatrixSumSizeMismatch");
+        }
+
+
+            //23 크기가 맞지 않는 행렬 곱셈 시도
             try {
                 matrix1.multiplyMatrix(matrix2, "left"); // 2x2 * 3x3
                 System.out.println("행렬 곱셈 성공 (예상외)");
             } catch (MatrixMultiplySizeMismatch e) {
-                System.out.println("행렬 곱셈 크기 불일치 예외 발생: " + e.getMessage());
-            } catch (Exception e) {
-                System.out.println("행렬 곱셈 기타 예외: " + e.getMessage());
+                System.out.println("MatrixMultiplySizeMismatch");
             }
 
-            // 행수가 다른 두 행렬을 가로로 합치기 시도
+        //29 크기가 맞지 않는 행렬 곱셈 시도
+        try {
+            Tensors.multiplyMatrixEach(matrix1,matrix2); // 2x2 * 3x3
+            System.out.println("행렬 곱셈 성공 (예상외)");
+        } catch (MatrixMultiplySizeMismatch e) {
+            System.out.println("MatrixMultiplySizeMismatch");
+        }
+
+            //32 행수가 다른 두 행렬을 가로로 합치기 시도
             try {
                 matrix1.connectMatrix(matrix2, "horizontal"); // 2x2와 3x3
                 System.out.println("가로 합치기 성공 (예상외)");
             } catch (MatrixColumnSizeMismatch e) {
-                System.out.println("가로 합치기 행수 불일치 예외 발생: " + e.getMessage());
-            } catch (Exception e) {
-                System.out.println("가로 합치기 기타 예외: " + e.getMessage());
+                System.out.println("MatrixColumnSizeMismatch");
             }
 
-            System.out.println("\n=== 모든 테스트 완료 ===");
+            //33 열수가 다른 두 행렬을 세로로 합치기 시도
+            try
+            {
+                matrix1.connectMatrix(matrix2, "vertical");
+            }
+            catch (MatrixColumnSizeMismatch e)
+            {
+                System.out.println("MatrixColumnSizeMismatch");
+            }
+
+        //3 벡터, 행렬의 생성에서 차원을 0이하로 설정 후 시도
+        try
+        {
+            Factory.getVector(Factory.getScalar("0"),-1);
+            System.out.println("생성 성공 (예상외)");
+        }
+        catch(DimensionCannotBeZero e)
+        {
+            System.out.println("DimensionCannotBeZero");
+        }
+
+        //4 벡터, 행렬의 생성에서 차원을 0이하로 설정 후 시도
+        try
+        {
+            Factory.getVector(1,9,0);
+            System.out.println("생성 성공 (예상외)");
+        }
+        catch(DimensionCannotBeZero e)
+        {
+            System.out.println("DimensionCannotBeZero");
+        }
+
+            //5 벡터, 행렬의 생성에서 차원을 0이하로 설정 후 시도
+            try
+            {
+                Factory.getVector(null);
+                System.out.println("생성 성공 (예상외)");
+            }
+            catch(DimensionCannotBeZero e)
+            {
+                System.out.println("DimensionCannotBeZero");
+            }
+
+        //6 벡터, 행렬의 생성에서 차원을 0이하로 설정 후 시도
+        try
+        {
+            Factory.getMatrix(Factory.getScalar("0"),-1,-1);
+            System.out.println("생성 성공 (예상외)");
+        }
+        catch(DimensionCannotBeZero e)
+        {
+            System.out.println("DimensionCannotBeZero");
+        }
+
+        //7 벡터, 행렬의 생성에서 차원을 0이하로 설정 후 시도
+        try
+        {
+            Factory.getMatrix(1,9,-1,-1);
+            System.out.println("생성 성공 (예상외)");
+        }
+        catch(DimensionCannotBeZero e)
+        {
+            System.out.println("DimensionCannotBeZero");
+        }
+
+        //8 벡터, 행렬의 생성에서 차원을 0이하로 설정 후 시도
+        try
+        {
+            Factory.getMatrix(csvFile,-1,-1);
+            System.out.println("생성 성공 (예상외)");
+        }
+        catch(DimensionCannotBeZero e)
+        {
+            System.out.println("DimensionCannotBeZero");
+        }
+
+        //9 벡터, 행렬의 생성에서 차원을 0이하로 설정 후 시도
+        try
+        {
+            int[][] arr={{0}};
+            Factory.getMatrix(arr,-1,-1);
+            System.out.println("생성 성공 (예상외)");
+        }
+        catch(DimensionCannotBeZero e)
+        {
+            System.out.println("DimensionCannotBeZero");
+        }
+
+        //10 벡터, 행렬의 생성에서 차원을 0이하로 설정 후 시도
+        try
+        {
+            Factory.getMatrix(0);
+            System.out.println("생성 성공 (예상외)");
+        }
+        catch(DimensionCannotBeZero e)
+        {
+            System.out.println("DimensionCannotBeZero");
+        }
+
+        //11v 유효하지 않은 인덱스의 조회, 접근
+        try
+        {
+            vector1.setAt(Factory.getScalar("0"),-1);
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+        //11v 유효하지 않은 인덱스의 조회, 접근
+        try
+        {
+            vector1.getAt(-1);
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+        //11m 유효하지 않은 인덱스의 조회, 접근
+        try
+        {
+            matrix1.setMatrixAt(-1,-1,Factory.getScalar("0"));
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+        //11m 유효하지 않은 인덱스의 조회, 접근
+        try
+        {
+            matrix1.getMatrixAt(-1,-1);
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+        //34 유효하지 않은 인덱스의 조회, 접근
+        try
+        {
+            matrix1.extractMatrixToVector(-1,"h");
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+        //35 유효하지 않은 인덱스의 조회, 접근
+        try
+        {
+            matrix1.extractMatrixToVector(-1,"z");
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+        //36 유효하지 않은 인덱스의 조회, 접근
+        try
+        {
+            matrix1.extractSubMatrix(-1,-1,-1,-1);
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+        //37 유효하지 않은 인덱스의 조회, 접근
+        try
+        {
+            matrix1.extractSubMatrix(-1,-1);
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+        //45 유효하지 않은 인덱스의 조회, 접근
+        try
+        {
+            matrix1.swapRow(-1,-1);
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+        //46 유효하지 않은 인덱스의 조회, 접근
+        try
+        {
+            matrix1.swapColumn(-1,-1);
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+        //49 유효하지 않은 인덱스의 조회, 접근
+        try
+        {
+            matrix1.addMultipliedRow(-1,-1,Factory.getScalar("0"));
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+        //50 유효하지 않은 인덱스의 조회, 접근
+        try
+        {
+            matrix1.addMultipliedColumn(-1,-1,Factory.getScalar("0"));
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+        //53 행렬식을 얻을 수 없는 행렬에서의 행렬식 얻기 시도
+        try
+        {
+            Matrix matrix10 = Factory.getMatrix(Factory.getScalar("0"),3,4);
+            matrix10.getDeterminant();
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+        //54 비가역행렬에서의 역행렬 얻기 시도
+        try
+        {
+            Matrix matrix10 = Factory.getMatrix(Factory.getScalar("1"),2,2);
+            matrix10.getReversed();
+            System.out.println("접근 성공 (예상외)");
+        }
+        catch (IndexOutOfBounds e)
+        {
+            System.out.println("IndexOutOfBounds");
+        }
+
+
+        System.out.println("\n=== 모든 테스트 완료 ===");
 
         }
 }

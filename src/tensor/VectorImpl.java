@@ -96,13 +96,13 @@ class VectorImpl implements Vector,Cloneable {
         return null;
     }
 
-    //30 n-차원 벡터 객체를 자신으로 부터 n*1 행렬을 생성하여 반환
+    //31 n-차원 벡터 객체를 자신으로 부터 1*n 행렬을 생성하여 반환
     public Matrix getRow(){
         Matrix result = null;
         return result;
     }
 
-    //30 n-차원 벡터 객체를 자신으로 부터 1*n 행렬을 생성하여 반환
+    //30 n-차원 벡터 객체를 자신으로 부터 n*1 행렬을 생성하여 반환
     public Matrix getColumn(){
         Matrix result = null;
         return result;
