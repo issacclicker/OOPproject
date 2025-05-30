@@ -595,6 +595,14 @@ public class Test {
                 // 52. RREF 판단
                 boolean isRREF = matrix2.isRREF();
                 System.out.println("행렬2 " + (isRREF ? "is RREF" : "is not RREF") + " (52)");
+                if(isRREF) //시나리오에 따라 값 변경
+                {
+                    System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
 
             } catch (Exception e) {
                 System.out.println("RREF 연산 중 오류: " + e.getMessage());
@@ -603,12 +611,30 @@ public class Test {
             // 최종 RREF 구하기
             try {
                 Matrix rrefMatrix = matrix2.getRREF();
-                System.out.println("최종 RREF 구하기 완료 (51)");
+                System.out.println("최종 RREF 구하기 완료 (51) 값:");
+                System.out.println(rrefMatrix.toString());
+                if(" ".equals(rrefMatrix.toString()))
+                {
+                    System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
 
                 // 54. 역행렬 구하기
                 Matrix inverse = matrix2.getReversed();
-                System.out.println("역행렬 구하기 완료 (54)");
-
+                System.out.println("역행렬 구하기 완료 (54) 값:");
+                System.out.println(inverse.toString());
+                if(" ".equals(inverse.toString()))
+                {
+                    System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
+                
             } catch (Exception e) {
                 System.out.println("RREF/역행렬 구하기 실패: " + e.getMessage());
             }
