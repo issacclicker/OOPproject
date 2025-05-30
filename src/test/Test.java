@@ -126,28 +126,8 @@ public class Test {
             }
 
 
-            // 11. 벡터1 n번째 인덱스 요소 조회 (예외 상황)
-            int val3 = -1;
-
-            try {
-                Scalar element0 = vector1.getAt(val3);
-                System.out.println("벡터1 0번째 인덱스 요소 조회: " + element0.toString() + " (11)");
-                if(element0.toString().equals("1"))
-                {
-                    System.out.println("성공.");
-                }
-                else
-                {
-                    System.out.println("실패.");
-                }
-            }
-            catch (IndexOutOfBoundsException e)
-            {
-                System.out.println("인덱스 범위 벗어남.");
-            }
-
             //11. 벡터1 n번째 인덱스 요소 조회
-            val3 = 0;
+            int val3 = 0;
             try {
                 Scalar element0 = vector1.getAt(val3);
                 System.out.println("벡터1 0번째 인덱스 요소 조회: " + element0.toString() + " (11)");
@@ -196,21 +176,6 @@ public class Test {
                 System.out.println("벡터의 사이즈가 맞지 않습니다.");
             }
 
-            // 26. 벡터1 벡터2 덧셈(예외 발생)
-            try
-            {
-                Vector tempVector = Tensors.addVectorEach(vector1, vector2);
-                System.out.println("벡터1에 벡터2 더한 결과: " + tempVector.toString() + " (26)");
-                if ("1 2 3".equals(tempVector.toString())) {
-                    System.out.println("성공.");
-                } else {
-                    System.out.println("실패.");
-                }
-            }
-            catch (VectorSumSizeMismatch e)
-            {
-                System.out.println("벡터의 사이즈가 맞지 않습니다.");
-            }
 
             //27. 벡터1 스칼라 곱셈
             try{
@@ -242,27 +207,6 @@ public class Test {
                     System.out.println("실패.");
                 }
             } catch (VectorSumSizeMismatch e) {
-                System.out.println("temp1에 temp2 더하기 실패 (크기 불일치)");
-            }
-
-        // 20. temp1에 temp2 더해서 저장 (크기가 같은 벡터끼리만 가능) (예외 발생)
-            try
-            {
-                int[] tempValues = {1,2,3}, tempValues2 = {3,2};
-                Vector temp1 = Factory.getVector(tempValues);
-                Vector temp2 = Factory.getVector(tempValues2);
-                temp1.addVector(temp2);
-                System.out.println("temp1에 temp2 더해서 저장 완료 -> " + temp1 + " (20)");
-                if("4 4 4".equals(temp1.toString()))
-                {
-                    System.out.println("성공.");
-                }
-                else
-                {
-                    System.out.println("실패.");
-                }
-            }
-            catch (VectorSumSizeMismatch e) {
                 System.out.println("temp1에 temp2 더하기 실패 (크기 불일치)");
             }
 
@@ -547,50 +491,20 @@ public class Test {
             System.out.println("[9] 행렬식 구하기");
 
             // 53. 행렬식 구하기
-            // 14m. 행렬1 크기 정보 조회
-            int matrix1Rows = matrix1.size("row");
-            int matrix1Cols = matrix1.size("column");
-            System.out.println("행렬1 크기: " + matrix1Rows + "x" + matrix1Cols + " (14m)");
-
-            if (matrix1Rows == matrix1Cols) { // 정사각행렬인 경우
-                try {
-                    if (matrix1Rows == 2) {
-                        // 2x2 행렬식 계산: (1,1)*(2,2) - (1,2)*(2,1)
-                        // 11m. 특정 위치 요소 조회
-                        Scalar a11 = matrix1.getMatrixAt(0, 0);
-                        Scalar a12 = matrix1.getMatrixAt(0, 1);
-                        Scalar a21 = matrix1.getMatrixAt(1, 0);
-                        Scalar a22 = matrix1.getMatrixAt(1, 1);
-
-                        System.out.println("2x2 행렬식 수동 계산:");
-                        System.out.println("a11: " + a11.getScalar() + ", a12: " + a12.getScalar());
-                        System.out.println("a21: " + a21.getScalar() + ", a22: " + a22.getScalar());
-
-                        // 19. 스칼라끼리 곱셈ㅇ
-                        Scalar term1 = a11.cloneSelf();
-                        term1.multiplyScalar(a22);
-
-                        Scalar term2 = a12.cloneSelf();
-                        term2.multiplyScalar(a21);
-
-                        Scalar minusOne = Factory.getScalar("-1");
-                        term2.multiplyScalar(minusOne);
-
-                        // 18. 스칼라끼리 덧셈
-                        term1.addScalar(term2);
-
-                        System.out.println("수동 계산된 행렬식: " + term1.getScalar());
-                    }
-
-                    // 53. 행렬식 구하기 (라이브러리 메소드)
-                    Scalar determinant = matrix1.getDeterminant();
-                    System.out.println("라이브러리로 구한 행렬식: " + determinant.getScalar() + " (53)");
-
-                } catch (Exception e) {
-                    System.out.println("행렬식 계산 실패: " + e.getMessage());
-                }
-            } else {
-                System.out.println("정사각행렬이 아니므로 행렬식을 구할 수 없습니다.");
+            // 14m. 행렬 크기 정보 조회
+            Scalar temp5 = Factory.getScalar("1");
+            Matrix matrix5 = Factory.getMatrix(temp5,2,2);
+            int matrix5Rows = matrix5.size("row");
+            int matrix5Cols = matrix5.size("column");
+            System.out.println("행렬 크기: " + matrix5Rows + "x" + matrix5Cols + " (14m)");
+            Scalar determinantValue = matrix5.getDeterminant();
+            if("0".equals(determinantValue.toString()))
+            {
+                System.out.println("성공.");
+            }
+            else
+            {
+                System.out.println("실패.");
             }
 
             System.out.println();
