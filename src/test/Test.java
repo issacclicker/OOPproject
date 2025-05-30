@@ -103,13 +103,13 @@ public class Test {
                 System.out.println("스칼라1에 스칼라2 더해서 저장 실패 (18)");
             }
 
-            // 19. 스칼라2에 스칼라3 곱해서 저장
-            scalar2.multiplyScalar(scalar3);
-        if(parseInt(String.valueOf(scalar2)) >= 4 && parseInt(String.valueOf(scalar3)) < 40){
-            System.out.println("스칼라2에 스칼라3 곱해서 저장 성공: " + scalar3.getScalar() + " (19)");
-        } else {
-            System.out.println("스칼라2에 스칼라3 곱해서 저장 실패 (19)");
-        }
+            // 19. 스칼라2에 스칼라2 곱해서 저장
+            scalar2.multiplyScalar(scalar2);
+            if(parseInt(String.valueOf(scalar2))*parseInt(String.valueOf(scalar2)) == 16){
+                System.out.println("스칼라2에 스칼라2 곱해서 저장 성공: " + scalar2.toString() + " (19)");
+            } else {
+                System.out.println("스칼라2에 스칼라2 곱해서 저장 실패 (19)");
+            }
 
             System.out.println();
 
