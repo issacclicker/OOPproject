@@ -205,14 +205,61 @@ public class Test {
             // 07. 행렬4 랜덤(1~9) 2*2 생성
             int randMin_m=1, randMax_m=10, row4 = 2, col4 = 2;  //사용자 설정 값
             Matrix matrix4 = Factory.getMatrix(randMin_m,randMax_m,row4, col4);
-            System.out.printf("행렬4 랜덤(%d~%d) %d*%d 생성 (07)\n", randMin_m,randMax_m-1,row4,col4);
+
+            if(matrix4.size("row") == row4 && matrix4.size("col") == col4) //사이즈 비교
+            {
+                boolean flag=true;
+                for(int i=0;i<row4;i++){ //값이 유효한 범위 안인지 비교
+                    for(int j=0;j<col4;j++) //값이 유효한 범위 안인지 비교
+                    {
+                        Scalar nowVal = matrix4.getMatrixAt(i, j);
+                        if(randMin_m>Integer.parseInt(nowVal.toString()) || randMax_m<Integer.parseInt(nowVal.toString()))
+                        {
+                            flag=false;
+                            System.out.println("실패.");
+                            break;
+                        }
+                    }
+                }
+
+                if(flag)
+                {
+                    System.out.printf("행렬4 랜덤(%d~%d) %d*%d 생성 성공 (07)\n", randMin_m,randMax_m-1,row4,col4);
+                }
+            } else {
+                System.out.printf("행렬4 랜덤(%d~%d) %d*%d 생성 실패 (07)\n", randMin_m,randMax_m-1,row4,col4);
+            }
 
             // 28. 행렬1과 행렬4 덧셈
             try {
                 Matrix result_1plus4 = Tensors.addMatrixEach(matrix1, matrix4);
-                System.out.println("행렬1과 행렬4 덧셈 성공 (28)");
+                if(result_1plus4.size("row") == row4 && result_1plus4.size("col") == col4) //사이즈 비교
+                {
+                    boolean flag=true;
+                    for(int i=0;i<row4;i++){ //값이 유효한 범위 안인지 비교
+                        for(int j=0;j<col4;j++) //값이 유효한 범위 안인지 비교
+                        {
+                            Scalar nowVal = result_1plus4.getMatrixAt(i, j);
+                            Scalar addVal = matrix1.getMatrixAt(i,j);
+
+                            if(randMin_m+Integer.parseInt(addVal.toString())>Integer.parseInt(nowVal.toString()) || randMax_m+Integer.parseInt(addVal.toString())<Integer.parseInt(nowVal.toString()))
+                            {
+                                flag=false;
+                                System.out.println("실패.");
+                                break;
+                            }
+                        }
+                    }
+
+                    if(flag)
+                    {
+                        System.out.println("행렬1 행렬4 덧셈 성공 (28)");
+                    }
+                } else {
+                    System.out.println("행렬1 행렬4 덧셈 실패 (28)");
+                }
             } catch (Exception e) {
-                System.out.println("행렬1과 행렬4 더하기 실패: " + e.getMessage());
+                System.out.println("행렬1과 행렬4 덧셈 실패(28): " + e.getMessage());
             }
             // 29. 행렬1과 행렬3 곱셈
             try {
