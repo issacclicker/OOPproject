@@ -3,6 +3,8 @@ package test;
 import java.io.File;
 import tensor.*;
 
+import static java.lang.Integer.*;
+
 
 public class Test {
     public static void main(String[] args) {
@@ -10,30 +12,54 @@ public class Test {
             System.out.println("[1] 스칼라 생성 및 연산");
 
             // 01. 스칼라1 지정 생성(지정값 : 3)
-            Scalar scalar1 = Factory.getScalar("3");
-            System.out.println("스칼라1 생성 (01)");
+            String scalar1_value = "3"; // 사용자 지정 값
+            Scalar scalar1 = Factory.getScalar(scalar1_value);
+            if("3".equals(scalar1.toString())) {
+                System.out.println("스칼라1 생성 성공 (01)");
+            } else { System.out.println("스칼라1 생성 실패(01)"); }
 
             // 01. 스칼라2 지정 생성(지정값 : 4)
-            Scalar scalar2 = Factory.getScalar("4");
-            System.out.println("스칼라2 생성 (01)");
+            String scalar2_value = "4"; // 사용자 지정 값
+            Scalar scalar2 = Factory.getScalar(scalar2_value);
+            if("4".equals(scalar2.toString())) {
+            System.out.println("스칼라2 생성 성공 (02)");
+            } else { System.out.println("스칼라2 생성 실패(02)"); }
 
             // 02. 스칼라3 랜덤 생성(1~9중 랜덤값)
-            int scalarRandomValue1 = (int)(Math.random() * 9) + 1, scalarRandomValue2 = (int)(Math.random() * 9) + 1;
-            Scalar scalar3 = Factory.getScalar(scalarRandomValue1, scalarRandomValue2);
+            int randMin_s=1,randMax_s=10; // 사용자 지정 값
+            Scalar scalar3 = Factory.getScalar(randMin_s,randMax_s);
             System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 (02)");
+            if(parseInt(String.valueOf(scalar3)) >= 1 && parseInt(String.valueOf(scalar3)) < 10){
+                System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 성공 (02)");
+            } else {
+                System.out.println("스칼라3 생성 실패 (02");
+            }
 
             // 17. 스칼라1 복제
             Scalar scalar1_1 = scalar1.cloneSelf();
-            System.out.println("스칼라1-1에 스칼라1 복제(17) -> " + scalar1_1);
+            if("3".equals(scalar1_1.toString())) {
+                System.out.println("스칼라1-1에 스칼라1 복제 성공(17) -> " + scalar1_1);
+            } else {
+                System.out.println("스칼라1-1에 스칼라1 복제 실패(17) ");
+            }
+
 
             // 16. 스칼라1 스칼라2 비교
-            //int comparedvalue = scalar1.compareWith(scalar2);
-            //compareTo 호출이 불가하여 compareWith 대체해놓음.
-            //System.out.println("스칼라1과 스칼라2의 비교 결과: " + comparedvalue + " (16)");
+            int comparedvalue = scalar1.compareWith(scalar2);
+            System.out.println("스칼라1과 스칼라2의 비교 결과: " + comparedvalue + " (16)");
+            if(comparedvalue<0){
+                System.out.println("스칼라1과 스칼라2의 비교 결과 (성공): " + comparedvalue + " (16)");
+            } else {
+                System.out.println("스칼라1과 스칼라2 비교 실패 (16)");
+            }
 
-            // 15. 스칼라1 동등성 비교
+            // 15. 스칼라1 스칼라2 동등성 비교
             boolean isEqual = scalar1.equals(scalar2);
-            System.out.println("스칼라1과 스칼라2 동등성 비교 결과: " + isEqual + " (15)");
+            if(false == isEqual) {
+                System.out.println("스칼라1과 스칼라2 동등성 비교 성공 /결과: " + isEqual + " (15)");
+            } else {
+                System.out.println("스칼라1과 스칼라2 동등성 비교 실패 (15)");
+            }
 
             // 14. 스칼라1 출력
             System.out.println("스칼라1 출력: " + scalar1 + " (14)");
@@ -42,23 +68,43 @@ public class Test {
             System.out.println("스칼라1 값 조회: " + scalar1.getScalar() + " (12)");
             String scalarValue = "5";
             scalar1.setScalar(scalarValue);
-            System.out.println("스칼라1 값을 5로 변경 후 조회: " + scalar1.getScalar() + " (12)");
+            if ("5".equals(scalar1.getScalar().toString())){
+                System.out.println("스칼라1 값을 5로 변경 후 조회 성공: " + scalar1.getScalar() + " (12)");
+            } else {
+                System.out.println("스칼라1 값을 5로 변경 후 조회 실패 (12)");
+            }
 
             // 24. 스칼라1 스칼라2 덧셈
             Scalar tempscalar = Tensors.addScalarEach(scalar1, scalar2);
-            System.out.println(tempscalar + " (24)"); //scalar1에 scalar2의 값을 더한 것을 출력함.
+            if("9".equals(tempscalar.toString())){
+            System.out.println("스칼라1 + 스칼라2 성공 :" + tempscalar + " (24)"); //scalar1에 scalar2의 값을 더한 것을 출력함.
+            } else {
+            System.out.println("스칼라1 + 스칼라2 실패 (24)");
+            }
 
             // 25. 스칼라1 스칼라2 곱셈
             Scalar tempscalar2 = Tensors.multiplyScalarEach(scalar1, scalar2);
-            System.out.println(tempscalar2 + " (25)"); //scalar1에 scalar2의 값을 곱한 것을 출력함.
+            if("20".equals(tempscalar2.toString())) {
+                System.out.println("스칼라1 * 스칼라2 성공" + tempscalar2 + " (25)"); //scalar1에 scalar2의 값을 곱한 것을 출력함.
+            } else {
+                System.out.println("스칼라1 * 스칼라2 실패 (25)");
+            }
 
             // 18. 스칼라1에 스칼라2 더해서 저장
             scalar1.addScalar(scalar2);
-            System.out.println("스칼라1에 스칼라2 더한 결과: " + scalar1 + " (18)");
+            if ("9".equals(scalar1.toString())) {
+                System.out.println("스칼라1에 스칼라2 더해서 저장 성공 : " + scalar1 + " (18)");
+            } else {
+                System.out.println("스칼라1에 스칼라2 더해서 저장 실패 (18)");
+            }
 
             // 19. 스칼라2에 스칼라3 곱해서 저장
             scalar2.multiplyScalar(scalar3);
-            System.out.println("스칼라2에 스칼라3 곱한 결과: " + scalar3 + " (19)");
+        if(parseInt(String.valueOf(scalar2)) >= 4 && parseInt(String.valueOf(scalar3)) < 40){
+            System.out.println("스칼라2에 스칼라3 곱해서 저장 성공: " + scalar3.getScalar() + " (19)");
+        } else {
+            System.out.println("스칼라2에 스칼라3 곱해서 저장 실패 (19)");
+        }
 
             System.out.println();
 
@@ -265,70 +311,148 @@ public class Test {
                 }
             }
 
-
             System.out.println();
 
             // [4] 행렬 생성 및 연산
             System.out.println("[4] 행렬 생성 및 연산");
 
             // 09. 행렬1 2차원 배열로 생성(값 : {1 2} {3 4})
-            int[][] arr2d = {{1, 2}, {3, 4}};
-            Matrix matrix1 = Factory.getMatrix(arr2d, 2, 2);
-            System.out.println("행렬1 2차원 배열로 생성(값: {1 2} {3 4}) (09)");
+            int[][] matrix1_array = {{1, 2}, {3, 4}}; // 사용자 지정 값
+            int row = 2, col = 2 ; //사용자 지정 값
+            Matrix matrix1 = Factory.getMatrix(matrix1_array, row , col);
+            if(("1 2\n3 4".equals(matrix1.toString()))){
+                System.out.println("행렬1 2차원 배열로 생성 성공 :" +  matrix1 + "(09)");
+            } else {
+                System.out.println("행렬1 2차원 배열로 생성 실패 (09)");
+            }
 
             // 08. 행렬2 csv 파일로 생성 (파일이 있다고 가정)
             File csvFile = new File("matrix_data.csv");
             Matrix matrix2 = Factory.getMatrix(csvFile, 3, 3);
-            System.out.println("행렬2 csv 파일로 생성 (08)");
+            if(("5 6 7\n8 9 10\n11 12 13".equals(matrix2.toString()))){
+                System.out.println("행렬2 csv파일로 생성 성공 :" +  matrix2 + "(08)");
+            } else {
+                System.out.println("행렬2 csv파일로 생성 실패 (08)");
+            }
+
 
             // 06. 행렬3 0으로만 구성된 2*2 행렬 생성
-            int row = 2, col = 2; //사용자 설정 값
-            Scalar zeroScalar = Factory.getScalar("0");
-            Matrix matrix3 = Factory.getMatrix(zeroScalar, row, col);
-            System.out.printf("행렬3 0으로만 구성된 %d*%d 행렬 생성 (06)\n", row, col);
+            int row3= 2, col3=2;//사용자 설정 값
+            String matrix3_value = "0"; //사용자 설정 값
+            Scalar zeroScalar = Factory.getScalar(matrix3_value);
+            Matrix matrix3 = Factory.getMatrix(zeroScalar, row3, col3);
+        if(("0 0\n0 0".equals(matrix3.toString()))){
+            System.out.printf("행렬3 %s으로만 구성된 %d*%d 행렬 생성 성공 :" +  matrix3 + "(06)" ,matrix3_value, row, col);
+        } else {
+            System.out.printf("행렬3 %s으로만 구성된 %d*%d 행렬 생성 실패 (06)",matrix3_value, row, col);
+        }
 
             // 07. 행렬4 랜덤(1~9) 2*2 생성
-            int randMin = 1, randMax = 10, row = 2, col = 2;  //사용자 설정 값
-            Matrix matrix4 = Factory.getMatrix(randMin, randMax, row, col);
-            System.out.printf("행렬4 랜덤(1~9) %d*%d 생성 (07)\n", row, col);
+            int randMin_m=1, randMax_m=10, row4 = 2, col4 = 2;  //사용자 설정 값
+            Matrix matrix4 = Factory.getMatrix(randMin_m,randMax_m,row4, col4);
+
+            if(matrix4.size("row") == row4 && matrix4.size("col") == col4) //사이즈 비교
+            {
+                boolean flag=true;
+                for(int i=0;i<row4;i++){ //값이 유효한 범위 안인지 비교
+                    for(int j=0;j<col4;j++) //값이 유효한 범위 안인지 비교
+                    {
+                        Scalar nowVal = matrix4.getMatrixAt(i, j);
+                        if(randMin_m>Integer.parseInt(nowVal.toString()) || randMax_m<Integer.parseInt(nowVal.toString()))
+                        {
+                            flag=false;
+                            System.out.println("실패.");
+                            break;
+                        }
+                    }
+                }
+
+                if(flag)
+                {
+                    System.out.printf("행렬4 랜덤(%d~%d) %d*%d 생성 성공 (07)\n", randMin_m,randMax_m-1,row4,col4);
+                }
+            } else {
+                System.out.printf("행렬4 랜덤(%d~%d) %d*%d 생성 실패 (07)\n", randMin_m,randMax_m-1,row4,col4);
+            }
 
             // 28. 행렬1과 행렬4 덧셈
             try {
                 Matrix result_1plus4 = Tensors.addMatrixEach(matrix1, matrix4);
-                System.out.println("행렬1과 행렬4 덧셈 성공 (28)");
+                if(result_1plus4.size("row") == row4 && result_1plus4.size("col") == col4) //사이즈 비교
+                {
+                    boolean flag=true;
+                    for(int i=0;i<row4;i++){ //값이 유효한 범위 안인지 비교
+                        for(int j=0;j<col4;j++) //값이 유효한 범위 안인지 비교
+                        {
+                            Scalar nowVal = result_1plus4.getMatrixAt(i, j);
+                            Scalar addVal = matrix1.getMatrixAt(i,j);
+
+                            if(randMin_m+Integer.parseInt(addVal.toString())>Integer.parseInt(nowVal.toString()) || randMax_m+Integer.parseInt(addVal.toString())<Integer.parseInt(nowVal.toString()))
+                            {
+                                flag=false;
+                                System.out.println("실패.");
+                                break;
+                            }
+                        }
+                    }
+
+                    if(flag)
+                    {
+                        System.out.println("행렬1 행렬4 덧셈 성공 (28)");
+                    }
+                } else {
+                    System.out.println("행렬1 행렬4 덧셈 실패 (28)");
+                }
             } catch (Exception e) {
-                System.out.println("행렬1과 행렬4 더하기 실패: " + e.getMessage());
+                System.out.println("행렬1과 행렬4 덧셈 실패(28): " + e.getMessage());
             }
             // 29. 행렬1과 행렬3 곱셈
             try {
                 Matrix result_1multi3 = Tensors.multiplyMatrixEach(matrix1, matrix3);
-                System.out.println("행렬1과 행렬3 곱셈 성공 (29)");
+                if(("0 0\n0 0".equals(result_1multi3.toString()))){
+                    System.out.println("행렬1과 행렬3 곱셈 성공 : "+  result_1multi3 +"(29)");
+                } else {
+                    System.out.println("행렬1과 행렬3 곱셈 실패 (29)");
+                }
             } catch (Exception e) {
                 System.out.println("행렬1과 행렬3 곱하기 실패: " + e.getMessage());
             }
+
             // 22. 행렬1에 행렬3 더해서 저장
             try {
                 matrix1.addMatrix(matrix3);
-                System.out.println("행렬1에 행렬3 더해서 저장 완료 (22)");
+                if(("1 2\n3 4".equals(matrix1.toString()))){
+                    System.out.println("행렬1에 행렬3 더해서 저장 성공 : "+  matrix1 +"(22)");
+                } else {
+                    System.out.println("행렬1과 행렬3 더해서 저장 실패 (22)");
+                }
             } catch (Exception e) {
-                System.out.println("행렬1에 행렬3 더하기 실패: " + e.getMessage());
+                System.out.println("행렬1에 행렬3 더해서 저장 실패: " + e.getMessage());
             }
 
             // 23. 행렬3에 행렬1 곱해서 저장
             String multiplyDirection = "right";//사용자 지정 값
             try {
-                matrix3.multiplyMatrix(matrix1, multiplyDirection); // m * 기존행렬
-                System.out.println("행렬3에 행렬1 곱해서 저장 완료 (23)");
+                matrix3.multiplyMatrix(matrix1, multiplyDirection); //m * 기존행렬
+                if(("0 0\n0 0".equals(matrix3.toString()))){
+                    System.out.println("행렬3에 행렬1 곱해서 저장 성공 : "+  matrix3 +"(23)");
+                } else {
+                    System.out.println("행렬3에 행렬1 곱해서 저장 실패 (23)");
+                }
             } catch (Exception e) {
-                System.out.println("행렬3에 행렬1 곱하기 실패: " + e.getMessage());
+                System.out.println("행렬3에 행렬1 곱해서 저장 실패: " + e.getMessage());
             }
 
             // 39. 행렬3 대각 요소의 합 구하기
             try {
                 Scalar trace = matrix3.getTrace();
-                System.out.println("행렬3 대각 요소의 합: " + trace.getScalar() + " (39)");
+                if("0".equals(trace.toString())) {
+                    System.out.println("행렬3 대각 요소의 합 구하기 성공: " + trace.getScalar() + " (39)");
+                } else {
+                    System.out.println("행렬3 대각 요소의 합 구하기 실패 (39)");
+                }
             } catch (Exception e) {
-                System.out.println("행렬3 대각합 구하기 실패: " + e.getMessage());
+                System.out.println("행렬3 대각합 구하기 실패 (39): " + e.getMessage());
             }
 
             System.out.println();
@@ -337,23 +461,34 @@ public class Test {
             System.out.println("[5] 행렬 행/열 조작");
 
             // 45. 행렬1 1행과 2행 교환
-            int rows = matrix1.size("row");
-            int cols = matrix1.size("column");
-            Matrix matrix1Copy = Factory.getMatrix(arr2d, rows, cols); // 새로 생성
-            matrix1Copy.swapRow(0, 1); // 0-based 인덱스 사용
-            System.out.println("행렬1 1행과 2행 교환 완료 (45)");
+            matrix1.swapRow(0, 1); // 0-based 인덱스 사용
+            if("3 4\n1 2".equals(matrix1.toString())) {
+                System.out.println("행렬1 1행과 2행 교환 성공 (45)");
+            } else {
+                System.out.println("행렬1 1행과 2행 교환 실패(45)");
+            }
 
             // 46. 행렬1 1열과 2열 교환
-            matrix1Copy.swapColumn(0, 1);
-            System.out.println("행렬1 1열과 2열 교환 완료 (46)");
-
+            matrix1.swapColumn(0, 1);
+            if("4 3\n2 1".equals(matrix1.toString())) {
+                System.out.println("행렬1 1열과 2열 교환 성공 (46)");
+            } else {
+                System.out.println("행렬1 1열과 2열 교환 실패 (46)");
+            }
             // 38. 행렬1 전치행렬 생성
             Matrix transpose = matrix1.getTranspose();
-            System.out.println("행렬1 전치행렬 생성 완료 (38)");
-
+            if("1 3\n2 4".equals(transpose.toString())) {
+                System.out.println("행렬1 전치행렬 생성 완료"+transpose+"(38)");
+            }else {
+                System.out.println("행렬1 전치행렬 생성 실패 (38)");
+            }
             // 15m. 행렬1과 행렬1전치행렬 동등성 판단
             boolean isTransposeEqual = matrix1.equals(transpose);
-            System.out.println("행렬1과 전치행렬 동등성: " + isTransposeEqual + " (15m)");
+            if(false == isTransposeEqual) {
+                System.out.println("행렬1과 전치행렬 동등성 판단 성공: " + isTransposeEqual + " (15m)");
+            } else {
+                System.out.println("행렬1과 전치행렬 동등성 판단 실패 (15m)");
+            }
 
             System.out.println();
 
@@ -376,10 +511,10 @@ public class Test {
 
             // 33. 행렬끼리 세로로 합치기
             try {
-                //matrixFromRow1.connectMatrix(matrixFromRow2, "vertical");
+                matrixFromRow1.connectMatrix(matrixFromRow2, "vertical");
                 System.out.println("행렬끼리 세로로 합치기 완료 (33)");
             } catch (Exception e) {
-                System.out.println("세로 합치기 실패: " + e.getMessage());
+                System.out.println("세로 합치기 실패: (33)" + e.getMessage());
             }
 
             // 35. 행렬1의 열 벡터 형태로 추출
@@ -397,7 +532,7 @@ public class Test {
                 matrixFromCol1.connectMatrix(matrixFromCol2, "horizontal");
                 System.out.println("행렬끼리 가로로 합치기 완료 (32)");
             } catch (Exception e) {
-                System.out.println("가로 합치기 실패: " + e.getMessage());
+                System.out.println("가로 합치기 실패: (32)" + e.getMessage());
             }
 
             System.out.println();
