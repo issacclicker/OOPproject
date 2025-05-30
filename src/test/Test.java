@@ -380,7 +380,7 @@ public class Test {
             }
 
             // 28. 행렬1과 행렬4 덧셈
-            try {
+
                 Matrix result_1plus4 = Tensors.addMatrixEach(matrix1, matrix4);
                 if(result_1plus4.size("row") == row4 && result_1plus4.size("col") == col4) //사이즈 비교
                 {
@@ -407,57 +407,46 @@ public class Test {
                 } else {
                     System.out.println("행렬1 행렬4 덧셈 실패 (28)");
                 }
-            } catch (Exception e) {
-                System.out.println("행렬1과 행렬4 덧셈 실패(28): " + e.getMessage());
-            }
+
             // 29. 행렬1과 행렬3 곱셈
-            try {
+
                 Matrix result_1multi3 = Tensors.multiplyMatrixEach(matrix1, matrix3);
                 if(("0 0 \n0 0 ".equals(result_1multi3.toString()))){
                     System.out.println("행렬1과 행렬3 곱셈 성공 : "+  result_1multi3 +"(29)");
                 } else {
                     System.out.println("행렬1과 행렬3 곱셈 실패 (29)");
                 }
-            } catch (Exception e) {
-                System.out.println("행렬1과 행렬3 곱하기 실패: " + e.getMessage());
-            }
+
 
             // 22. 행렬1에 행렬3 더해서 저장
-            try {
+
                 matrix1.addMatrix(matrix3);
                 if(("1 3 \n2 4 ".equals(matrix1.toString()))){
                     System.out.println("행렬1에 행렬3 더해서 저장 성공 : "+  matrix1 +"(22)");
                 } else {
                     System.out.println("행렬1과 행렬3 더해서 저장 실패 (22)");
                 }
-            } catch (Exception e) {
-                System.out.println("행렬1에 행렬3 더해서 저장 실패: " + e.getMessage());
-            }
 
             // 23. 행렬3에 행렬1 곱해서 저장
             String multiplyDirection = "right";//사용자 지정 값
-            try {
+
                 matrix3.multiplyMatrix(matrix1, multiplyDirection); //m * 기존행렬
                 if(("0 0 \n0 0 ".equals(matrix3.toString()))){
                     System.out.println("행렬3에 행렬1 곱해서 저장 성공 : "+  matrix3 +"(23)");
                 } else {
                     System.out.println("행렬3에 행렬1 곱해서 저장 실패 (23)");
                 }
-            } catch (Exception e) {
-                System.out.println("행렬3에 행렬1 곱해서 저장 실패: " + e.getMessage());
-            }
+
 
             // 39. 행렬3 대각 요소의 합 구하기
-            try {
+
                 Scalar trace = matrix3.getTrace();
                 if("0".equals(trace.toString())) {
                     System.out.println("행렬3 대각 요소의 합 구하기 성공: " + trace.getScalar() + " (39)");
                 } else {
                     System.out.println("행렬3 대각 요소의 합 구하기 실패 (39)");
                 }
-            } catch (Exception e) {
-                System.out.println("행렬3 대각합 구하기 실패 (39): " + e.getMessage());
-            }
+
 
             System.out.println();
 
@@ -537,8 +526,6 @@ public class Test {
             }
 
             // 33. 행렬끼리 세로로 합치기
-
-            try {
                 matrixFromRow1.connectMatrix(matrixFromRow2, "vertical");
                 if("4 3 \n2 1 ".equals(matrixFromRow1.toString()))
                 {
@@ -548,9 +535,7 @@ public class Test {
                 {
                     System.out.println("(33) 실패");
                 }
-            } catch (Exception e) {
-                System.out.println("세로 합치기 실패: (33)" + e.getMessage());
-            }
+
 
             // 35. 행렬1의 열 벡터 형태로 추출
             Vector col1 = matrix1.extractMatrixToVector(1, "column");
@@ -575,19 +560,14 @@ public class Test {
             }
 
             // 32. 행렬끼리 가로로 합치기
-            try {
                 matrixFromCol1.connectMatrix(matrixFromCol2, "horizontal");
                 if("4 3 \n2 1 ".equals(matrixFromCol1.toString()))
                 {
                     System.out.println("(32) 통과");
                 }
-                else
-                {
+                else {
                     System.out.println("(32) 실패");
                 }
-            } catch (Exception e) {
-                System.out.println("가로 합치기 실패: (32)" + e.getMessage());
-            }
 
             System.out.println();
 
@@ -627,7 +607,6 @@ public class Test {
             // 실제 구현에서는 알고리즘에 따라 적절한 연산 선택
 
             // 예시: 47. 특정행에 상수배
-            try {
                 matrix2.multiplyByScalar(Factory.getScalar("2"), "row");
                 System.out.println("연산결과출력 (47)");
                 identityMatrix.multiplyByScalar(Factory.getScalar("2"), "row");
@@ -644,12 +623,7 @@ public class Test {
                     System.out.println("실패.");
                 }
 
-            } catch (Exception e) {
-                System.out.println("RREF 연산 중 오류: " + e.getMessage());
-            }
-
             // 최종 RREF 구하기
-            try {
                 Matrix rrefMatrix = matrix2.getRREF();
                 System.out.println("최종 RREF 구하기 완료 (51) 값:");
                 System.out.println(rrefMatrix.toString());
@@ -674,17 +648,13 @@ public class Test {
                 {
                     System.out.println("실패.");
                 }
-                
-            } catch (Exception e) {
-                System.out.println("RREF/역행렬 구하기 실패: " + e.getMessage());
-            }
+
 
             System.out.println();
 
             // [8] RREF로 구한 값의 특징 판단
             System.out.println("[8] RREF 특징 판단");
 
-            try {
                 Matrix rrefResult = matrix2.getRREF();
 
                 // 40. 정사각 행렬인지
@@ -747,9 +717,6 @@ public class Test {
                     System.out.println("실패.");
                 }
 
-            } catch (Exception e) {
-                System.out.println("RREF 특징 판단 중 오류: " + e.getMessage());
-            }
 
             System.out.println();
 
