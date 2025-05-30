@@ -105,7 +105,7 @@ public class Test {
 
             // 19. 스칼라2에 스칼라2 곱해서 저장
             scalar2.multiplyScalar(scalar2);
-            if(parseInt(String.valueOf(scalar2))*parseInt(String.valueOf(scalar2)) == 16){
+            if(parseInt(String.valueOf(scalar2)) == 16){
                 System.out.println("스칼라2에 스칼라2 곱해서 저장 성공: " + scalar2.toString() + " (19)");
             } else {
                 System.out.println("스칼라2에 스칼라2 곱해서 저장 실패 (19)");
