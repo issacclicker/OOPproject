@@ -12,15 +12,31 @@ public class Test {
             // 01. 스칼라1 지정 생성(지정값 : 3)
             Scalar scalar1 = Factory.getScalar("3");
             System.out.println("스칼라1 생성 (01)");
+            if("3".equals(scalar1.toString()))
+            {
+                System.out.println("(01) 통과");
+            }
+            else
+            {
+                System.out.println(("(01) 실패"));
+            }
 
             // 01. 스칼라2 지정 생성(지정값 : 4)
             Scalar scalar2 = Factory.getScalar("4");
             System.out.println("스칼라2 생성 (01)");
+            if("4".equals(scalar2.toString()))
+            {
+                System.out.println("(02) 통과");
+            }
+            else
+            {
+                System.out.println(("(02) 실패"));
+            }
 
             // 02. 스칼라3 랜덤 생성(1~9중 랜덤값)
             int scalarRandomValue1 = (int)(Math.random() * 9) + 1, scalarRandomValue2 = (int)(Math.random() * 9) + 1;
             Scalar scalar3 = Factory.getScalar(scalarRandomValue1, scalarRandomValue2);
-            System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 (02)");
+            System.out.println("스칼라3 생성 (02)");
 
             // 17. 스칼라1 복제
             Scalar scalar1_1 = scalar1.cloneSelf();
@@ -93,8 +109,9 @@ public class Test {
             Vector tempVector = Tensors.addVectorEach(vector1, vector2);
             System.out.println("벡터1에 벡터2 더한 결과: " + tempVector + " (26)");
 
-            //27. 벡터1 벡터2 곱셈
-            // Vector tempVector2 = Tensors.multiplyVectorScalar(vector1, vector2);
+            //27. 벡터1 스칼라2 곱셈
+            Vector tempVector2 = Tensors.multiplyVectorScalar(vector1, scalar2);
+            System.out.println("벡터1에 스칼라2를 곱한 결과: " + tempVector2 + " (27)");
 
             // 20. 벡터1에 벡터3 더해서 저장 (크기가 같은 벡터끼리만 가능)
             try {
@@ -216,22 +233,41 @@ public class Test {
             System.out.println("[6] 행렬 구조 추출 및 결합");
 
             // 34. 행렬1의 1행 벡터 형태로 추출
-            Vector row1 = matrix1.extractMatrixToVector(0, "row");
+            Vector row1 = matrix1.extractMatrixToVector(1, "row");
             System.out.println("행렬1의 1행 벡터 형태로 추출 완료 (34)");
+            if("1\n3".equals(row1.toString()))
+            {
+                System.out.println("(34-1) 통과");
+            }
+            else
+            {
+                System.out.println(("(34-1) 실패"));
+            }
 
             // 34. 행렬1의 2행 벡터 형태로 추출
-            Vector row2 = matrix1.extractMatrixToVector(1, "row");
+            Vector row2 = matrix1.extractMatrixToVector(2, "row");
             System.out.println("행렬1의 2행 벡터 형태로 추출 완료 (34)");
+            if("2\n4".equals(row2.toString()))
+            {
+                System.out.println("(34-2) 통과");
+            }
+            else
+            {
+                System.out.println(("(34-2) 실패"));
+            }
 
             // 31. 추출한 행 벡터들을 행렬로 전환
-
             Matrix matrixFromRow1 = row1.getColumn(0);
             Matrix matrixFromRow2 = row2.getColumn(0);
-            System.out.println("추출한 행 벡터들을 행렬로 전환 완료 (31)");
+            if("1 3 ".equals(matrixFromRow1) && "2 4 ".equals(matrixFromRow2))
+            {
+                System.out.println("추출한 행 벡터들을 행렬로 전환 완료 (31)");
+            }
+
 
             // 33. 행렬끼리 세로로 합치기
             try {
-                //matrixFromRow1.connectMatrix(matrixFromRow2, "vertical");
+                matrixFromRow1.connectMatrix(matrixFromRow2, "vertical");
                 System.out.println("행렬끼리 세로로 합치기 완료 (33)");
             } catch (Exception e) {
                 System.out.println("세로 합치기 실패: " + e.getMessage());
