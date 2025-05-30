@@ -525,37 +525,68 @@ public class Test {
 
             // 31. 추출한 행 벡터들을 행렬로 전환
 
-            Matrix matrixFromRow1 = row1.getColumn(0);
-            Matrix matrixFromRow2 = row2.getColumn(0);
-            if("1 3 ".equals(matrixFromRow1) && "2 4 ".equals(matrixFromRow2))
+            Matrix matrixFromRow1 = row1.getColumn();
+            Matrix matrixFromRow2 = row2.getColumn();
+            if("1 3 ".equals(matrixFromRow1.toString()) && "2 4 ".equals(matrixFromRow2.toString()))
             {
-                System.out.println("추출한 행 벡터들을 행렬로 전환 완료 (31)");
+                System.out.println("(31) 통과");
+            }
+            else
+            {
+                System.out.println("(31) 실패");
             }
 
-
-
             // 33. 행렬끼리 세로로 합치기
+
             try {
                 matrixFromRow1.connectMatrix(matrixFromRow2, "vertical");
-                System.out.println("행렬끼리 세로로 합치기 완료 (33)");
+                if("1 3 \n2 4 ".equals(matrixFromRow1.toString()))
+                {
+                    System.out.println("(33) 통과");
+                }
+                else
+                {
+                    System.out.println("(33) 실패");
+                }
             } catch (Exception e) {
                 System.out.println("세로 합치기 실패: (33)" + e.getMessage());
             }
 
             // 35. 행렬1의 열 벡터 형태로 추출
-            Vector col1 = matrix1.extractMatrixToVector(0, "column");
-            Vector col2 = matrix1.extractMatrixToVector(1, "column");
-            System.out.println("행렬1의 열 벡터들 추출 완료 (35)");
+            Vector col1 = matrix1.extractMatrixToVector(1, "column");
+            Vector col2 = matrix1.extractMatrixToVector(2, "column");
+            if("1\n2".equals(col1.toString()) && "3\n4".equals(col2.toString()))
+            {
+                System.out.println("(35) 통과");
+            }
+            else
+            {
+                System.out.println("(35) 실패");
+            }
 
             // 30. 추출한 열 벡터들을 행렬로 전환
             Matrix matrixFromCol1 = col1.getRow();
             Matrix matrixFromCol2 = col2.getRow();
-            System.out.println("추출한 열 벡터들을 행렬로 전환 완료 (30)");
+            if("1 2 ".equals(matrixFromCol1.toString()) && "3 4 ".equals(matrixFromCol2.toString()))
+            {
+                System.out.println("(30) 통과");
+            }
+            else
+            {
+                System.out.println("(30) 실패");
+            }
 
             // 32. 행렬끼리 가로로 합치기
             try {
                 matrixFromCol1.connectMatrix(matrixFromCol2, "horizontal");
-                System.out.println("행렬끼리 가로로 합치기 완료 (32)");
+                if("1 2 3 4 ".equals(matrixFromCol1.toString()))
+                {
+                    System.out.println("(32) 통과");
+                }
+                else
+                {
+                    System.out.println("(32) 실패");
+                }
             } catch (Exception e) {
                 System.out.println("가로 합치기 실패: (32)" + e.getMessage());
             }
@@ -566,10 +597,19 @@ public class Test {
             System.out.println("[7] RREF와 역행렬 구하기");
 
             // 51. 행렬2 RREF 구하기
-            System.out.println("행렬2 RREF 구하기 시작:");
+            Matrix RREFmatrix = matrix2.getRREF();
+            if("".equals(RREFmatrix.toString()))  // //////////////////////////////
+            {
+                System.out.println("(51) 성공");
+            }
+            else
+            {
+                System.out.println("(51) 실패");
+            }
 
-            // 14m. 행렬2 출력 (toString이 없어서 크기 정보만)
-            System.out.println("행렬2 현재 상태 출력 (14m)");
+            // 14m. 행렬2 출력
+            System.out.println("행렬2 현재 상태 출력 (14m) 값: ");
+            System.out.println(matrix2.toString());
 
             // 13m. 행렬2 크기 정보 조회
             int rows = matrix2.size("row");
@@ -577,8 +617,12 @@ public class Test {
             System.out.println("행렬2 크기: " + rows + "x" + cols + " (13m)");
 
             // 10. 단위행렬 생성
-            Matrix identityMatrix = Factory.getMatrix(rows); // n*n 단위행렬
-            System.out.println("단위행렬 생성 완료 (10)");
+            Matrix identityMatrix = Factory.getMatrix(rows); // (입력값: 바로위에서 알게된 3)
+            if("1 0 0 \n0 1 0 \n0 0 1 ".equals(identityMatrix.toString()))
+            {
+                System.out.println("단위행렬 생성 완료 (10)");
+                System.out.println("(10) 성공");
+            }
 
             // RREF 과정 시뮬레이션 (실제로는 getRREF() 사용)
             System.out.println("RREF 연산 과정:");
