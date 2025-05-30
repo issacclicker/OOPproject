@@ -12,6 +12,7 @@ public class Test {
             System.out.println("[1] 스칼라 생성 및 연산");
 
             // 01. 스칼라1 지정 생성(지정값 : 3)
+
             String scalar1_value = "3"; // 사용자 지정 값
             Scalar scalar1 = Factory.getScalar(scalar1_value);
             if("3".equals(scalar1.toString())) {
@@ -236,6 +237,9 @@ public class Test {
                 System.out.println("벡터의 사이즈가 맞지 않습니다.");
             }
 
+            //27. 벡터1 스칼라2 곱셈
+            Vector tempVector2 = Tensors.multiplyVectorScalar(vector1, scalar2);
+            System.out.println("벡터1에 스칼라2를 곱한 결과: " + tempVector2 + " (27)");
 
             // 20. temp1에 temp2 더해서 저장 (크기가 같은 벡터끼리만 가능)
             try {
@@ -496,18 +500,39 @@ public class Test {
             System.out.println("[6] 행렬 구조 추출 및 결합");
 
             // 34. 행렬1의 1행 벡터 형태로 추출
-            Vector row1 = matrix1.extractMatrixToVector(0, "row");
+            Vector row1 = matrix1.extractMatrixToVector(1, "row");
             System.out.println("행렬1의 1행 벡터 형태로 추출 완료 (34)");
+            if("1\n3".equals(row1.toString()))
+            {
+                System.out.println("(34-1) 통과");
+            }
+            else
+            {
+                System.out.println(("(34-1) 실패"));
+            }
 
             // 34. 행렬1의 2행 벡터 형태로 추출
-            Vector row2 = matrix1.extractMatrixToVector(1, "row");
+            Vector row2 = matrix1.extractMatrixToVector(2, "row");
             System.out.println("행렬1의 2행 벡터 형태로 추출 완료 (34)");
+            if("2\n4".equals(row2.toString()))
+            {
+                System.out.println("(34-2) 통과");
+            }
+            else
+            {
+                System.out.println(("(34-2) 실패"));
+            }
 
             // 31. 추출한 행 벡터들을 행렬로 전환
 
-            Matrix matrixFromRow1 = row1.getColumn();
-            Matrix matrixFromRow2 = row2.getColumn();
-            System.out.println("추출한 행 벡터들을 행렬로 전환 완료 (31)");
+            Matrix matrixFromRow1 = row1.getColumn(0);
+            Matrix matrixFromRow2 = row2.getColumn(0);
+            if("1 3 ".equals(matrixFromRow1) && "2 4 ".equals(matrixFromRow2))
+            {
+                System.out.println("추출한 행 벡터들을 행렬로 전환 완료 (31)");
+            }
+
+
 
             // 33. 행렬끼리 세로로 합치기
             try {
