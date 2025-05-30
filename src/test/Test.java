@@ -288,13 +288,39 @@ public class Test {
             // [3] 벡터 -> 행렬 전환
             System.out.println("[3] 벡터 -> 행렬 전환");
 
-            // 30. 벡터1을 행렬로 전환 (3*1 행렬)
-            Matrix matrixFromVector1 = vector1.getRow(0);
-            System.out.println("벡터1을 행렬로 전환 (3*1 행렬) (30)");
+            // 30. 벡터를 행렬로 전환 (n*1 행렬)
+            {
+                int[] arr = {0,1,2};
+                Vector target = Factory.getVector(arr); //입력값
+                Matrix matrixFromVector1 = target.getRow();
+                System.out.println("벡터1을 행렬로 전환 ("+arr.length+"*1 행렬) (30) 값 :");
+                System.out.println(matrixFromVector1.toString());
+                if(matrixFromVector1.toString().equals("0 \n1 \n2 "))
+                {
+                    System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
+            }
+            // 31. 벡터를 행렬로 전환 (1*n 행렬)
+            {
+                int[] arr = {0,1,2};
+                Vector target = Factory.getVector(arr); //입력값
+                Matrix matrixFromVector2 = target.getColumn();
+                System.out.println("벡터1을 행렬로 전환 ("+arr.length+"*3 행렬) (31) 값:");
+                System.out.println(matrixFromVector2.toString());
+                if("0 1 2".equals(matrixFromVector2.toString()))
+                {
+                    System.out.println("성공.");
+                }
+                else
+                {
+                    System.out.println("실패.");
+                }
+            }
 
-            // 31. 벡터1을 행렬로 전환 (1*3 행렬)
-            Matrix matrixFromVector2 = vector1.getColumn(0);
-            System.out.println("벡터1을 행렬로 전환 (1*3 행렬) (31)");
 
             System.out.println();
 
@@ -400,8 +426,8 @@ public class Test {
 
             // 31. 추출한 행 벡터들을 행렬로 전환
 
-            Matrix matrixFromRow1 = row1.getColumn(0);
-            Matrix matrixFromRow2 = row2.getColumn(0);
+            Matrix matrixFromRow1 = row1.getColumn();
+            Matrix matrixFromRow2 = row2.getColumn();
             System.out.println("추출한 행 벡터들을 행렬로 전환 완료 (31)");
 
             // 33. 행렬끼리 세로로 합치기
@@ -418,8 +444,8 @@ public class Test {
             System.out.println("행렬1의 열 벡터들 추출 완료 (35)");
 
             // 30. 추출한 열 벡터들을 행렬로 전환
-            Matrix matrixFromCol1 = col1.getRow(0);
-            Matrix matrixFromCol2 = col2.getRow(0);
+            Matrix matrixFromCol1 = col1.getRow();
+            Matrix matrixFromCol2 = col2.getRow();
             System.out.println("추출한 열 벡터들을 행렬로 전환 완료 (30)");
 
             // 32. 행렬끼리 가로로 합치기
