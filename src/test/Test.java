@@ -16,24 +16,24 @@ public class Test {
 
             // 01. 스칼라1 지정 생성(지정값 : 3)
 
-            String scalar1_value = "3"; // 사용자 지정 값
+            String scalar1_value = "111"; // 사용자 지정 값
             Scalar scalar1 = Factory.getScalar(scalar1_value);
-            if("3".equals(scalar1.toString())) {
+            if("111".equals(scalar1.toString())) {
                 System.out.println("스칼라1 생성 성공 (01)");
             } else { System.out.println("스칼라1 생성 실패(01)"); }
 
             // 01. 스칼라2 지정 생성(지정값 : 4)
-            String scalar2_value = "4"; // 사용자 지정 값
+            String scalar2_value = "111"; // 사용자 지정 값
             Scalar scalar2 = Factory.getScalar(scalar2_value);
-            if("4".equals(scalar2.toString())) {
+            if("111".equals(scalar2.toString())) {
             System.out.println("스칼라2 생성 성공 (02)");
             } else { System.out.println("스칼라2 생성 실패(02)"); }
 
-            // 02. 스칼라3 랜덤 생성(1~9중 랜덤값)
-            int randMin_s=1,randMax_s=10; // 사용자 지정 값
+            // 02. 스칼라3 랜덤 생성(100~999중 랜덤값)
+            int randMin_s=100,randMax_s=999; // 사용자 지정 값
             Scalar scalar3 = Factory.getScalar(randMin_s,randMax_s);
             System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 (02)");
-            if(parseInt(String.valueOf(scalar3)) >= 1 && parseInt(String.valueOf(scalar3)) < 10){
+            if(parseInt(scalar3.toString()) >= 100 && parseInt(scalar3.toString()) <= 999){
                 System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 성공 (02)");
             } else {
                 System.out.println("스칼라3 생성 실패 (02");
@@ -41,7 +41,7 @@ public class Test {
 
             // 17. 스칼라1 복제
             Scalar scalar1_1 = scalar1.cloneSelf();
-            if("3".equals(scalar1_1.toString())) {
+            if("111".equals(scalar1_1.toString())) {
                 System.out.println("스칼라1-1에 스칼라1 복제 성공(17) -> " + scalar1_1);
             } else {
                 System.out.println("스칼라1-1에 스칼라1 복제 실패(17) ");
@@ -51,7 +51,7 @@ public class Test {
             // 16. 스칼라1 스칼라2 비교
             int comparedvalue = scalar1.compareWith(scalar2);
             System.out.println("스칼라1과 스칼라2의 비교 결과: " + comparedvalue + " (16)");
-            if(comparedvalue<0){
+            if(comparedvalue==0){
                 System.out.println("스칼라1과 스칼라2의 비교 결과 (성공): " + comparedvalue + " (16)");
             } else {
                 System.out.println("스칼라1과 스칼라2 비교 실패 (16)");
@@ -59,14 +59,14 @@ public class Test {
 
             // 15. 스칼라1 스칼라2 동등성 비교
             boolean isEqual = scalar1.equals(scalar2);
-            if(!isEqual) {
+            if(isEqual) {
                 System.out.println("스칼라1과 스칼라2 동등성 비교 성공 /결과: " + isEqual + " (15)");
             } else {
                 System.out.println("스칼라1과 스칼라2 동등성 비교 실패 (15)");
             }
 
             // 14. 스칼라1 출력
-            if("3".equals(scalar1.toString())) {
+            if("111".equals(scalar1.toString())) {
                 System.out.println("스칼라1 출력 성공(14) -> " + scalar1);
             } else {
                 System.out.println("스칼라1 출력 실패(14) ");
@@ -74,9 +74,9 @@ public class Test {
 
             // 12. 스칼라1 지정 및 조회
             System.out.println("스칼라1 값 조회: " + scalar1.getScalar() + " (12)");
-            String scalarValue = "5";
+            String scalarValue = "500";
             scalar1.setScalar(scalarValue);
-            if ("5".equals(scalar1.toString())){
+            if ("500".equals(scalar1.toString())){
                 System.out.println("스칼라1 값을 5로 변경 후 조회 성공: " + scalar1.getScalar() + " (12)");
             } else {
                 System.out.println("스칼라1 값을 5로 변경 후 조회 실패 (12)");
@@ -84,23 +84,25 @@ public class Test {
 
             // 24. 스칼라1 스칼라2 덧셈
             Scalar tempscalar = Tensors.addScalarEach(scalar1, scalar2);
-            if("9".equals(tempscalar.toString())){
-            System.out.println("스칼라1 + 스칼라2 성공 :" + tempscalar + " (24)"); //scalar1에 scalar2의 값을 더한 것을 출력함.
+            if("611".equals(tempscalar.toString())){
+            System.out.println("스칼라1 + 스칼라2 성공 :" + 611+ " (24)"); //scalar1에 scalar2의 값을 더한 것을 출력함.
             } else {
             System.out.println("스칼라1 + 스칼라2 실패 (24)");
             }
 
             // 25. 스칼라1 스칼라2 곱셈
             Scalar tempscalar2 = Tensors.multiplyScalarEach(scalar1, scalar2);
-            if("20".equals(tempscalar2.toString())) {
-                System.out.println("스칼라1 * 스칼라2 성공" + tempscalar2 + " (25)"); //scalar1에 scalar2의 값을 곱한 것을 출력함.
-            } else {
+            if("55500".equals(tempscalar2.toString())) {
+                System.out.println("스칼라1 * 스칼라2 성공"+tempscalar2+" (25)"); //scalar1에 scalar2의 값을 곱한 것을 출력함.
+            }
+            else {
                 System.out.println("스칼라1 * 스칼라2 실패 (25)");
             }
 
+
             // 18. 스칼라1에 스칼라2 더해서 저장
             scalar1.addScalar(scalar2);
-            if ("9".equals(scalar1.toString())) {
+            if ("611".equals(scalar1.toString())) {
                 System.out.println("스칼라1에 스칼라2 더해서 저장 성공 : " + scalar1 + " (18)");
             } else {
                 System.out.println("스칼라1에 스칼라2 더해서 저장 실패 (18)");
@@ -108,7 +110,7 @@ public class Test {
 
             // 19. 스칼라2에 스칼라2 곱해서 저장
             scalar2.multiplyScalar(scalar2);
-            if(parseInt(String.valueOf(scalar2)) == 16){
+            if(parseInt(scalar2.toString()) == 12321){
                 System.out.println("스칼라2에 스칼라2 곱해서 저장 성공: " + scalar2.toString() + " (19)");
             } else {
                 System.out.println("스칼라2에 스칼라2 곱해서 저장 실패 (19)");
@@ -120,11 +122,11 @@ public class Test {
             System.out.println("[2] 벡터 생성 및 연산");
 
             // 05. 벡터1 1차원 배열(arr1)로 3차원 벡터 생성
-            int[] arr1 = {1, 2, 3};
+            int[] arr1 = {250,250}; //입력값
             Vector vector1 = Factory.getVector(arr1);
             System.out.println("벡터1 1차원 배열로 3차원 벡터 생성 (05) 값 : ");
             System.out.print(vector1.toString());
-            if("1\n2\n3".equals(vector1.toString()))
+            if("250\n250".equals(vector1.toString()))
             {
                 System.out.println("통과.");
             }
@@ -135,11 +137,11 @@ public class Test {
 
 
             // 03. 스칼라 va1을 요소로 하는 n차원 벡터 생성
-            Scalar val1 = Factory.getScalar("0");
+            Scalar val1 = Factory.getScalar("100"); //입력값
             Vector vector2 = Factory.getVector(val1, 2);
             System.out.println("벡터2 "+val1+"을 요소로 하는 2차원 벡터 생성 (03) 값 : ");
             System.out.println(vector2.toString());
-            if("0\n0".equals(vector2.toString()))
+            if("100\n100".equals(vector2.toString()))
             {
                 System.out.println("통과.");
             }
@@ -148,10 +150,31 @@ public class Test {
                 System.out.println("실패.");
             }
 
+            //17v 벡터1을 복사해 벡터6에 저장
+            Vector vector6 = vector1.cloneSelf();
+        if(vector1.equals(vector6))
+        {
+            System.out.println("통과.");
+        }
+        else
+        {
+            System.out.println("실패.");
+        }
+            //15v 벡터1과 벡터2의 동등성 비교
+            if(!vector1.equals(vector2))
+            {
+                System.out.println("통과.");
+            }
+            else
+            {
+                System.out.println( "실패.");
+            }
+
+
             // 04. 벡터3 rand1~rand2까지 랜덤 요소로 val2차원 벡터 생성
-            int rand1 = 1;
-            int rand2 = 9;
-            int val2 = 3;
+            int rand1 = 100;
+            int rand2 = 999;
+            int val2 = 2;
             Vector vector3 = Factory.getVector(rand1, rand2, val2);
             System.out.println("벡터3 "+rand1+"~"+rand2+"까지 랜덤 요소로 "+val2+"차원 벡터 생성 (04) 값 : ");
             System.out.println(vector3.toString());
@@ -184,7 +207,7 @@ public class Test {
             int val3 = 0;
             Scalar element0 = vector1.getAt(val3);
             System.out.println("벡터1 0번째 인덱스 요소 조회: " + element0.toString() + " (11)");
-            if(element0.toString().equals("1"))
+            if(element0.toString().equals("250"))
             {
                 System.out.println("성공.");
             }
@@ -206,12 +229,10 @@ public class Test {
                 System.out.println("실패.");
             }
 
-            // 26. 벡터1 벡터4 덧셈
-                Scalar temp = Factory.getScalar("1");
-                Vector vector4 = Factory.getVector(temp, 3);
-                Vector tempVector = Tensors.addVectorEach(vector1, vector4);
+            // 26. 벡터1 벡터2 덧셈
+                Vector tempVector = Tensors.addVectorEach(vector1, vector2);
                 System.out.println("벡터1에 벡터4 더한 결과: " + tempVector.toString() + " (26)");
-                if ("2\n3\n4".equals(tempVector.toString())) {
+                if ("350\n350".equals(tempVector.toString())) {
                     System.out.println("성공.");
                 } else {
                     System.out.println("실패.");
@@ -221,31 +242,16 @@ public class Test {
 
             Scalar tempScalar = Factory.getScalar("1");
             Vector tempVector2 = Tensors.multiplyVectorScalar(vector1, tempScalar);
-            if ("1\n2\n3".equals(tempVector2.toString())) {
-                System.out.println("(27-1) 성공");
+            if ("50000\n90000".equals(tempVector2.toString())) {
+                System.out.println("(27) 성공.");
             } else {
-                System.out.println("(27-1) 실패.");
+                System.out.println("(27) 실패.");
             }
 
-            //27. 벡터1 스칼라2 곱셈
-
-            tempVector2 = Tensors.multiplyVectorScalar(vector1, scalar2);
-            if ("4\n8\n12".equals(tempVector2.toString())) {
-                System.out.println("(27-2) 성공");
-            } else {
-                System.out.println("(27-2)실패.");
-            }
-
-            System.out.println("벡터1에 스칼라2를 곱한 결과: " + tempVector2 + " (27)");
-
-            // 20. temp1에 temp2 더해서 저장 (크기가 같은 벡터끼리만 가능)
-
-            int[] tempValues = {1,2,3}, tempValues2 = {3,2,1};
-            Vector temp1 = Factory.getVector(tempValues);
-            Vector temp2 = Factory.getVector(tempValues2);
-            temp1.addVector(temp2);
-            System.out.println("temp1에 temp2 더해서 저장 완료 -> " + temp1 + " (20)");
-            if("4\n4\n4".equals(temp1.toString()))
+            //20 벡터1에 벡터2 더해서 저장
+            vector1.addVector(vector2);
+            System.out.println("벡터1에 벡터2 더해서 저장 완료 -> " + vector1 + " (20)");
+            if("350\n550".equals(vector1.toString()))
             {
                 System.out.println("성공.");
             }
@@ -254,14 +260,10 @@ public class Test {
                 System.out.println("실패.");
             }
 
-            // 21. 벡터2에 스칼라2 곱해서 저장
-
-            {
-            Scalar tempscalar3 = Factory.getScalar("2");
-            Vector tempvector = Factory.getVector(tempValues);
-            tempvector.multiplyScalar(tempscalar3);
-            System.out.println("tempvector에 tempscalar3 곱해서 저장 완료 (21)");
-            if("2\n4\n6".equals(temp1.toString()))
+            // 21. 벡터2에 (스칼라)111 곱해서 저장
+            vector2.multiplyScalar(Factory.getScalar("111"));
+            System.out.println("vector2에 111 곱해서 저장 완료 (21)");
+            if("11100\n11100".equals(vector2.toString()))
             {
                 System.out.println("성공.");
             }
@@ -269,23 +271,7 @@ public class Test {
             {
                 System.out.println("실패.");
             }
-            }
 
-            // 15v. 벡터1과 벡터2 동등성 비교
-            isEqual = scalar1.equals(scalar2);
-            if(!isEqual) {
-                System.out.println("벡터1과 벡터2 동등성 비교 성공 /결과: " + isEqual + " (15)");
-            } else {
-                System.out.println("스칼라1과 스칼라2 동등성 비교 실패 (15)");
-            }
-
-            // 17v. 벡터1를 복사해 벡터6에 저장
-            Vector vector6 = vector1.cloneSelf();
-            if("1\n2\n3".equals(vector6.toString())) {
-                System.out.println("벡터6에 벡터1 복제 성공 (17v) -> " + vector6.toString());
-            } else {
-                System.out.println("벡터6에 벡터1 복제 실패 (17v) ");
-            }
 
             System.out.println();
 
