@@ -754,15 +754,30 @@ public class Test {
             // [9] 행렬식 구하기
             System.out.println("[9] 행렬식 구하기");
 
-            // 53. 행렬식 구하기
-            // 14m. 행렬 크기 정보 조회
+            // 53. 2*2크기의 행렬5 행렬식 구하기
             Scalar temp5 = Factory.getScalar("1");
             Matrix matrix5 = Factory.getMatrix(temp5,2,2);
             int matrix5Rows = matrix5.size("row");
             int matrix5Cols = matrix5.size("column");
-            System.out.println("행렬 크기: " + matrix5Rows + "x" + matrix5Cols + " (14m)");
+            System.out.println("행렬 크기: " + matrix5Rows + "x" + matrix5Cols);
             Scalar determinantValue = matrix5.getDeterminant();
             if("0".equals(determinantValue.toString()))
+            {
+                System.out.println("성공.");
+            }
+            else
+            {
+                System.out.println("실패.");
+            }
+
+            // 53. 3*3크기의 행렬7 행렬식 구하기
+            Scalar temp6 = Factory.getScalar("1");
+            Matrix matrix7 = Factory.getMatrix(temp6,3,3);
+            int matrix7Rows = matrix7.size("row");
+            int matrix7Cols = matrix7.size("column");
+            System.out.println("행렬 크기: " + matrix7Rows + "x" + matrix7Cols);
+            Scalar determinantValue2 = matrix5.getDeterminant();
+            if("0".equals(determinantValue2.toString()))
             {
                 System.out.println("성공.");
             }
