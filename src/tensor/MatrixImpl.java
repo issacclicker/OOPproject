@@ -105,7 +105,7 @@ class MatrixImpl implements Matrix {
         System.out.println("swapColumn 호출 성공");
     }
 
-    public void multiplyByScalar(Scalar value, String multiplyCondition) {
+    public void multiplyByScalar(int n, Scalar value, String multiplyCondition) {
         System.out.println("multiplyByScalar 호출 성공");
     }
 
