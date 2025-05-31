@@ -270,7 +270,7 @@ public class Test {
             System.out.println("[3] 벡터 -> 행렬 전환");
 
             // 30. 벡터1을 n*1 행렬로 전환 후 새 객체에 저장
-                Matrix matrixFromVector1 = vector1.getRow();
+                Matrix matrixFromVector1 = vector1.getColumn();
                 System.out.println("벡터1을 행렬로 전환 (3*1 행렬) (30) 값 :");
                 System.out.println(matrixFromVector1.toString());
                 if(matrixFromVector1.toString().equals("2 \n3 \n4 "))
@@ -283,7 +283,7 @@ public class Test {
                 }
 
             // 31. 벡터1을 1*n 행렬로 전환 후 새 객체에 저장
-                Matrix matrixFromVector2 = vector1.getColumn();
+                Matrix matrixFromVector2 = vector1.getRow();
                 System.out.println("벡터1을 행렬로 전환 (1*3행렬) (31) 값:");
                 System.out.println(matrixFromVector2.toString());
                 if("2 3 4 ".equals(matrixFromVector2.toString()))
@@ -310,15 +310,6 @@ public class Test {
                 System.out.println("행렬1 2차원 배열로 생성 실패 (09)");
             }
 
-            // 08. 행렬2 csv 파일로 생성 (파일이 있다고 가정)
-            File csvFile = new File("matrix_data.csv");
-            Matrix matrix2 = Factory.getMatrix(csvFile, 3, 3);
-            if(("0 2 1 \n1 0 3 \n4 5 6 ".equals(matrix2.toString()))){
-                System.out.println("행렬2 csv파일로 생성 성공 :" +  matrix2 + "(08)");
-            } else {
-                System.out.println("행렬2 csv파일로 생성 실패 (08)");
-            }
-
             // 14m. 행렬1 출력
             if(("1 3 \n2 4 ".equals(matrix1.toString()))){
                 System.out.println("행렬1 출력 성공");
@@ -334,16 +325,25 @@ public class Test {
                 System.out.println("행렬6에 행렬1 복제 실패 (17m) ");
             }
 
+            // 08. 행렬2 csv 파일로 생성 (파일이 있다고 가정)
+            File csvFile = new File("matrix_data.csv");
+            Matrix matrix2 = Factory.getMatrix(csvFile, 3, 3);
+            if(("0 2 1 \n1 0 3 \n4 5 6 ".equals(matrix2.toString()))){
+                System.out.println("행렬2 csv파일로 생성 성공 :" +  matrix2 + "(08)");
+            } else {
+                System.out.println("행렬2 csv파일로 생성 실패 (08)");
+            }
+
             // 06. 행렬3 0으로만 구성된 2*2 행렬 생성
             int row3= 2, col3=2;//사용자 설정 값
             String matrix3_value = "0"; //사용자 설정 값
             Scalar zeroScalar = Factory.getScalar(matrix3_value);
             Matrix matrix3 = Factory.getMatrix(zeroScalar, row3, col3);
-        if(("0 0\n0 0".equals(matrix3.toString()))){
-            System.out.printf("행렬3 %s으로만 구성된 %d*%d 행렬 생성 성공 :" +  matrix3 + "(06)" ,matrix3_value, row, col);
-        } else {
-            System.out.printf("행렬3 %s으로만 구성된 %d*%d 행렬 생성 실패 (06)",matrix3_value, row, col);
-        }
+            if(("0 0\n0 0".equals(matrix3.toString()))){
+                System.out.printf("행렬3 %s으로만 구성된 %d*%d 행렬 생성 성공 :" +  matrix3 + "(06)\n" ,matrix3_value, row, col);
+            } else {
+                System.out.printf("행렬3 %s으로만 구성된 %d*%d 행렬 생성 실패 (06)\n",matrix3_value, row, col);
+            }
 
             // 07. 행렬4 랜덤(1~9) 2*2 생성
             int randMin_m=1, randMax_m=10, row4 = 2, col4 = 2;  //사용자 설정 값
@@ -482,10 +482,30 @@ public class Test {
             // [6] 행렬 구조 추출 및 결합
             System.out.println("[6] 행렬 구조 추출 및 결합");
 
+            // 36. 행렬1의 1행~1행, 1열~2열 을 부분 행렬로 추출
+            Matrix SubMatrix = matrix1.extractSubMatrix(1, 1, 1, 2);
+            if("4 3 ".equals(SubMatrix.toString()))
+            {
+                System.out.println("행렬1의 1행~1행, 1열~2열 을 부분 행렬로 추출 결과 :" + SubMatrix.toString());
+                System.out.println("(36) 통과");
+            } else {
+                System.out.println("(36) 실패");
+            }
+
+            // 37. 행렬1의 1행, 1열을 제외한 부분 행렬 추출
+            Matrix SubMatrix2 = matrix1.extractSubMatrix(1, 1);
+            if("1 ".equals(SubMatrix2.toString()))
+            {
+                System.out.println("행렬1의 1행, 1열을 제외한 부분 행렬 추출 결과 :" + SubMatrix2.toString());
+                System.out.println("(37) 통과");
+            } else {
+                System.out.println("(37) 실패");
+            }
+
             // 34. 행렬1의 1행 벡터 형태로 추출
             Vector row1 = matrix1.extractMatrixToVector(1, "row");
             System.out.println("행렬1의 1행 벡터 형태로 추출 완료 (34)");
-            if("4 \n3 ".equals(row1.toString()))
+            if("4\n3".equals(row1.toString()))
             {
                 System.out.println("(34-1) 통과");
             }
@@ -497,7 +517,7 @@ public class Test {
             // 34. 행렬1의 2행 벡터 형태로 추출
             Vector row2 = matrix1.extractMatrixToVector(2, "row");
             System.out.println("행렬1의 2행 벡터 형태로 추출 완료 (34)");
-            if("2 \n1 ".equals(row2.toString()))
+            if("2\n1".equals(row2.toString()))
             {
                 System.out.println("(34-2) 통과");
             }
@@ -520,21 +540,20 @@ public class Test {
             }
 
             // 33. 행렬끼리 세로로 합치기
-                matrixFromRow1.connectMatrix(matrixFromRow2, "vertical");
-                if("4 3 \n2 1 ".equals(matrixFromRow1.toString()))
-                {
-                    System.out.println("(33) 통과");
-                }
-                else
-                {
-                    System.out.println("(33) 실패");
-                }
-
+            matrixFromRow1.connectMatrix(matrixFromRow2, "vertical");
+            if("4 3 \n2 1 ".equals(matrixFromRow1.toString()))
+            {
+                System.out.println("(33) 통과");
+            }
+            else
+            {
+                System.out.println("(33) 실패");
+            }
 
             // 35. 행렬1의 열 벡터 형태로 추출
             Vector col1 = matrix1.extractMatrixToVector(1, "column");
             Vector col2 = matrix1.extractMatrixToVector(2, "column");
-            if("4 \n2 ".equals(col1.toString()) && "3 \n1 ".equals(col2.toString()))
+            if("4\n2".equals(col1.toString()) && "3\n1".equals(col2.toString()))
             {
                 System.out.println("(35) 통과");
             } else {
@@ -555,7 +574,7 @@ public class Test {
 
             // 32. 행렬끼리 가로로 합치기
             matrixFromCol1.connectMatrix(matrixFromCol2, "horizontal");
-            if("4 3 \n2 1 ".equals(matrixFromCol1.toString()))
+            if("4 3 2 1 ".equals(matrixFromCol1.toString()))
             {
                 System.out.println("(32) 통과");
             }
@@ -563,25 +582,7 @@ public class Test {
                 System.out.println("(32) 실패");
             }
 
-            // 36. 행렬1의 1행~1행, 1열~2열 을 부분 행렬로 추출
-            Matrix SubMatrix = matrix1.extractSubMatrix(1, 1, 1, 2);
-            if("1 3 ".equals(SubMatrix.toString()))
-            {
-                System.out.println("행렬1의 1행~1행, 1열~2열 을 부분 행렬로 추출 결과 :" + SubMatrix.toString());
-                System.out.println("(36) 통과");
-            } else {
-                System.out.println("(36) 실패");
-            }
 
-            // 37. 행렬1의 1행, 1열을 제외한 부분 행렬 추출
-            Matrix SubMatrix2 = matrix1.extractSubMatrix(1, 1);
-            if("4 ".equals(SubMatrix2.toString()))
-            {
-                System.out.println("행렬1의 1행, 1열을 제외한 부분 행렬 추출 결과 :" + SubMatrix2.toString());
-                System.out.println("(37) 통과");
-            } else {
-                System.out.println("(37) 실패");
-            }
 
             System.out.println();
 
