@@ -574,7 +574,7 @@ public class Test {
 
             // 32. 행렬끼리 가로로 합치기
             matrixFromCol1.connectMatrix(matrixFromCol2, "horizontal");
-            if("4 3 2 1 ".equals(matrixFromCol1.toString()))
+            if("4 3 \n2 1 ".equals(matrixFromCol1.toString()))
             {
                 System.out.println("(32) 통과");
             }
@@ -582,21 +582,22 @@ public class Test {
                 System.out.println("(32) 실패");
             }
 
-
-
             System.out.println();
 
             // [7] RREF와 역행렬 구하기
             System.out.println("[7] RREF와 역행렬 구하기");
 
             // 51. 행렬2 RREF 구하기
-            Matrix RREFmatrix = matrix2.getRREF();
-            if("1 0 0 \n0 1 0 \n0 0 1 ".equals(RREFmatrix.toString()))
+            Matrix rrefResult = matrix2.getRREF();
+            if("1 0 0 \n0 1 0 \n0 0 1 ".equals(rrefResult.toString()))
             {
                 System.out.println("(51) 성공");
             } else {
                 System.out.println("(51) 실패");
             }
+
+            // 14m. 행렬2 2차원 배열 모양으로 콘솔 출력
+
 
             // 13m. 행렬2 크기 정보 조회
             int rows = matrix2.size("row");
@@ -606,6 +607,7 @@ public class Test {
                 System.out.println("행렬2 크기: " + rows + "x" + cols + " (13m)");
                 System.out.println("통과 (13m)");
             }
+
             // 10. 단위행렬 생성
             Matrix identityMatrix = Factory.getMatrix(rows); // (입력값: 바로위에서 알게된 3)
             if("1 0 0 \n0 1 0 \n0 0 1 ".equals(identityMatrix.toString()))
@@ -614,62 +616,77 @@ public class Test {
                 System.out.println("(10) 성공");
             }
 
-            // RREF 과정 시뮬레이션 (실제로는 getRREF() 사용)
-            System.out.println("RREF 연산 과정:");
+            // 47. n번째 행에 상수 k배
+            matrix2.multiplyByScalar(0, Factory.getScalar("2"), "row");
+            if("0 4 2 \n1 0 3 \n4 5 6 ".equals(matrix2.toString()))
+            {
+                System.out.println("47. n번째 행에 상수 k배 성공 결과 : " + matrix2.toString());
+            }
+            else
+            {
+                System.out.println("47. n번째 행에 상수 k배 실패");
+            }
 
-            // 45-50번 연산들 중 하나씩 수행하며 RREF 판단
-            // 실제 구현에서는 알고리즘에 따라 적절한 연산 선택
+            // 48. n번째 열에 상수 k배
+            matrix2.multiplyByScalar(0, Factory.getScalar("2"), "column");
+            if("0 4 2 \n2 0 3 \n8 5 6 ".equals(matrix2.toString()))
+            {
+                System.out.println("48. n번째 열에 상수 k배 성공 결과 : " + matrix2.toString());
+            }
+            else
+            {
+                System.out.println("48. n번째 열에 상수 k배 실패");
+            }
 
-            // 예시: 47. 특정행에 상수배
-                matrix2.multiplyByScalar(Factory.getScalar("2"), "row");
-                System.out.println("연산결과출력 (47)");
-                identityMatrix.multiplyByScalar(Factory.getScalar("2"), "row");
+            // 49. m번째 행에 n번째 행 상수 k배 더하기
+            matrix2.addMultipliedRow(0, 1, Factory.getScalar("2"));
+            if("4 4 8 \n2 0 3 \n8 5 6 ".equals(matrix2.toString()))
+            {
+                System.out.println("49. m번째 행에 n번째 행 상수 k배 더하기 성공 결과 : " + matrix2.toString());
+            }
+            else
+            {
+                System.out.println("49. m번째 행에 n번째 행 상수 k배 더하기 실패");
+            }
 
-                // 52. RREF 판단
-                boolean isRREF = matrix2.isRREF();
-                System.out.println("행렬2 " + (isRREF ? "is RREF" : "is not RREF") + " (52)");
-                if(isRREF) //시나리오에 따라 값 변경
-                {
-                    System.out.println("성공.");
-                }
-                else
-                {
-                    System.out.println("실패.");
-                }
+            // 50. m번째 열에 n번째 열 상수 k배 더하기
+            matrix2.addMultipliedColumn(0, 1, Factory.getScalar("2"));
+            if("12 4 8 \n2 0 3 \n16 5 6 ".equals(matrix2.toString()))
+            {
+                System.out.println("49. m번째 행에 n번째 행 상수 k배 더하기 성공 결과 : " + matrix2.toString());
+            }
+            else
+            {
+                System.out.println("49. m번째 행에 n번째 행 상수 k배 더하기 실패");
+            }
 
-            // 최종 RREF 구하기
-                Matrix rrefMatrix = matrix2.getRREF();
-                System.out.println("최종 RREF 구하기 완료 (51) 값:");
-                System.out.println(rrefMatrix.toString());
-                if(" ".equals(rrefMatrix.toString()))
-                {
-                    System.out.println("성공.");
-                }
-                else
-                {
-                    System.out.println("실패.");
-                }
+            // 52. RREF 판단
+            boolean isRREF = matrix2.isRREF();
+            System.out.println("행렬2 " + (isRREF ? "is RREF" : "is not RREF") + " (52)");
+            if(isRREF)
+            {
+                System.out.println("성공.");
+            }
+            else
+            {
+                System.out.println("실패.");
+            }
 
-                // 54. 역행렬 구하기
-                Matrix inverse = matrix2.getReversed();
-                System.out.println("역행렬 구하기 완료 (54) 값:");
-                System.out.println(inverse.toString());
-                if(" ".equals(inverse.toString()))
-                {
-                    System.out.println("성공.");
-                }
-                else
-                {
-                    System.out.println("실패.");
-                }
-
+            // 54. 역행렬 구하기
+            Matrix inverse = matrix2.getReversed();
+            if("-0.34 0.36 0.27 \n0.82 -1.27 -0.45 \n0.23 0.09 -0.18 ".equals(inverse.toString()))
+            {
+                System.out.println("성공.");
+            }
+            else
+            {
+                System.out.println("실패.");
+            }
 
             System.out.println();
 
             // [8] RREF로 구한 값의 특징 판단
             System.out.println("[8] RREF 특징 판단");
-
-                Matrix rrefResult = matrix2.getRREF();
 
                 // 40. 정사각 행렬인지
                 boolean isSquare = rrefResult.isSquareMatrix();

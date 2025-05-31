@@ -14,6 +14,9 @@ public interface Matrix {
     @Override
     boolean equals(Object o);
 
+    @Override
+    String toString();
+
     Matrix cloneSelf();
 
     //22 다른 행렬과의 덧셈
@@ -65,7 +68,7 @@ public interface Matrix {
 
     //47 48 특정 행/열에 상수배(스칼라)
     //multiplyCondition -> 행에 곱할건지, 열에 곱할건지
-    void multiplyByScalar(Scalar value, String multiplyCondition);
+    void multiplyByScalar(int A, Scalar value, String multiplyCondition);
 
     //49 특정 행에 다른 행의 상수배를 더할 수 있다.
     void addMultipliedRow(int A,int B,Scalar multiplyValue);
