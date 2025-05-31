@@ -108,7 +108,7 @@ public class Test {
 
             // 19. 스칼라2에 스칼라2 곱해서 저장
             scalar2.multiplyScalar(scalar2);
-            if(parseInt(String.valueOf(scalar2)) == 16){
+            if("16".equals(scalar2.toString())){
                 System.out.println("스칼라2에 스칼라2 곱해서 저장 성공: " + scalar2.toString() + " (19)");
             } else {
                 System.out.println("스칼라2에 스칼라2 곱해서 저장 실패 (19)");
@@ -131,6 +131,22 @@ public class Test {
             else
             {
                 System.out.println("실패.");
+            }
+
+            // 17v. 벡터1를 복사해 벡터6에 저장
+            Vector vector6 = vector1.cloneSelf();
+            if("1\n2\n3".equals(vector6.toString())) {
+                System.out.println("벡터6에 벡터1 복제 성공 (17v) -> " + vector6.toString());
+            } else {
+                System.out.println("벡터6에 벡터1 복제 실패 (17v) ");
+            }
+
+            // 15v. 벡터1과 벡터6 동등성 비교
+            isEqual = vector1.equals(vector6);
+            if(!isEqual) {
+                System.out.println("벡터1과 벡터6 동등성 비교 성공 /결과: " + isEqual + " (15v)");
+            } else {
+                System.out.println("벡터1과 벡터6 동등성 비교 실패 (15v)");
             }
 
 
@@ -197,7 +213,7 @@ public class Test {
             // 13. 벡터1 크기 정보(차원) 조회
             int vector1Size = vector1.size();
             System.out.println("벡터1 크기 정보 조회: " + vector1Size + " (13)");
-            if(vector1Size == arr1.length)
+            if(vector1Size == 3)
             {
                 System.out.println("성공.");
             }
@@ -206,7 +222,7 @@ public class Test {
                 System.out.println("실패.");
             }
 
-            // 26. 벡터1 벡터4 덧셈
+            // 26. 벡터1 벡터4 더한 값 새 객체에 저장
                 Scalar temp = Factory.getScalar("1");
                 Vector vector4 = Factory.getVector(temp, 3);
                 Vector tempVector = Tensors.addVectorEach(vector1, vector4);
@@ -217,35 +233,18 @@ public class Test {
                     System.out.println("실패.");
                 }
 
-            //27. 벡터1 스칼라 곱셈
-
-            Scalar tempScalar = Factory.getScalar("1");
-            Vector tempVector2 = Tensors.multiplyVectorScalar(vector1, tempScalar);
-            if ("1\n2\n3".equals(tempVector2.toString())) {
-                System.out.println("(27-1) 성공");
-            } else {
-                System.out.println("(27-1) 실패.");
-            }
-
-            //27. 벡터1 스칼라2 곱셈
-
-            tempVector2 = Tensors.multiplyVectorScalar(vector1, scalar2);
+            //27. 벡터1 스칼라2 곱한 값 새 객체에 저장
+            Vector tempVector2 = Tensors.multiplyVectorScalar(vector1, scalar2);
             if ("4\n8\n12".equals(tempVector2.toString())) {
-                System.out.println("(27-2) 성공");
+                System.out.println("(27) 성공 결과 : " + tempVector2.toString());
             } else {
-                System.out.println("(27-2)실패.");
+                System.out.println("(27) 실패");
             }
 
-            System.out.println("벡터1에 스칼라2를 곱한 결과: " + tempVector2 + " (27)");
-
-            // 20. temp1에 temp2 더해서 저장 (크기가 같은 벡터끼리만 가능)
-
-            int[] tempValues = {1,2,3}, tempValues2 = {3,2,1};
-            Vector temp1 = Factory.getVector(tempValues);
-            Vector temp2 = Factory.getVector(tempValues2);
-            temp1.addVector(temp2);
-            System.out.println("temp1에 temp2 더해서 저장 완료 -> " + temp1 + " (20)");
-            if("4\n4\n4".equals(temp1.toString()))
+            // 20. 벡터1에 벡터4 더해서 저장
+            vector1.addVector(vector4);
+            System.out.println("temp1에 temp2 더해서 저장 완료 -> " + vector1 + " (20)");
+            if("2\n3\n4".equals(vector1.toString()))
             {
                 System.out.println("성공.");
             }
@@ -255,36 +254,14 @@ public class Test {
             }
 
             // 21. 벡터2에 스칼라2 곱해서 저장
-
+            vector2.multiplyScalar(scalar2);
+            if("0\n0".equals(vector2.toString()))
             {
-            Scalar tempscalar3 = Factory.getScalar("2");
-            Vector tempvector = Factory.getVector(tempValues);
-            tempvector.multiplyScalar(tempscalar3);
-            System.out.println("tempvector에 tempscalar3 곱해서 저장 완료 (21)");
-            if("2\n4\n6".equals(temp1.toString()))
-            {
-                System.out.println("성공.");
+                System.out.println("vector2에 scalar2 곱해서 저장 성공 결과 : " + vector2.toString() + " (21)");
             }
             else
             {
                 System.out.println("실패.");
-            }
-            }
-
-            // 15v. 벡터1과 벡터2 동등성 비교
-            isEqual = scalar1.equals(scalar2);
-            if(!isEqual) {
-                System.out.println("벡터1과 벡터2 동등성 비교 성공 /결과: " + isEqual + " (15)");
-            } else {
-                System.out.println("스칼라1과 스칼라2 동등성 비교 실패 (15)");
-            }
-
-            // 17v. 벡터1를 복사해 벡터6에 저장
-            Vector vector6 = vector1.cloneSelf();
-            if("1\n2\n3".equals(vector6.toString())) {
-                System.out.println("벡터6에 벡터1 복제 성공 (17v) -> " + vector6.toString());
-            } else {
-                System.out.println("벡터6에 벡터1 복제 실패 (17v) ");
             }
 
             System.out.println();
@@ -292,14 +269,11 @@ public class Test {
             // [3] 벡터 -> 행렬 전환
             System.out.println("[3] 벡터 -> 행렬 전환");
 
-            // 30. 벡터를 행렬로 전환 (n*1 행렬)
-            {
-                int[] arr = {0,1,2};
-                Vector target = Factory.getVector(arr); //입력값
-                Matrix matrixFromVector1 = target.getRow();
-                System.out.println("벡터1을 행렬로 전환 ("+arr.length+"*1 행렬) (30) 값 :");
+            // 30. 벡터1을 n*1 행렬로 전환 후 새 객체에 저장
+                Matrix matrixFromVector1 = vector1.getRow();
+                System.out.println("벡터1을 행렬로 전환 (3*1 행렬) (30) 값 :");
                 System.out.println(matrixFromVector1.toString());
-                if(matrixFromVector1.toString().equals("0 \n1 \n2 "))
+                if(matrixFromVector1.toString().equals("2 \n3 \n4 "))
                 {
                     System.out.println("성공.");
                 }
@@ -307,15 +281,12 @@ public class Test {
                 {
                     System.out.println("실패.");
                 }
-            }
-            // 31. 벡터를 행렬로 전환 (1*n 행렬)
-            {
-                int[] arr = {0,1,2};
-                Vector target = Factory.getVector(arr); //입력값
-                Matrix matrixFromVector2 = target.getColumn();
-                System.out.println("벡터1을 행렬로 전환 (1*"+arr.length+" 행렬) (31) 값:");
+
+            // 31. 벡터1을 1*n 행렬로 전환 후 새 객체에 저장
+                Matrix matrixFromVector2 = vector1.getColumn();
+                System.out.println("벡터1을 행렬로 전환 (1*3행렬) (31) 값:");
                 System.out.println(matrixFromVector2.toString());
-                if("0 1 2 ".equals(matrixFromVector2.toString()))
+                if("2 3 4 ".equals(matrixFromVector2.toString()))
                 {
                     System.out.println("성공.");
                 }
@@ -323,7 +294,6 @@ public class Test {
                 {
                     System.out.println("실패.");
                 }
-            }
 
             System.out.println();
 
