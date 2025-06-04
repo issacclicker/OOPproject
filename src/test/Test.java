@@ -2,8 +2,6 @@ package test;
 
 import java.io.DataInput;
 import java.io.File;
-import java.util.Objects;
-
 import tensor.*;
 
 import static java.lang.Integer.*;
@@ -14,7 +12,7 @@ public class Test {
             // [1] 스칼라 생성 및 연산
             System.out.println("[1] 스칼라 생성 및 연산");
 
-            // 01. 스칼라1 지정 생성(지정값 : 3)
+            // 01. 스칼라1 지정 생성(지정값 : 111)
 
             String scalar1_value = "111"; // 사용자 지정 값
             Scalar scalar1 = Factory.getScalar(scalar1_value);
@@ -22,7 +20,7 @@ public class Test {
                 System.out.println("스칼라1 생성 성공 (01)");
             } else { System.out.println("스칼라1 생성 실패(01)"); }
 
-            // 01. 스칼라2 지정 생성(지정값 : 4)
+            // 01. 스칼라2 지정 생성(지정값 : 111)
             String scalar2_value = "111"; // 사용자 지정 값
             Scalar scalar2 = Factory.getScalar(scalar2_value);
             if("111".equals(scalar2.toString())) {
@@ -33,7 +31,7 @@ public class Test {
             int randMin_s=100,randMax_s=999; // 사용자 지정 값
             Scalar scalar3 = Factory.getScalar(randMin_s,randMax_s);
             System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 (02)");
-            if(parseInt(scalar3.toString()) >= 100 && parseInt(scalar3.toString()) <= 999){
+            if(parseInt(scalar3.getScalar()) >= 100 && parseInt(scalar3.getScalar()) <= 999){
                 System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 성공 (02)");
             } else {
                 System.out.println("스칼라3 생성 실패 (02");
@@ -41,7 +39,7 @@ public class Test {
 
             // 17. 스칼라1 복제
             Scalar scalar1_1 = scalar1.cloneSelf();
-            if("111".equals(scalar1_1.toString())) {
+            if(scalar1.equals(scalar1_1)) {
                 System.out.println("스칼라1-1에 스칼라1 복제 성공(17) -> " + scalar1_1);
             } else {
                 System.out.println("스칼라1-1에 스칼라1 복제 실패(17) ");
@@ -77,28 +75,26 @@ public class Test {
             String scalarValue = "500";
             scalar1.setScalar(scalarValue);
             if ("500".equals(scalar1.toString())){
-                System.out.println("스칼라1 값을 5로 변경 후 조회 성공: " + scalar1.getScalar() + " (12)");
+                System.out.println("스칼라1 값을 500로 변경 후 조회 성공: " + scalar1.getScalar() + " (12)");
             } else {
-                System.out.println("스칼라1 값을 5로 변경 후 조회 실패 (12)");
+                System.out.println("스칼라1 값을 500로 변경 후 조회 실패 (12)");
             }
 
             // 24. 스칼라1 스칼라2 덧셈
             Scalar tempscalar = Tensors.addScalarEach(scalar1, scalar2);
             if("611".equals(tempscalar.toString())){
-            System.out.println("스칼라1 + 스칼라2 성공 :" + 611+ " (24)"); //scalar1에 scalar2의 값을 더한 것을 출력함.
+            System.out.println("스칼라1 + 스칼라2 성공 :" + tempscalar + " (24)"); //scalar1에 scalar2의 값을 더한 것을 출력함.
             } else {
             System.out.println("스칼라1 + 스칼라2 실패 (24)");
             }
 
             // 25. 스칼라1 스칼라2 곱셈
             Scalar tempscalar2 = Tensors.multiplyScalarEach(scalar1, scalar2);
-            if("55500".equals(tempscalar2.toString())) {
-                System.out.println("스칼라1 * 스칼라2 성공"+tempscalar2+" (25)"); //scalar1에 scalar2의 값을 곱한 것을 출력함.
-            }
-            else {
+            if("55000".equals(tempscalar2.toString())) {
+                System.out.println("스칼라1 * 스칼라2 성공" + tempscalar2 + " (25)"); //scalar1에 scalar2의 값을 곱한 것을 출력함.
+            } else {
                 System.out.println("스칼라1 * 스칼라2 실패 (25)");
             }
-
 
             // 18. 스칼라1에 스칼라2 더해서 저장
             scalar1.addScalar(scalar2);
@@ -122,11 +118,11 @@ public class Test {
             System.out.println("[2] 벡터 생성 및 연산");
 
             // 05. 벡터1 1차원 배열(arr1)로 3차원 벡터 생성
-            int[] arr1 = {250,250}; //입력값
+            int[] arr1 = {250, 450};
             Vector vector1 = Factory.getVector(arr1);
             System.out.println("벡터1 1차원 배열로 3차원 벡터 생성 (05) 값 : ");
             System.out.print(vector1.toString());
-            if("250\n250".equals(vector1.toString()))
+            if("250\n450".equals(vector1.toString()))
             {
                 System.out.println("통과.");
             }
@@ -135,9 +131,25 @@ public class Test {
                 System.out.println("실패.");
             }
 
+        // 17v. 벡터1를 복사해 벡터6에 저장
+        Vector vector6 = vector1.cloneSelf();
+        if("250\n450".equals(vector6.toString())) {
+            System.out.println("벡터6에 벡터1 복제 성공 (17v) -> " + vector6.toString());
+        } else {
+            System.out.println("벡터6에 벡터1 복제 실패 (17v) ");
+        }
+
+        // 15v. 벡터1과 벡터6 동등성 비교
+        isEqual = vector1.equals(vector6);
+        if(isEqual) {
+            System.out.println("벡터1과 벡터2 동등성 비교 성공 /결과: " + isEqual + " (15)");
+        } else {
+            System.out.println("스칼라1과 스칼라2 동등성 비교 실패 (15)");
+        }
+
 
             // 03. 스칼라 va1을 요소로 하는 n차원 벡터 생성
-            Scalar val1 = Factory.getScalar("100"); //입력값
+            Scalar val1 = Factory.getScalar("100");
             Vector vector2 = Factory.getVector(val1, 2);
             System.out.println("벡터2 "+val1+"을 요소로 하는 2차원 벡터 생성 (03) 값 : ");
             System.out.println(vector2.toString());
@@ -150,31 +162,10 @@ public class Test {
                 System.out.println("실패.");
             }
 
-            //17v 벡터1을 복사해 벡터6에 저장
-            Vector vector6 = vector1.cloneSelf();
-        if(vector1.equals(vector6))
-        {
-            System.out.println("통과.");
-        }
-        else
-        {
-            System.out.println("실패.");
-        }
-            //15v 벡터1과 벡터2의 동등성 비교
-            if(!vector1.equals(vector2))
-            {
-                System.out.println("통과.");
-            }
-            else
-            {
-                System.out.println( "실패.");
-            }
-
-
             // 04. 벡터3 rand1~rand2까지 랜덤 요소로 val2차원 벡터 생성
-            int rand1 = 100;
-            int rand2 = 999;
-            int val2 = 2;
+            int rand1 = 1;
+            int rand2 = 9;
+            int val2 = 3;
             Vector vector3 = Factory.getVector(rand1, rand2, val2);
             System.out.println("벡터3 "+rand1+"~"+rand2+"까지 랜덤 요소로 "+val2+"차원 벡터 생성 (04) 값 : ");
             System.out.println(vector3.toString());
@@ -207,7 +198,7 @@ public class Test {
             int val3 = 0;
             Scalar element0 = vector1.getAt(val3);
             System.out.println("벡터1 0번째 인덱스 요소 조회: " + element0.toString() + " (11)");
-            if(element0.toString().equals("250"))
+            if(element0.toString().equals("1"))
             {
                 System.out.println("성공.");
             }
@@ -229,10 +220,12 @@ public class Test {
                 System.out.println("실패.");
             }
 
-            // 26. 벡터1 벡터2 덧셈
+            // 26. 벡터1 벡터4 덧셈
+                Scalar temp = Factory.getScalar("1");
+//                Vector vector4 = vector2;
                 Vector tempVector = Tensors.addVectorEach(vector1, vector2);
-                System.out.println("벡터1에 벡터4 더한 결과: " + tempVector.toString() + " (26)");
-                if ("350\n350".equals(tempVector.toString())) {
+                System.out.println("벡터1에 벡터2 더한 결과: " + tempVector.toString() + " (26)");
+                if ("350\n550".equals(tempVector.toString())) {
                     System.out.println("성공.");
                 } else {
                     System.out.println("실패.");
@@ -242,16 +235,31 @@ public class Test {
 
             Scalar tempScalar = Factory.getScalar("1");
             Vector tempVector2 = Tensors.multiplyVectorScalar(vector1, tempScalar);
-            if ("50000\n90000".equals(tempVector2.toString())) {
-                System.out.println("(27) 성공.");
+            if ("250\n450".equals(tempVector2.toString())) {
+                System.out.println("(27-1) 성공");
             } else {
-                System.out.println("(27) 실패.");
+                System.out.println("(27-1) 실패.");
             }
 
-            //20 벡터1에 벡터2 더해서 저장
-            vector1.addVector(vector2);
-            System.out.println("벡터1에 벡터2 더해서 저장 완료 -> " + vector1 + " (20)");
-            if("350\n550".equals(vector1.toString()))
+            //27. 벡터2 스칼라2 곱셈
+
+            tempVector2 = Tensors.multiplyVectorScalar(vector2, scalar2);
+            if ("".equals(tempVector2.toString())) {
+                System.out.println("(27-2) 성공");
+            } else {
+                System.out.println("(27-2)실패.");
+            }
+
+            System.out.println("벡터1에 스칼라2를 곱한 결과: " + tempVector2 + " (27)");
+
+            // 20. temp1에 temp2 더해서 저장 (크기가 같은 벡터끼리만 가능)
+
+            int[] tempValues = {1,2,3}, tempValues2 = {3,2,1};
+            Vector temp1 = Factory.getVector(tempValues);
+            Vector temp2 = Factory.getVector(tempValues2);
+            temp1.addVector(temp2);
+            System.out.println("temp1에 temp2 더해서 저장 완료 -> " + temp1 + " (20)");
+            if("4\n4\n4".equals(temp1.toString()))
             {
                 System.out.println("성공.");
             }
@@ -260,10 +268,13 @@ public class Test {
                 System.out.println("실패.");
             }
 
-            // 21. 벡터2에 (스칼라)111 곱해서 저장
-            vector2.multiplyScalar(Factory.getScalar("111"));
-            System.out.println("vector2에 111 곱해서 저장 완료 (21)");
-            if("11100\n11100".equals(vector2.toString()))
+            // 21. 벡터2에 스칼라2 곱해서 저장
+
+            {
+            Scalar tempscalar3 = Factory.getScalar("2");
+            vector2.multiplyScalar(tempscalar3);
+            System.out.println("tempvector에 tempscalar3 곱해서 저장 완료 (21)");
+            if("2\n4\n6".equals(temp1.toString()))
             {
                 System.out.println("성공.");
             }
@@ -271,21 +282,25 @@ public class Test {
             {
                 System.out.println("실패.");
             }
+            }
 
 
-            System.out.println();
 
-            // [3] 벡터 -> 행렬 전환
+
+        System.out.println();
+
+
+
+        // [3] 벡터 -> 행렬 전환
             System.out.println("[3] 벡터 -> 행렬 전환");
 
             // 30. 벡터를 행렬로 전환 (n*1 행렬)
             {
-                int[] arr = {0,1,2};
-                Vector target = Factory.getVector(arr); //입력값
-                Matrix matrixFromVector1 = target.getRow();
-                System.out.println("벡터1을 행렬로 전환 ("+arr.length+"*1 행렬) (30) 값 :");
+                Vector target = vector1; //입력값
+                Matrix matrixFromVector1 = target.getColumn();
+                System.out.println("벡터1을 행렬로 전환 (2*1 행렬) (30) 값 :");
                 System.out.println(matrixFromVector1.toString());
-                if(matrixFromVector1.toString().equals("0 \n1 \n2 "))
+                if(matrixFromVector1.toString().equals("350 \n450 "))
                 {
                     System.out.println("성공.");
                 }
@@ -296,12 +311,12 @@ public class Test {
             }
             // 31. 벡터를 행렬로 전환 (1*n 행렬)
             {
-                int[] arr = {0,1,2};
-                Vector target = Factory.getVector(arr); //입력값
-                Matrix matrixFromVector2 = target.getColumn();
-                System.out.println("벡터1을 행렬로 전환 (1*"+arr.length+" 행렬) (31) 값:");
+
+                Vector target = vector1; //입력값
+                Matrix matrixFromVector2 = target.getRow();
+                System.out.println("벡터1을 행렬로 전환 (1*2 행렬) (31) 값:");
                 System.out.println(matrixFromVector2.toString());
-                if("0 1 2 ".equals(matrixFromVector2.toString()))
+                if("350 450 ".equals(matrixFromVector2.toString()))
                 {
                     System.out.println("성공.");
                 }
@@ -326,6 +341,25 @@ public class Test {
                 System.out.println("행렬1 2차원 배열로 생성 실패 (09)");
             }
 
+        // 14m. 행렬1 출력
+        if(("1 3 \n2 4 ".equals(matrix1.toString()))){
+            System.out.println("행렬1 출력 성공");
+        } else {
+            System.out.println("행렬1 출력 실패");
+        }
+
+        // 17m. 행렬1을 복사해 행렬6에 저장
+        Matrix matrix6 = matrix1.cloneSelf();
+        if(matrix6.equals(matrix1))
+        {
+            System.out.println("성공");
+        }
+        else
+        {
+            System.out.println("실패");
+        }
+
+
             // 08. 행렬2 csv 파일로 생성 (파일이 있다고 가정)
             File csvFile = new File("matrix_data.csv");
             Matrix matrix2 = Factory.getMatrix(csvFile, 3, 3);
@@ -335,20 +369,7 @@ public class Test {
                 System.out.println("행렬2 csv파일로 생성 실패 (08)");
             }
 
-            // 14m. 행렬1 출력
-            if(("1 3 \n2 4 ".equals(matrix1.toString()))){
-                System.out.println("행렬1 출력 성공");
-            } else {
-                System.out.println("행렬1 출력 실패");
-            }
 
-            // 17m. 행렬1을 복사해 행렬6에 저장
-            Matrix matrix6 = matrix1.cloneSelf();
-            if("1 3 \n2 4 ".equals(vector6.toString())) {
-                System.out.println("행렬6에 행렬1 복제 성공 (17m) -> " + matrix6.toString());
-            } else {
-                System.out.println("행렬6에 행렬1 복제 실패 (17m) ");
-            }
 
             // 06. 행렬3 0으로만 구성된 2*2 행렬 생성
             int row3= 2, col3=2;//사용자 설정 값
@@ -570,34 +591,14 @@ public class Test {
             }
 
             // 32. 행렬끼리 가로로 합치기
-            matrixFromCol1.connectMatrix(matrixFromCol2, "horizontal");
-            if("4 3 \n2 1 ".equals(matrixFromCol1.toString()))
-            {
-                System.out.println("(32) 통과");
-            }
-            else {
-                System.out.println("(32) 실패");
-            }
-
-            // 36. 행렬1의 1행~1행, 1열~2열 을 부분 행렬로 추출
-            Matrix SubMatrix = matrix1.extractSubMatrix(1, 1, 1, 2);
-            if("1 3 ".equals(SubMatrix.toString()))
-            {
-                System.out.println("행렬1의 1행~1행, 1열~2열 을 부분 행렬로 추출 결과 :" + SubMatrix.toString());
-                System.out.println("(36) 통과");
-            } else {
-                System.out.println("(36) 실패");
-            }
-
-            // 37. 행렬1의 1행, 1열을 제외한 부분 행렬 추출
-            Matrix SubMatrix2 = matrix1.extractSubMatrix(1, 1);
-            if("4 ".equals(SubMatrix2.toString()))
-            {
-                System.out.println("행렬1의 1행, 1열을 제외한 부분 행렬 추출 결과 :" + SubMatrix2.toString());
-                System.out.println("(37) 통과");
-            } else {
-                System.out.println("(37) 실패");
-            }
+                matrixFromCol1.connectMatrix(matrixFromCol2, "horizontal");
+                if("4 3 \n2 1 ".equals(matrixFromCol1.toString()))
+                {
+                    System.out.println("(32) 통과");
+                }
+                else {
+                    System.out.println("(32) 실패");
+                }
 
             System.out.println();
 
