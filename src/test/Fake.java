@@ -2,13 +2,17 @@ package test;
 
 import tensor.*;
 
+import java.io.File;
+
 public class Fake {
     public static void main(String[] args)
     {
-        Scalar scalar1 = Factory.getScalar("3");
-        Scalar scalar2 = scalar1.cloneSelf();
-        Scalar scalar3 = Tensors.multiplyScalarEach(scalar1, scalar2);
+        int[][] arr = {{1,0,0},{0,2,0},{0,0,1}};
+        Matrix mm = Factory.getMatrix(arr,3,3);
 
-        System.out.println(scalar3);
+        mm.multiplyMatrix(mm,"right");
+
+        System.out.println(mm);
+
     }
 }

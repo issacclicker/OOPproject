@@ -10,6 +10,8 @@ public interface Matrix {
     //13m 크기 정보 조회 (행 또는 열 개수 반환)
     int size(String option);
 
+    String toString();
+
     //15m. 객체의 동등성 판단
     @Override
     boolean equals(Object o);
