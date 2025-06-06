@@ -67,7 +67,7 @@ public interface Matrix {
 
     //47 48 특정 행/열에 상수배(스칼라)
     //multiplyCondition -> 행에 곱할건지, 열에 곱할건지
-    void multiplyByScalar(Scalar value, String multiplyCondition);
+    void multiplyByScalar(Scalar value, int index,String multiplyCondition);
 
     //49 특정 행에 다른 행의 상수배를 더할 수 있다.
     void addMultipliedRow(int A,int B,Scalar multiplyValue);

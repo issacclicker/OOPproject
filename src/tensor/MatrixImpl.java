@@ -158,11 +158,11 @@ class MatrixImpl implements Matrix {
 
     //36
     public Matrix extractSubMatrix(int beginRow, int endRow, int beginColumn, int endColumn) {
-        Matrix result = Factory.getMatrix(Factory.getScalar("0"),endRow-beginRow,endColumn-beginColumn);
+        Matrix result = Factory.getMatrix(Factory.getScalar("0"),endRow-beginRow+1,endColumn-beginColumn+1);
 
-        for(int i=beginRow;i<endRow;i++)
+        for(int i=beginRow;i<endRow+1;i++)
         {
-            for(int j=beginColumn;j<endColumn;j++)
+            for(int j=beginColumn;j<endColumn+1;j++)
             {
                 result.setMatrixAt(i-beginRow,j-beginColumn,this.getMatrixAt(i,j));
             }
@@ -173,75 +173,162 @@ class MatrixImpl implements Matrix {
 
     //37
     public Matrix extractSubMatrix(int exceptingRow, int exceptingColumn) {
-        System.out.println("extractSubMatrix(제외) 호출 성공");
-        return null;
+        Matrix result = Factory.getMatrix(Factory.getScalar("0"),rows-1,cols-1);
+
+        boolean rowCondition = false;
+        for(int i=0;i<rows;i++)
+        {
+            if(exceptingRow==i)
+            {
+                rowCondition = true;
+                continue;
+            }
+
+            boolean colCondition = false;
+            for(int j=0;j<cols;j++)
+            {
+                if(exceptingColumn==j)
+                {
+                    colCondition = true;
+                    continue;
+                }
+
+                int wantRow = i;
+                int wantCol = j;
+
+                if(rowCondition) wantRow--;
+                if(colCondition) wantCol--;
+
+                result.setMatrixAt(wantRow,wantCol,this.getMatrixAt(i,j));
+            }
+        }
+
+        return result;
     }
 
     //38
     public Matrix getTranspose() {
-        System.out.println("getTranspose 호출 성공");
-        return null;
+        Matrix result = Factory.getMatrix(Factory.getScalar("0"),cols,rows);
+
+        for(int i=0;i<rows;i++)
+        {
+            for(int j=0;j<cols;j++)
+            {
+                result.setMatrixAt(j,i,this.getMatrixAt(i,j));
+            }
+        }
+
+        return result;
     }
 
     //39
     public Scalar getTrace() {
-        System.out.println("getTrace 호출 성공");
-        return null;
+        Scalar result = Factory.getScalar("0");
+
+        for(int i=0;i<rows;i++)
+        {
+            result.addScalar(this.getMatrixAt(i,i));
+        }
+        return result;
     }
 
     //40
     public boolean isSquareMatrix() {
-        System.out.println("isSquareMatrix 호출 성공");
-        return false;
+        return rows==cols;
     }
 
     //41
     public boolean isUpperTriangularMatrix() {
-        System.out.println("isUpperTriangularMatrix 호출 성공");
-        return false;
+
+        for(int i=1;i<rows;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(!getMatrixAt(i,j).equals(Factory.getScalar("0")))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     //42
     public boolean isLowerTriangularMatrix() {
-        System.out.println("isLowerTriangularMatrix 호출 성공");
-        return false;
+
+        Matrix temp = this.getTranspose();
+        return temp.isUpperTriangularMatrix();
     }
 
     //43
     public boolean isIdentityMatrix() {
-        System.out.println("isIdentityMatrix 호출 성공");
-        return false;
+        Matrix temp = Factory.getMatrix(rows);
+        return temp.equals(this);
     }
 
     //44
     public boolean isZeroMatrix() {
-        System.out.println("isZeroMatrix 호출 성공");
-        return false;
+        Matrix temp = Factory.getMatrix(Factory.getScalar("0"),rows,cols);
+        return temp.equals(this);
     }
 
     //45
-    public void swapRow(int A, int B) {
-        System.out.println("swapRow 호출 성공");
+    public void swapRow(int A, int B)
+    {
+        for(int i=0;i<cols;i++)
+        {
+            Scalar temp = this.getMatrixAt(A,i);
+            this.setMatrixAt(A,i,this.getMatrixAt(B,i));
+            this.setMatrixAt(B,i,temp);
+        }
     }
 
     //46
-    public void swapColumn(int A, int B) {
-        System.out.println("swapColumn 호출 성공");
+    public void swapColumn(int A, int B)
+    {
+        for(int i=0;i<rows;i++)
+        {
+            Scalar temp = this.getMatrixAt(i,A).cloneSelf();
+            this.setMatrixAt(i,A,this.getMatrixAt(i,B));
+            this.setMatrixAt(i,B,temp);
+        }
     }
 
     //47,48
-    public void multiplyByScalar(Scalar value, String multiplyCondition) {
-        System.out.println("multiplyByScalar 호출 성공");
+    public void multiplyByScalar(Scalar value, int index, String multiplyCondition)
+    {
+        if(multiplyCondition.equals("row"))
+        {
+            for(int i=0;i<cols;i++)
+            {
+                this.setMatrixAt(index,i,Tensors.multiplyScalarEach(value,this.getMatrixAt(index,i)));
+            }
+        }
+        else
+        {
+            for(int i=0;i<rows;i++)
+            {
+                this.setMatrixAt(i,index,Tensors.multiplyScalarEach(value,this.getMatrixAt(i,index)));
+            }
+        }
     }
 
     //49
-    public void addMultipliedRow(int A, int B, Scalar multiplyValue) {
-        System.out.println("addMultipliedRow 호출 성공");
+    public void addMultipliedRow(int A, int B, Scalar multiplyValue)
+    {
+        for(int i=0;i<cols;i++)
+        {
+            this.setMatrixAt(B,i,Tensors.addScalarEach(getMatrixAt(B,i),Tensors.multiplyScalarEach(multiplyValue,this.getMatrixAt(A,i))));
+        }
     }
 
     //50
     public void addMultipliedColumn(int A, int B, Scalar multiplyValue) {
-        System.out.println("addMultipliedColumn 호출 성공");
+        for(int i=0;i<rows;i++)
+        {
+            this.setMatrixAt(i,B,Tensors.addScalarEach(getMatrixAt(i,B),Tensors.multiplyScalarEach(multiplyValue,this.getMatrixAt(i,A))));
+        }
     }
 
     //51
@@ -253,7 +340,7 @@ class MatrixImpl implements Matrix {
 
     //52
     public boolean isRREF() {
-        System.out.println("isRREF 호출 성공");
+        if(this.getRREF().equals(this)) return true;
         return false;
     }
 
@@ -270,42 +357,20 @@ class MatrixImpl implements Matrix {
     }
 
 
-//    public void add(Scalar val) {
-//        System.out.println("Vector add 호출 성공");
-//    }
-
-//    public void subtract(Scalar val) {
-//        System.out.println("Vector subtract 호출 성공");
-//    }
-
-//    public void multiply(Scalar val) {
-//        System.out.println("Vector multiply 호출 성공");
-//    }
-
-//    public void divide(Scalar val) {
-//        System.out.println("Vector divide 호출 성공");
-//    }
-
-//    public int getSize() {
-//        System.out.println("Vector getSize 호출 성공");
-//        return 0;
-//    }
-
-//    public Scalar get(int index) {
-//        System.out.println("Vector get 호출 성공");
-//        return null;
-//    }
-
-//    public void set(int index, Scalar val) {
-//        System.out.println("Vector set 호출 성공");
-//    }
-
-
     //17m
     @Override
     protected Matrix clone() {
+        Matrix result = Factory.getMatrix(Factory.getScalar("0"),rows,cols);
 
-        return null;
+        for(int i=0;i<rows;i++)
+        {
+            for(int j=0;j<cols;j++)
+            {
+                result.setMatrixAt(i,j,this.getMatrixAt(i,j));
+            }
+        }
+
+        return result;
     }
 
     // 생성자들
@@ -335,7 +400,6 @@ class MatrixImpl implements Matrix {
     }
 
     //8 csv 파일로 부터 m*n 행렬 생성
-    //수정 필요
     MatrixImpl(File val, int m, int n) {
         this.rows = m;
         this.cols = n;
@@ -380,7 +444,6 @@ class MatrixImpl implements Matrix {
     }
 
     //10 단위 행렬 생성
-    //크기는 어떻게 되는 걸까요..?
     MatrixImpl(int n) {
         this.rows = n;
         this.cols = n;
@@ -403,14 +466,15 @@ class MatrixImpl implements Matrix {
 
     //28 전달받은 두 행렬의 덧셈
     static Matrix addMatrixEach(Matrix A, Matrix B) {
-        Matrix resultof28 = null;
-        return resultof28;
+        Matrix result = A.cloneSelf();
+        result.addMatrix(B);
+        return result;
     }
 
     //29 전달받은 두 행렬의 곱셈
     static Matrix multiplyMatrixEach(Matrix A, Matrix B) {
-        Matrix resultof29 = null;
-        //구현 필요
-        return resultof29;
+        Matrix result = B.cloneSelf();
+        result.multiplyMatrix(A,"right");
+        return result;
     }
 }

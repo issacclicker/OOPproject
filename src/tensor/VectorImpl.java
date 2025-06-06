@@ -13,7 +13,7 @@ class VectorImpl implements Vector,Cloneable {
         dimension = n;
         for(int i=0;i<n;i++)
         {
-            vectorValues.add(val);
+            vectorValues.add(val.cloneSelf());
         }
     }
 

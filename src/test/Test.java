@@ -637,9 +637,9 @@ public class Test {
             // 실제 구현에서는 알고리즘에 따라 적절한 연산 선택
 
             // 예시: 47. 특정행에 상수배
-                matrix2.multiplyByScalar(Factory.getScalar("2"), "row");
+                matrix2.multiplyByScalar(Factory.getScalar("2"),0 ,"row");
                 System.out.println("연산결과출력 (47)");
-                identityMatrix.multiplyByScalar(Factory.getScalar("2"), "row");
+                identityMatrix.multiplyByScalar(Factory.getScalar("2"), 0,"row");
 
                 // 52. RREF 판단
                 boolean isRREF = matrix2.isRREF();
