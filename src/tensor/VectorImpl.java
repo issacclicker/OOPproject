@@ -10,6 +10,11 @@ class VectorImpl implements Vector,Cloneable {
     //3. 지정한 하나의 값을 모든 요소의 값으로 하는 n차원 벡터 생성
     VectorImpl(Scalar val, int n)
     {
+        if(n < 1)
+        {
+            throw new DimensionCannotBeZero("");
+        }
+
         dimension = n;
         for(int i=0;i<n;i++)
         {
@@ -20,6 +25,11 @@ class VectorImpl implements Vector,Cloneable {
     //4. i 이상 j 미만의 무작위 값을 요소로 하는 n차원 벡터 생성
     VectorImpl(int i, int j, int n)
     {
+        if(n < 1)
+        {
+            throw new DimensionCannotBeZero("");
+        }
+
         dimension = n;
         for(int k=0;k<n;k++)
         {
@@ -31,6 +41,12 @@ class VectorImpl implements Vector,Cloneable {
     //5. 1차원 배열로부터 n-차원 벡터 생성
     VectorImpl(int[] arr)
     {
+        if(arr == null || arr.length < 1)
+        {
+            throw new DimensionCannotBeZero("");
+        }
+
+
         dimension = arr.length;
         for(int i : arr)
         {
@@ -40,11 +56,21 @@ class VectorImpl implements Vector,Cloneable {
 
     //11v. 특정 위치의 요소를 지정
     public void setAt(Scalar val,int index) {
+        if(index<0||index>=dimension)
+        {
+            throw new IndexOutOfBounds("");
+        }
+
         vectorValues.set(index,val);
     };
 
     //11v. 특정 위치의 요소를 조회
     public Scalar getAt(int index){
+        if(index<0||index>=dimension)
+        {
+            throw new IndexOutOfBounds("");
+        }
+
         return vectorValues.get(index);
     };
 

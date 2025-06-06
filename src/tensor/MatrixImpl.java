@@ -16,10 +16,18 @@ class MatrixImpl implements Matrix {
     //11m
     public void setMatrixAt(int i, int j, Scalar val)
     {
+        if(i<0||i>=rows || j<0||j>=cols)
+        {
+            throw new IndexOutOfBounds("");
+        }
         MatrixValues.get(i).setAt(val,j);
     }
 
     public Scalar getMatrixAt(int i, int j) {
+        if(i<0||i>=rows || j<0||j>=cols)
+        {
+            throw new IndexOutOfBounds("");
+        }
         return MatrixValues.get(i).getAt(j);
     }
 
@@ -65,6 +73,12 @@ class MatrixImpl implements Matrix {
     //22
     public void addMatrix(Matrix m)
     {
+        if(this.cols != m.size("col") || this.rows != m.size("row"))
+        {
+            throw new MatrixSumSizeMismatch("");
+        }
+
+
         for(int i=0;i<rows;i++)
         {
             for(int j=0;j<cols;j++)
@@ -77,6 +91,11 @@ class MatrixImpl implements Matrix {
     //23
     public void multiplyMatrix(Matrix m, String multiplyDirection)
     {
+        if(this.cols != m.size("col") || this.rows != m.size("row"))
+        {
+            throw new MatrixMultiplySizeMismatch("");
+        }
+
         //m * 기존행렬
         if(multiplyDirection.equals("right"))
         {
@@ -116,6 +135,12 @@ class MatrixImpl implements Matrix {
 
         if(connectDirection.equals("horizontal"))
         {
+            if(this.rows != m.size("row"))
+            {
+                throw new MatrixColumnSizeMismatch("");
+            }
+
+
             cols += m.size("cols");
 
             for(int i=0;i<m.size("row");i++)
@@ -128,6 +153,12 @@ class MatrixImpl implements Matrix {
         }
         else
         {
+            if(this.cols != m.size("col"))
+            {
+                throw new MatrixColumnSizeMismatch("");
+            }
+
+
             rows += m.size("row");
             for(int i=0;i<m.size("row");i++)
             {
@@ -139,8 +170,14 @@ class MatrixImpl implements Matrix {
     //34,35
     public Vector extractMatrixToVector(int index, String extractDirection) {
 
+        if(index<0||index>=rows||index>=cols)
+        {
+            throw new IndexOutOfBounds("");
+        }
+
+
         Vector result = null;
-        if(extractDirection.equals("row"))
+        if(extractDirection.equals("row") || extractDirection.equals("h"))
         {
             result = this.MatrixValues.get(index).cloneSelf();
         }
@@ -158,6 +195,11 @@ class MatrixImpl implements Matrix {
 
     //36
     public Matrix extractSubMatrix(int beginRow, int endRow, int beginColumn, int endColumn) {
+        if(beginRow<0||beginRow>=rows || endRow<0||endRow>=rows || beginColumn<0||beginColumn>=cols || endColumn<0||endColumn>=cols)
+        {
+            throw new IndexOutOfBounds("");
+        }
+
         Matrix result = Factory.getMatrix(Factory.getScalar("0"),endRow-beginRow+1,endColumn-beginColumn+1);
 
         for(int i=beginRow;i<endRow+1;i++)
@@ -173,6 +215,11 @@ class MatrixImpl implements Matrix {
 
     //37
     public Matrix extractSubMatrix(int exceptingRow, int exceptingColumn) {
+        if(exceptingRow<0||exceptingRow>=rows || exceptingColumn<0||exceptingColumn>=cols)
+        {
+            throw new IndexOutOfBounds("");
+        }
+
         Matrix result = Factory.getMatrix(Factory.getScalar("0"),rows-1,cols-1);
 
         boolean rowCondition = false;
@@ -276,6 +323,11 @@ class MatrixImpl implements Matrix {
     //45
     public void swapRow(int A, int B)
     {
+        if(A<0||A>=rows || B<0||B>=rows)
+        {
+            throw new IndexOutOfBounds("");
+        }
+
         for(int i=0;i<cols;i++)
         {
             Scalar temp = this.getMatrixAt(A,i);
@@ -287,6 +339,11 @@ class MatrixImpl implements Matrix {
     //46
     public void swapColumn(int A, int B)
     {
+        if(A<0||A>=cols || B<0||B>=cols)
+        {
+            throw new IndexOutOfBounds("");
+        }
+
         for(int i=0;i<rows;i++)
         {
             Scalar temp = this.getMatrixAt(i,A).cloneSelf();
@@ -317,6 +374,11 @@ class MatrixImpl implements Matrix {
     //49
     public void addMultipliedRow(int A, int B, Scalar multiplyValue)
     {
+        if(A<0||A>=rows || B<0||B>=rows)
+        {
+            throw new IndexOutOfBounds("");
+        }
+
         for(int i=0;i<cols;i++)
         {
             this.setMatrixAt(B,i,Tensors.addScalarEach(getMatrixAt(B,i),Tensors.multiplyScalarEach(multiplyValue,this.getMatrixAt(A,i))));
@@ -325,6 +387,11 @@ class MatrixImpl implements Matrix {
 
     //50
     public void addMultipliedColumn(int A, int B, Scalar multiplyValue) {
+        if(A<0||A>=cols || B<0||B>=cols)
+        {
+            throw new IndexOutOfBounds("");
+        }
+
         for(int i=0;i<rows;i++)
         {
             this.setMatrixAt(i,B,Tensors.addScalarEach(getMatrixAt(i,B),Tensors.multiplyScalarEach(multiplyValue,this.getMatrixAt(i,A))));
@@ -333,8 +400,64 @@ class MatrixImpl implements Matrix {
 
     //51
     public Matrix getRREF() {
-        System.out.println("getRREF 호출 성공");
-        return null;
+        MatrixImpl A = (MatrixImpl) this.clone();
+
+        int rowCount = A.rows;
+        int colCount = A.cols;
+        int lead = 0;
+
+
+        for (int r = 0; r < rowCount; r++) {
+            if (lead >= colCount) {
+                break;
+            }
+
+            int i = r;
+
+            while (i < rowCount &&
+                    A.getMatrixAt(i, lead).equals(Factory.getScalar("0"))) {
+                i++;
+            }
+
+            if (i == rowCount) {
+                lead++;
+                r--;
+                continue;
+            }
+
+            A.swapRow(i, r);
+
+            Scalar pivotVal = A.getMatrixAt(r, lead);
+            for (int c = 0; c < colCount; c++) {
+                Scalar old = A.getMatrixAt(r, c);
+                Scalar divided = Tensors.multiplyScalarEach(Factory.getScalar( Double.valueOf( 1.0 / Double.parseDouble( pivotVal.getScalar() ) ).toString() ), old);
+                A.setMatrixAt(r, c, divided);
+            }
+
+            for (int k = 0; k < rowCount; k++) {
+                if (k == r) {
+                    continue;
+                }
+                Scalar factor = A.getMatrixAt(k, lead);
+                if (factor.equals(Factory.getScalar("0"))) {
+                    continue;
+                }
+
+                for (int c = 0; c < colCount; c++) {
+                    Scalar toSubtract = Tensors.multiplyScalarEach(factor, A.getMatrixAt(r, c));
+                    Scalar negativeOne = Factory.getScalar("-1");
+                    Scalar minusProduct = Tensors.multiplyScalarEach(negativeOne, toSubtract);
+                    Scalar newVal = Tensors.addScalarEach(A.getMatrixAt(k, c), minusProduct);
+                    A.setMatrixAt(k, c, newVal);
+                }
+            }
+
+
+            lead++;
+        }
+
+
+        return A;
     }
 
 
@@ -346,14 +469,129 @@ class MatrixImpl implements Matrix {
 
     //53
     public Scalar getDeterminant() {
-        System.out.println("getDeterminant 호출 성공");
-        return null;
+
+        if(this.rows!=this.cols)
+        {
+            throw new CannotGetDeterminant("");
+        }
+
+        MatrixImpl A = (MatrixImpl) this.clone();
+        int n = rows;
+
+        Scalar det = Factory.getScalar("1");
+
+        for (int i = 0; i < n; i++) {
+            int pivotRow = i;
+            while (pivotRow < n && A.getMatrixAt(pivotRow, i).equals(Factory.getScalar("0"))) {
+                pivotRow++;
+            }
+
+            if (pivotRow == n) {
+                return Factory.getScalar("0");
+            }
+
+            if (pivotRow != i) {
+                A.swapRow(i, pivotRow);
+                // det = det * (-1)
+                det = Tensors.multiplyScalarEach(det, Factory.getScalar("-1"));
+            }
+
+            Scalar pivotVal = A.getMatrixAt(i, i);
+            det = Tensors.multiplyScalarEach(det, pivotVal);
+
+            double pivotDouble = Double.parseDouble(pivotVal.getScalar());
+            double invPivotD  = 1.0 / pivotDouble;
+            Scalar invPivot   = Factory.getScalar(Double.valueOf(invPivotD).toString());
+
+            for (int j = i + 1; j < n; j++) {
+                Scalar aji = A.getMatrixAt(j, i);
+                Scalar factor = Tensors.multiplyScalarEach(aji, invPivot);
+
+                for (int k = i; k < n; k++) {
+                    Scalar aik      = A.getMatrixAt(i, k);
+                    Scalar toSubtract = Tensors.multiplyScalarEach(factor, aik);
+
+                    Scalar negativeOne = Factory.getScalar("-1");
+                    Scalar minusProd   = Tensors.multiplyScalarEach(negativeOne, toSubtract);
+                    Scalar oldVal      = A.getMatrixAt(j, k);
+                    Scalar newVal      = Tensors.addScalarEach(oldVal, minusProd);
+
+                    A.setMatrixAt(j, k, newVal);
+                }
+                A.setMatrixAt(j, i, Factory.getScalar("0"));
+            }
+        }
+        return det;
     }
 
     //54
     public Matrix getReversed() {
-        System.out.println("getReversed 호출 성공");
-        return null;
+        int n = rows;
+
+        if(this.rows!=this.cols || this.getDeterminant().equals(Factory.getScalar("0")))
+        {
+            throw new CannotGetDeterminant("");
+        }
+
+
+        MatrixImpl A = (MatrixImpl) this.clone();
+        MatrixImpl I = (MatrixImpl) Factory.getMatrix(n);
+
+        for (int i = 0; i < n; i++) {
+            int pivotRow = i;
+            while (pivotRow < n && A.getMatrixAt(pivotRow, i).equals(Factory.getScalar("0"))) {
+                pivotRow++;
+            }
+
+            if (pivotRow != i) {
+                A.swapRow(i, pivotRow);
+                I.swapRow(i, pivotRow);
+            }
+
+            Scalar pivotVal = A.getMatrixAt(i, i);
+            double pivotD    = Double.parseDouble(pivotVal.getScalar());
+            double invPivotD = 1.0 / pivotD;
+            Scalar invPivot  = Factory.getScalar(Double.valueOf(invPivotD).toString());
+
+            for (int c = 0; c < n; c++) {
+                Scalar aOld = A.getMatrixAt(i, c);
+                Scalar aNew = Tensors.multiplyScalarEach(aOld, invPivot);
+                A.setMatrixAt(i, c, aNew);
+
+                Scalar iOld = I.getMatrixAt(i, c);
+                Scalar iNew = Tensors.multiplyScalarEach(iOld, invPivot);
+                I.setMatrixAt(i, c, iNew);
+            }
+
+            for (int k = 0; k < n; k++) {
+                if (k == i) continue;
+
+                Scalar factor = A.getMatrixAt(k, i);
+                if (factor.equals(Factory.getScalar("0"))) {
+                    continue;
+                }
+
+                for (int c = 0; c < n; c++) {
+                    Scalar aic      = A.getMatrixAt(i, c);
+                    Scalar toSubtractA = Tensors.multiplyScalarEach(factor, aic);
+                    Scalar oldAkc      = A.getMatrixAt(k, c);
+                    Scalar minusA      = Tensors.multiplyScalarEach(Factory.getScalar("-1"), toSubtractA);
+                    Scalar newAkc      = Tensors.addScalarEach(oldAkc, minusA);
+                    A.setMatrixAt(k, c, newAkc);
+
+                    Scalar iic         = I.getMatrixAt(i, c);
+                    Scalar toSubtractI = Tensors.multiplyScalarEach(factor, iic);
+                    Scalar oldIkc      = I.getMatrixAt(k, c);
+                    Scalar minusI      = Tensors.multiplyScalarEach(Factory.getScalar("-1"), toSubtractI);
+                    Scalar newIkc      = Tensors.addScalarEach(oldIkc, minusI);
+                    I.setMatrixAt(k, c, newIkc);
+                }
+
+                A.setMatrixAt(k, i, Factory.getScalar("0"));
+            }
+        }
+
+        return I;
     }
 
 
@@ -376,6 +614,11 @@ class MatrixImpl implements Matrix {
     // 생성자들
     //6 지정한 하나의 값을 모든 요소의 값으로 하는 m*n 행렬 생성
     MatrixImpl(Scalar val, int m, int n) {
+        if(n < 1 || m < 1)
+        {
+            throw new DimensionCannotBeZero("");
+        }
+
         rows = m;
         cols = n;
         MatrixValues = new java.util.Vector<>();
@@ -388,6 +631,11 @@ class MatrixImpl implements Matrix {
 
     //7 i 이상 j 미만의 무작위 값을 요소로 하는 m * n 행렬 생성
     MatrixImpl(int i, int j, int m, int n) {
+        if(n < 1 || m < 1)
+        {
+            throw new DimensionCannotBeZero("");
+        }
+
         this.rows = m;
         this.cols = n;
 
@@ -403,6 +651,11 @@ class MatrixImpl implements Matrix {
     MatrixImpl(File val, int m, int n) {
         this.rows = m;
         this.cols = n;
+
+        if(n < 1 || m < 1)
+        {
+            throw new DimensionCannotBeZero("");
+        }
 
         MatrixValues = new java.util.Vector<>();
 
@@ -434,6 +687,11 @@ class MatrixImpl implements Matrix {
         this.rows = m;
         this.cols = n;
 
+        if(n < 1 || m < 1)
+        {
+            throw new DimensionCannotBeZero("");
+        }
+
         MatrixValues = new java.util.Vector<>();
 
         for(int i=0;i<m;i++)
@@ -445,6 +703,12 @@ class MatrixImpl implements Matrix {
 
     //10 단위 행렬 생성
     MatrixImpl(int n) {
+
+        if(n < 1)
+        {
+            throw new DimensionCannotBeZero("");
+        }
+
         this.rows = n;
         this.cols = n;
 
