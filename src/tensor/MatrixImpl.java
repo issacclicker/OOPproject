@@ -116,41 +116,59 @@ class MatrixImpl implements Matrix {
 
         if(connectDirection.equals("horizontal"))
         {
-            int orginCols = cols;
             cols += m.size("cols");
-            Matrix result = Factory.getMatrix(Factory.getScalar("0"),rows,cols);
-            for(int i=0;i<rows;i++)
-            {
-                for(int j=0;j<orginCols;j++)
-                {
-                    result.setMatrixAt(i,j,this.getMatrixAt(i,j));
-                }
-            }
-            for(int i=0;i<rows;i++)
-            {
-                for(int j=0;j<cols-orginCols;j++)
-                {
-                    result.setMatrixAt(i,j,m.getMatrixAt(i,j));
-                }
-            }
 
+            for(int i=0;i<m.size("row");i++)
+            {
+                for(int j=0;j<m.size("cols");j++)
+                {
+                    ((VectorImpl)this.MatrixValues.get(i)).expansion(m.getMatrixAt(i,j));
+                }
+            }
         }
         else
         {
-
+            rows += m.size("row");
+            for(int i=0;i<m.size("row");i++)
+            {
+                this.MatrixValues.add(m.extractMatrixToVector(i,"row"));
+            }
         }
     }
 
     //34,35
     public Vector extractMatrixToVector(int index, String extractDirection) {
-        System.out.println("extractMatrixToVector 호출 성공");
-        return null;
+
+        Vector result = null;
+        if(extractDirection.equals("row"))
+        {
+            result = this.MatrixValues.get(index).cloneSelf();
+        }
+        else
+        {
+            result = Factory.getVector(Factory.getScalar("0"),cols);
+            for(int i=0;i<cols;i++)
+            {
+                result.setAt(this.getMatrixAt(index,i),i);
+            }
+        }
+
+        return result;
     }
 
     //36
     public Matrix extractSubMatrix(int beginRow, int endRow, int beginColumn, int endColumn) {
-        System.out.println("extractSubMatrix(범위) 호출 성공");
-        return null;
+        Matrix result = Factory.getMatrix(Factory.getScalar("0"),endRow-beginRow,endColumn-beginColumn);
+
+        for(int i=beginRow;i<endRow;i++)
+        {
+            for(int j=beginColumn;j<endColumn;j++)
+            {
+                result.setMatrixAt(i-beginRow,j-beginColumn,this.getMatrixAt(i,j));
+            }
+        }
+
+        return result;
     }
 
     //37

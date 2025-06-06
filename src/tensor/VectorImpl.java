@@ -162,4 +162,11 @@ class VectorImpl implements Vector,Cloneable {
 
         return result;
     }
+
+    //temp
+    public void expansion(Scalar val)
+    {
+        vectorValues.add(val);
+        dimension++;
+    }
 }

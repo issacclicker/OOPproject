@@ -10,9 +10,8 @@ public class Fake {
         int[][] arr = {{1,0,0},{0,2,0},{0,0,1}};
         Matrix mm = Factory.getMatrix(arr,3,3);
 
-        mm.multiplyMatrix(mm,"right");
+        Matrix tt = mm.extractSubMatrix(0,0,1,1);
 
-        System.out.println(mm);
-
+        System.out.println(tt);
     }
 }
