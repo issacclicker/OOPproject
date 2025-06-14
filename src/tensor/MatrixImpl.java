@@ -13,7 +13,7 @@ class MatrixImpl implements Matrix {
 
 
     // Matrix 인터페이스 메서드들
-    //11m
+    //11m i, j 위치의 값을 변경함
     public void setMatrixAt(int i, int j, Scalar val)
     {
         if(i<0||i>=rows || j<0||j>=cols)
@@ -23,6 +23,7 @@ class MatrixImpl implements Matrix {
         MatrixValues.get(i).setAt(val,j);
     }
 
+    //11m i, j 위치의 값을 조회
     public Scalar getMatrixAt(int i, int j) {
         if(i<0||i>=rows || j<0||j>=cols)
         {
@@ -31,7 +32,7 @@ class MatrixImpl implements Matrix {
         return MatrixValues.get(i).getAt(j);
     }
 
-    //13m
+    //13m option=row 면 행 개수, 아니면 열 개수 반환
     public int size(String option) {
         if(option.equals("row"))
         {
@@ -43,7 +44,7 @@ class MatrixImpl implements Matrix {
         }
     }
 
-    //14m
+    //14m 값들을 2차원 배열 모양으로 출력
     public String toString()
     {
         String result = "";
@@ -63,14 +64,14 @@ class MatrixImpl implements Matrix {
         return result;
     }
 
-    //15m
+    //15m 객체의 동등성 판단
     @Override
     public boolean equals(Object o) {
         if(o.toString().equals(this.toString())) return true;
         else return false;
     }
 
-    //22
+    //22 다른 행렬과의 덧셈 ( 객체 값 바꾸기 )
     public void addMatrix(Matrix m)
     {
         if(this.cols != m.size("col") || this.rows != m.size("row"))
@@ -88,7 +89,7 @@ class MatrixImpl implements Matrix {
         }
     }
 
-    //23
+    //23 다른 행렬과 곱셈 ( 객체 값 바꾸기 )
     public void multiplyMatrix(Matrix m, String multiplyDirection)
     {
         if(this.cols != m.size("col") || this.rows != m.size("row"))
@@ -129,7 +130,7 @@ class MatrixImpl implements Matrix {
         }
     }
 
-    //32,33
+    //32,33 다른 행렬과 가로 또는 세로로 합치기
     public void connectMatrix(Matrix m, String connectDirection)
     {
 
@@ -167,7 +168,7 @@ class MatrixImpl implements Matrix {
         }
     }
 
-    //34,35
+    //34,35 행렬은 특정 행/열을 벡터 형태로 추출
     public Vector extractMatrixToVector(int index, String extractDirection) {
 
         if(index<0||index>=rows||index>=cols)
@@ -193,7 +194,7 @@ class MatrixImpl implements Matrix {
         return result;
     }
 
-    //36
+    //36 특정 범위의 부분 행렬 추출 ( 시작, 끝, 행/열 인덱스 지정 )
     public Matrix extractSubMatrix(int beginRow, int endRow, int beginColumn, int endColumn) {
         if(beginRow<0||beginRow>=rows || endRow<0||endRow>=rows || beginColumn<0||beginColumn>=cols || endColumn<0||endColumn>=cols)
         {
@@ -213,7 +214,7 @@ class MatrixImpl implements Matrix {
         return result;
     }
 
-    //37
+    //37 특점 범위의 부분 행렬 추출 ( 제외할 행, 열 지정 )
     public Matrix extractSubMatrix(int exceptingRow, int exceptingColumn) {
         if(exceptingRow<0||exceptingRow>=rows || exceptingColumn<0||exceptingColumn>=cols)
         {
@@ -253,7 +254,7 @@ class MatrixImpl implements Matrix {
         return result;
     }
 
-    //38
+    //38 전치행렬을 구해서 생성
     public Matrix getTranspose() {
         Matrix result = Factory.getMatrix(Factory.getScalar("0"),cols,rows);
 
@@ -268,7 +269,7 @@ class MatrixImpl implements Matrix {
         return result;
     }
 
-    //39
+    //39 대각요소의 합을 구해서 생성
     public Scalar getTrace() {
         Scalar result = Factory.getScalar("0");
 
@@ -279,12 +280,12 @@ class MatrixImpl implements Matrix {
         return result;
     }
 
-    //40
+    //40 자신이 정사각 행렬인지 여부를 판별
     public boolean isSquareMatrix() {
         return rows==cols;
     }
 
-    //41
+    //41 자신이 상삼각 행렬인지 여부를 판별
     public boolean isUpperTriangularMatrix() {
 
         for(int i=1;i<rows;i++)
@@ -301,26 +302,26 @@ class MatrixImpl implements Matrix {
         return true;
     }
 
-    //42
+    //42 자신이 하삼각 행렬인지 여부를 판별
     public boolean isLowerTriangularMatrix() {
 
         Matrix temp = this.getTranspose();
         return temp.isUpperTriangularMatrix();
     }
 
-    //43
+    //43 단위 행렬인지 여부를 판별
     public boolean isIdentityMatrix() {
         Matrix temp = Factory.getMatrix(rows);
         return temp.equals(this);
     }
 
-    //44
+    //44 영 행렬인지 여부를 판별
     public boolean isZeroMatrix() {
         Matrix temp = Factory.getMatrix(Factory.getScalar("0"),rows,cols);
         return temp.equals(this);
     }
 
-    //45
+    //45 특정 두 행의 위치를 맞교환
     public void swapRow(int A, int B)
     {
         if(A<0||A>=rows || B<0||B>=rows)
@@ -336,7 +337,7 @@ class MatrixImpl implements Matrix {
         }
     }
 
-    //46
+    //46  특정 두 열의 위치를 맞교환
     public void swapColumn(int A, int B)
     {
         if(A<0||A>=cols || B<0||B>=cols)
@@ -352,7 +353,7 @@ class MatrixImpl implements Matrix {
         }
     }
 
-    //47,48
+    //47,48 행렬은 특정 행/열에 상수배 스칼라 를 할 수 있다
     public void multiplyByScalar(Scalar value, int index, String multiplyCondition)
     {
         if(multiplyCondition.equals("row"))
@@ -371,7 +372,7 @@ class MatrixImpl implements Matrix {
         }
     }
 
-    //49
+    //49  특정 행에 다른 행의 상수배를 더하기
     public void addMultipliedRow(int A, int B, Scalar multiplyValue)
     {
         if(A<0||A>=rows || B<0||B>=rows)
@@ -385,7 +386,7 @@ class MatrixImpl implements Matrix {
         }
     }
 
-    //50
+    //50  특정 행에 다른 열의 상수배를 더하기
     public void addMultipliedColumn(int A, int B, Scalar multiplyValue) {
         if(A<0||A>=cols || B<0||B>=cols)
         {
@@ -398,7 +399,7 @@ class MatrixImpl implements Matrix {
         }
     }
 
-    //51
+    //51  자신으로부터 행렬을 구해서 반환해 줄 수 있다
     public Matrix getRREF() {
         MatrixImpl A = (MatrixImpl) this.clone();
 
@@ -461,13 +462,13 @@ class MatrixImpl implements Matrix {
     }
 
 
-    //52
+    //52  행렬인지 여부를 판별
     public boolean isRREF() {
         if(this.getRREF().equals(this)) return true;
         return false;
     }
 
-    //53
+    //53 행렬식을 가질 수 있는지 판단
     public Scalar getDeterminant() {
 
         if(this.rows!=this.cols)
@@ -524,7 +525,7 @@ class MatrixImpl implements Matrix {
         return det;
     }
 
-    //54
+    //54 자신의 역행렬을 구해줄
     public Matrix getReversed() {
         int n = rows;
 
@@ -595,7 +596,7 @@ class MatrixImpl implements Matrix {
     }
 
 
-    //17m
+    //17m 객체 복제
     @Override
     protected Matrix clone() {
         Matrix result = Factory.getMatrix(Factory.getScalar("0"),rows,cols);

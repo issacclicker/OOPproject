@@ -778,7 +778,7 @@ public class Test {
         if("0.0".equals(determinantValue.toString()))
         {
             System.out.println(determinantValue);
-            System.out.println("성공.");
+            System.out.println("성공. (53)");
         }
         else
         {
@@ -795,7 +795,7 @@ public class Test {
         if("0.0".equals(determinantValue2.toString()))
         {
             System.out.println(determinantValue2);
-            System.out.println("성공.");
+            System.out.println("성공. (53)");
         }
         else
         {
