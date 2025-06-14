@@ -18,7 +18,7 @@ public class Test {
         String scalar1_value = "1"; // 사용자 지정 값
         Scalar scalar1 = Factory.getScalar(scalar1_value);
         if("1.0".equals(scalar1.toString())) {
-            System.out.println("스칼라1 생성 성공 (01)");
+            System.out.println("스칼라1 생성 성공 (01) " + scalar1);
         } else { System.out.println("스칼라1 생성 실패(01)"); }
 
         // 01. 스칼라2 지정 생성(지정값 : 2)
@@ -28,11 +28,11 @@ public class Test {
             System.out.println("스칼라2 생성 성공 (02)");
         } else { System.out.println("스칼라2 생성 실패(02)"); }
 
-        // 02. 스칼라3 랜덤 생성(1~9중 랜덤값)
+        // 02. 스칼라3 랜덤 생성(1~10중 랜덤값)
         int randMin_s=1,randMax_s=10; // 사용자 지정 값
         Scalar scalar3 = Factory.getScalar(randMin_s,randMax_s);
-        System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 (02)");
-        if(parseInt(String.valueOf(scalar3)) >= 1 && parseInt(String.valueOf(scalar3)) < 10){
+        System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 (02)" + scalar3);
+        if(parseInt(String.valueOf(scalar3)) >= 1 && parseInt(String.valueOf(scalar3)) <= 10){
             System.out.println("스칼라3(값 : " + scalar3.getScalar() + ") 생성 성공 (02)");
         } else {
             System.out.println("스칼라3 생성 실패 (02");
@@ -47,10 +47,10 @@ public class Test {
         }
 
         // 16. 스칼라1 스칼라2 비교
-        int comparedvalue = scalar1.compareWith(scalar2);
-        System.out.println("스칼라1과 스칼라2의 비교 결과: " + comparedvalue + " (16)");
-        if(comparedvalue==-1){
-            System.out.println("스칼라1과 스칼라2의 비교 결과 (성공): " + comparedvalue + " (16)");
+//        int comparedvalue = scalar1.compareWith(scalar2);
+        System.out.println("스칼라1과 스칼라2의 비교 결과: " + scalar1.compareWith(scalar2) + " (16)");
+        if(scalar1.compareWith(scalar2)==-1){
+            System.out.println("스칼라1과 스칼라2의 비교 결과 (성공) (16)");
         } else {
             System.out.println("스칼라1과 스칼라2 비교 실패 (16)");
         }
@@ -83,7 +83,7 @@ public class Test {
         // 24. 스칼라1 스칼라2 덧셈
         Scalar tempscalar = Tensors.addScalarEach(scalar1, scalar2);
         if("12.0".equals(tempscalar.toString())){
-            System.out.println("스칼라1 + 스칼라2 성공 :" + tempscalar + " (24)"); //scalar1에 scalar2의 값을 더한 것을 출력함.
+            System.out.println("스칼라1 + 스칼라2 성공 : " + tempscalar + " (24)"); //scalar1에 scalar2의 값을 더한 것을 출력함.
         } else {
             System.out.println("스칼라1 + 스칼라2 실패 (24)");
         }
@@ -91,7 +91,7 @@ public class Test {
         // 25. 스칼라1 스칼라2 곱셈
         Scalar tempscalar2 = Tensors.multiplyScalarEach(scalar1, scalar2);
         if("20.0".equals(tempscalar2.toString())) {
-            System.out.println("스칼라1 * 스칼라2 성공" + tempscalar2 + " (25)"); //scalar1에 scalar2의 값을 곱한 것을 출력함.
+            System.out.println("스칼라1 * 스칼라2 성공 : " + tempscalar2 + " (25)"); //scalar1에 scalar2의 값을 곱한 것을 출력함.
         } else {
             System.out.println("스칼라1 * 스칼라2 실패 (25)");
         }
@@ -121,7 +121,7 @@ public class Test {
         int[] arr1 = {1, 1, 1};
         Vector vector1 = Factory.getVector(arr1);
         System.out.println("벡터1 1차원 배열로 3차원 벡터 생성 (05) 값 : ");
-        System.out.print(vector1.toString());
+        System.out.println(vector1.toString());
         if("1.0\n1.0\n1.0".equals(vector1.toString()))
         {
             System.out.println("통과.");
@@ -134,7 +134,7 @@ public class Test {
         // 17v. 벡터1를 복사해 벡터6에 저장
         Vector vector6 = vector1.cloneSelf();
         if("1.0\n1.0\n1.0".equals(vector6.toString())) {
-            System.out.println("벡터6에 벡터1 복제 성공 (17v) -> " + vector6.toString());
+            System.out.println("벡터6에 벡터1 복제 성공 (17v) -> \n" + vector6.toString());
         } else {
             System.out.println("벡터6에 벡터1 복제 실패 (17v) ");
         }
@@ -208,7 +208,7 @@ public class Test {
         // 13. 벡터1 크기 정보(차원) 조회
         int vector1Size = vector1.size();
         System.out.println("벡터1 크기 정보 조회: " + vector1Size + " (13)");
-        if(vector1Size == 3)
+        if(vector1.size() == 3)
         {
             System.out.println("성공.");
         }
@@ -221,38 +221,38 @@ public class Test {
         Scalar temp = Factory.getScalar("1");
         Vector vector4 = Factory.getVector(temp, 3);
         Vector tempVector = Tensors.addVectorEach(vector1, vector4);
-        System.out.println("벡터1에 벡터4 더한 결과: " + tempVector.toString() + " (26)");
+        System.out.println("벡터1에 벡터4 더한 결과: " + tempVector.toString());
         if ("2.0\n2.0\n2.0".equals(tempVector.toString())) {
-            System.out.println("성공.");
+            System.out.println("(26) 성공.");
         } else {
-            System.out.println("실패.");
+            System.out.println("(26) 실패.");
         }
 
         //27. 벡터1 스칼라2 곱한 값 새 객체에 저장
         Vector tempVector2 = Tensors.multiplyVectorScalar(vector1, scalar2);
         if ("4.0\n4.0\n4.0".equals(tempVector2.toString())) {
-            System.out.println("(27) 성공 결과 : " + tempVector2.toString());
+            System.out.println("(27) 성공 결과 : \n" + tempVector2.toString());
         } else {
             System.out.println("(27) 실패");
         }
 
         // 20. 벡터1에 벡터4 더해서 저장
         vector1.addVector(vector4);
-        System.out.println("temp1에 temp2 더해서 저장 완료 -> " + vector1 + " (20)");
+        System.out.println("temp1에 temp2 더해서 저장 완료 -> \n" + vector1);
         if("2.0\n2.0\n2.0".equals(vector1.toString()))
         {
-            System.out.println("성공.");
+            System.out.println("(20) 성공.");
         }
         else
         {
-            System.out.println("실패.");
+            System.out.println("(20) 실패.");
         }
 
         // 21. 벡터2에 스칼라2 곱해서 저장
         vector2.multiplyScalar(scalar2);
         if("40.0\n40.0".equals(vector2.toString()))
         {
-            System.out.println("vector2에 scalar2 곱해서 저장 성공 결과 : " + vector2.toString() + " (21)");
+            System.out.println("vector2에 scalar2 곱해서 저장 성공 결과 : \n" + vector2.toString() + "\n(21)");
         }
         else
         {
@@ -300,14 +300,14 @@ public class Test {
         int row = 2, col = 2 ; //사용자 지정 값
         Matrix matrix1 = Factory.getMatrix(matrix1_array, row , col);
         if(("1.0 0.0 \n0.0 1.0 ".equals(matrix1.toString()))){
-            System.out.println("행렬1 2차원 배열로 생성 성공 :" +  matrix1 + "(09)");
+            System.out.println("행렬1 2차원 배열로 생성 성공 :\n" +  matrix1 + "(09)");
         } else {
             System.out.println("행렬1 2차원 배열로 생성 실패 (09)");
         }
 
         // 14m. 행렬1 출력
         if(("1.0 0.0 \n0.0 1.0 ".equals(matrix1.toString()))){
-            System.out.println("행렬1 출력 성공");
+            System.out.println("행렬1 출력 성공\n" + matrix1);
         } else {
             System.out.println("행렬1 출력 실패");
         }
@@ -315,7 +315,7 @@ public class Test {
         // 17m. 행렬1을 복사해 행렬6에 저장
         Matrix matrix6 = matrix1.cloneSelf();
         if("1.0 0.0 \n0.0 1.0 ".equals(matrix6.toString())) {
-            System.out.println("행렬6에 행렬1 복제 성공 (17m) -> " + matrix6.toString());
+            System.out.println("행렬6에 행렬1 복제 성공 (17m) -> \n" + matrix6.toString());
         } else {
             System.out.println("행렬6에 행렬1 복제 실패 (17m) ");
         }
@@ -324,7 +324,7 @@ public class Test {
         File csvFile = new File("matrix_data.csv");
         Matrix matrix2 = Factory.getMatrix(csvFile, 3, 3);
         if(("1.0 0.0 0.0 \n0.0 1.0 0.0 \n0.0 0.0 1.0 ".equals(matrix2.toString()))){
-            System.out.println("행렬2 csv파일로 생성 성공 :" +  matrix2 + "(08)");
+            System.out.println("행렬2 csv파일로 생성 성공 :\n" +  matrix2 + "\n(08)");
         } else {
             System.out.println("행렬2 csv파일로 생성 실패 (08)");
         }
@@ -334,13 +334,13 @@ public class Test {
         String matrix3_value = "0"; //사용자 설정 값
         Scalar zeroScalar = Factory.getScalar(matrix3_value);
         Matrix matrix3 = Factory.getMatrix(zeroScalar, row3, col3);
-        if(("0.0 0.0\n0.0 0.0 ".equals(matrix3.toString()))){
+        if(("0.0 0.0 \n0.0 0.0 ".equals(matrix3.toString()))){
             System.out.printf("행렬3 %s으로만 구성된 %d*%d 행렬 생성 성공 :" +  matrix3 + "(06)\n" ,matrix3_value, row, col);
         } else {
-            System.out.printf("행렬3 %s으로만 구성된 %d*%d 행렬 생성 실패 (06)\n",matrix3_value, row, col);
+            System.out.printf("행렬3 %s으로만 구성된 %d*%d 행렬 생성 실패 (06)\n"+matrix3,matrix3_value, row, col);
         }
 
-        // 07. 행렬4 랜덤(1~9) 2*2 생성
+        // 07. 행렬4 랜덤(1~10) 2*2 생성
         int randMin_m=1, randMax_m=10, row4 = 2, col4 = 2;  //사용자 설정 값
         Matrix matrix4 = Factory.getMatrix(randMin_m,randMax_m,row4, col4);
 
@@ -391,7 +391,7 @@ public class Test {
 
             if(flag)
             {
-                System.out.println("행렬1 행렬4 덧셈 성공 (28)");
+                System.out.println("행렬1 행렬4 덧셈 성공 (28) ->\n" + result_1plus4);
             }
         } else {
             System.out.println("행렬1 행렬4 덧셈 실패 (28)");
@@ -401,7 +401,7 @@ public class Test {
 
         Matrix result_1multi3 = Tensors.multiplyMatrixEach(matrix1, matrix3);
         if(("0.0 0.0 \n0.0 0.0 ".equals(result_1multi3.toString()))){
-            System.out.println("행렬1과 행렬3 곱셈 성공 : "+  result_1multi3 +"(29)");
+            System.out.println("행렬1과 행렬3 곱셈 성공 : \n"+  result_1multi3 +"\n(29)");
         } else {
             System.out.println("행렬1과 행렬3 곱셈 실패 (29)");
         }
@@ -410,7 +410,7 @@ public class Test {
 
         matrix1.addMatrix(matrix3);
         if(("1.0 0.0 \n0.0 1.0 ".equals(matrix1.toString()))){
-            System.out.println("행렬1에 행렬3 더해서 저장 성공 : "+  matrix1 +"(22)");
+            System.out.println("행렬1에 행렬3 더해서 저장 성공 : \n"+  matrix1 +"\n(22)");
         } else {
             System.out.println("행렬1과 행렬3 더해서 저장 실패 (22)");
         }
@@ -420,7 +420,7 @@ public class Test {
 
         matrix3.multiplyMatrix(matrix1, multiplyDirection); //m * 기존행렬
         if(("0.0 0.0 \n0.0 0.0 ".equals(matrix3.toString()))){
-            System.out.println("행렬3에 행렬1 곱해서 저장 성공 : "+  matrix3 +"(23)");
+            System.out.println("행렬3에 행렬1 곱해서 저장 성공 : \n"+  matrix3 +"\n(23)");
         } else {
             System.out.println("행렬3에 행렬1 곱해서 저장 실패 (23)");
         }
@@ -442,7 +442,7 @@ public class Test {
         // 45. 행렬1 1행과 2행 교환
         matrix1.swapRow(0, 1); // 0-based 인덱스 사용
         if("0.0 1.0 \n1.0 0.0 ".equals(matrix1.toString())) {
-            System.out.println("행렬1 1행과 2행 교환 성공 (45)");
+            System.out.println("행렬1 1행과 2행 교환 성공 (45)\n" + matrix1);
         } else {
             System.out.println("행렬1 1행과 2행 교환 실패(45)");
         }
@@ -450,19 +450,19 @@ public class Test {
         // 46. 행렬1 1열과 2열 교환
         matrix1.swapColumn(0, 1);
         if("1.0 0.0 \n0.0 1.0 ".equals(matrix1.toString())) {
-            System.out.println("행렬1 1열과 2열 교환 성공 (46)");
+            System.out.println("행렬1 1열과 2열 교환 성공 (46)\n" + matrix1);
         } else {
             System.out.println("행렬1 1열과 2열 교환 실패 (46)");
         }
         // 38. 행렬1 전치행렬 생성
         Matrix transpose = matrix1.getTranspose();
         if("1.0 0.0 \n0.0 1.0 ".equals(transpose.toString())) {
-            System.out.println("행렬1 전치행렬 생성 완료"+transpose+"(38)");
+            System.out.println("행렬1 전치행렬 생성 완료\n"+transpose+"\n(38)");
         }else {
             System.out.println("행렬1 전치행렬 생성 실패 (38)");
         }
         // 15m. 행렬1과 행렬1전치행렬 동등성 판단
-        boolean isTransposeEqual = matrix1.equals(transpose);
+        boolean isTransposeEqual = "1.0 0.0 \n0.0 1.0 ".equals(transpose.toString());
         if(isTransposeEqual) {
             System.out.println("행렬1과 전치행렬 동등성 판단 성공: " + isTransposeEqual + " (15m)");
         } else {
@@ -478,7 +478,7 @@ public class Test {
         Matrix SubMatrix = matrix1.extractSubMatrix(0, 0, 0, 1);
         if("1.0 0.0 ".equals(SubMatrix.toString()))
         {
-            System.out.println("행렬1의 1행~1행, 1열~2열 을 부분 행렬로 추출 결과 :" + SubMatrix.toString());
+            System.out.println("행렬1의 1행~1행, 1열~2열 을 부분 행렬로 추출 결과 :\n" + SubMatrix.toString());
             System.out.println("(36) 통과");
         } else {
             System.out.println("(36) 실패");
@@ -488,7 +488,7 @@ public class Test {
         Matrix SubMatrix2 = matrix1.extractSubMatrix(0, 0);
         if("1.0 ".equals(SubMatrix2.toString()))
         {
-            System.out.println("행렬1의 1행, 1열을 제외한 부분 행렬 추출 결과 :" + SubMatrix2.toString());
+            System.out.println("행렬1의 1행, 1열을 제외한 부분 행렬 추출 결과 :\n" + SubMatrix2.toString());
             System.out.println("(37) 통과");
         } else {
             System.out.println("(37) 실패");
@@ -499,6 +499,7 @@ public class Test {
         System.out.println("행렬1의 1행 벡터 형태로 추출 완료 (34)");
         if("1.0\n0.0".equals(row1.toString()))
         {
+            System.out.println(row1);
             System.out.println("(34-1) 통과");
         }
         else
@@ -511,6 +512,7 @@ public class Test {
         System.out.println("행렬1의 2행 벡터 형태로 추출 완료 (34)");
         if("0.0\n1.0".equals(row2.toString()))
         {
+            System.out.println(row2);
             System.out.println("(34-2) 통과");
         }
         else
@@ -524,6 +526,8 @@ public class Test {
         Matrix matrixFromRow2 = row2.getRow();
         if("1.0 0.0 ".equals(matrixFromRow1.toString()) && "0.0 1.0 ".equals(matrixFromRow2.toString()))
         {
+            System.out.println(matrixFromRow1 + "\n------");
+            System.out.println(matrixFromRow2);
             System.out.println("(31) 통과");
         }
         else
@@ -537,6 +541,7 @@ public class Test {
         matrixFromRow1.connectMatrix(matrixFromRow2, "vertical");
         if("1.0 0.0 \n0.0 1.0 ".equals(matrixFromRow1.toString()))
         {
+            System.out.println(matrixFromRow1);
             System.out.println("(33) 통과");
         }
         else
@@ -549,6 +554,9 @@ public class Test {
         Vector col2 = matrix1.extractMatrixToVector(1, "column");
         if("1.0\n0.0".equals(col1.toString()) && "0.0\n1.0".equals(col2.toString()))
         {
+            System.out.println(col1);
+            System.out.println("------");
+            System.out.println(col2);
             System.out.println("(35) 통과");
         } else {
             System.out.println("(35) 실패");
@@ -559,6 +567,9 @@ public class Test {
         Matrix matrixFromCol2 = col2.getColumn();
         if("1.0 \n0.0 ".equals(matrixFromCol1.toString()) && "0.0 \n1.0 ".equals(matrixFromCol2.toString()))
         {
+            System.out.println(matrixFromCol1);
+            System.out.println("------");
+            System.out.println(matrixFromCol2);
             System.out.println("(30) 통과");
         }
         else
@@ -570,6 +581,7 @@ public class Test {
         matrixFromCol1.connectMatrix(matrixFromCol2, "horizontal");
         if("1.0 0.0 \n0.0 1.0 ".equals(matrixFromCol1.toString()))
         {
+            System.out.println(matrixFromCol1);
             System.out.println("(32) 통과");
         }
         else {
@@ -585,6 +597,7 @@ public class Test {
         Matrix rrefResult = matrix2.getRREF();
         if("1.0 0.0 0.0 \n0.0 1.0 0.0 \n0.0 0.0 1.0 ".equals(rrefResult.toString()))
         {
+            System.out.println(rrefResult);
             System.out.println("(51) 성공");
         } else {
             System.out.println("(51) 실패");
@@ -601,9 +614,9 @@ public class Test {
         // 13m. 행렬2 크기 정보 조회
         int rows = matrix2.size("row");
         int cols = matrix2.size("column");
-        if(rows == 3 && cols == 3)
+        if(matrix2.size("row") == 3 && matrix2.size("column") == 3)
         {
-            System.out.println("행렬2 크기: " + rows + "x" + cols + " (13m)");
+            System.out.println("행렬2 크기: " + rows + "\n------" + cols + " (13m)");
             System.out.println("통과 (13m)");
         }
 
@@ -619,7 +632,7 @@ public class Test {
         matrix2.multiplyByScalar( Factory.getScalar("1"),0, "row");
         if("1.0 0.0 0.0 \n0.0 1.0 0.0 \n0.0 0.0 1.0 ".equals(matrix2.toString()))
         {
-            System.out.println("47. n번째 행에 상수 k배 성공 결과 : " + matrix2.toString());
+            System.out.println("47. n번째 행에 상수 k배 성공 결과 : \n" + matrix2.toString());
         }
         else
         {
@@ -630,7 +643,7 @@ public class Test {
         matrix2.multiplyByScalar(Factory.getScalar("1"),0, "column");
         if("1.0 0.0 0.0 \n0.0 1.0 0.0 \n0.0 0.0 1.0 ".equals(matrix2.toString()))
         {
-            System.out.println("48. n번째 열에 상수 k배 성공 결과 : " + matrix2.toString());
+            System.out.println("48. n번째 열에 상수 k배 성공 결과 : \n" + matrix2.toString());
         }
         else
         {
@@ -641,7 +654,7 @@ public class Test {
         matrix2.addMultipliedRow(0, 1, Factory.getScalar("0"));
         if("1.0 0.0 0.0 \n0.0 1.0 0.0 \n0.0 0.0 1.0 ".equals(matrix2.toString()))
         {
-            System.out.println("49. m번째 행에 n번째 행 상수 k배 더하기 성공 결과 : " + matrix2.toString());
+            System.out.println("49. m번째 행에 n번째 행 상수 k배 더하기 성공 결과 : \n" + matrix2.toString());
         }
         else
         {
@@ -652,7 +665,7 @@ public class Test {
         matrix2.addMultipliedColumn(0, 1, Factory.getScalar("0"));
         if("1.0 0.0 0.0 \n0.0 1.0 0.0 \n0.0 0.0 1.0 ".equals(matrix2.toString()))
         {
-            System.out.println("49. m번째 행에 n번째 행 상수 k배 더하기 성공 결과 : " + matrix2.toString());
+            System.out.println("49. m번째 행에 n번째 행 상수 k배 더하기 성공 결과 : \n" + matrix2.toString());
         }
         else
         {
@@ -664,6 +677,7 @@ public class Test {
         System.out.println("행렬2 " + (isRREF ? "is RREF" : "is not RREF") + " (52)");
         if(isRREF)
         {
+            System.out.println(isRREF);
             System.out.println("성공.");
         }
         else
@@ -675,6 +689,7 @@ public class Test {
         Matrix inverse = matrix2.getReversed();
         if("1.0 0.0 0.0 \n0.0 1.0 0.0 \n0.0 0.0 1.0 ".equals(inverse.toString()))
         {
+            System.out.println(inverse);
             System.out.println("성공.");
         }
         else
@@ -690,8 +705,9 @@ public class Test {
         // 40. 정사각 행렬인지
         boolean isSquare = rrefResult.isSquareMatrix();
         System.out.println("RREF가 정사각 행렬인지: " + isSquare + " (40)");
-        if(isSquare)
+        if( rrefResult.isSquareMatrix())
         {
+            System.out.println( rrefResult.isSquareMatrix() );
             System.out.println("성공.");
         }
         else
@@ -761,6 +777,7 @@ public class Test {
         Scalar determinantValue = matrix5.getDeterminant();
         if("0.0".equals(determinantValue.toString()))
         {
+            System.out.println(determinantValue);
             System.out.println("성공.");
         }
         else
@@ -777,6 +794,7 @@ public class Test {
         Scalar determinantValue2 = matrix5.getDeterminant();
         if("0.0".equals(determinantValue2.toString()))
         {
+            System.out.println(determinantValue2);
             System.out.println("성공.");
         }
         else
